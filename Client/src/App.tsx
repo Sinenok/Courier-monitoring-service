@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import Header from './components/Header';
 
 function App() {
 	return (
@@ -8,7 +9,9 @@ function App() {
 				<Button variant="secondary">Left</Button>
 				<Button variant="secondary">Middle</Button>
 				<Button variant="secondary">Right</Button>
+				<Button variant="secondary">Rightwqe</Button>
 			</ButtonGroup>
+			<Header />
 		</div>
 	);
 }
