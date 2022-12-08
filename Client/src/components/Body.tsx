@@ -4,6 +4,7 @@ import Order from './Order';
 import OrderInfo from './OrderInfo';
 import OrderList from './OrderList';
 import Map from './Map';
+import ExampleRestApi from './ExampleRestApi';
 
 function Body() {
 	// type postType = {
@@ -50,6 +51,7 @@ function Body() {
 					<Map />
 				</Col>
 			</Row>
+			<ExampleRestApi />
 		</Container>
 	);
 }
