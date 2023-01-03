@@ -1,0 +1,36 @@
+version: '3.4'
+
+networks:
+  dockerapi-dev:
+    driver: bridge
+
+services:
+  dockerapi:
+    image: dockerapi:latest
+    depends_on:
+      - "postgres_image"
+    build:
+      context: .
+      dockerfile: CourierMicroservice/Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      courierDB: "host=host.docker.internal;port=54320;database=courierdb;username=admin;password=admin;Pooling=true"
+    networks:
+      - dockerapi-dev
+
+  postgres_image:
+    image: postgres:latest
+    ports:
+      - "54320:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "courierdb"
+    volumes:
+      - db_volume:/var/lib/postgresql/data/
+    networks:
+      - dockerapi-dev
+volumes:
+  db_volume:

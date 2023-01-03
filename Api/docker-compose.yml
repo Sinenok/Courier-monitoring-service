@@ -1,9 +1,0 @@
-version: "3.4"
-
-services:
-  test-web-api:
-    build:
-      context: .
-      dockerfile: CourierMicroservice/CourierMicroservice/Dockerfile
-    ports:
-      - "8080:80"
