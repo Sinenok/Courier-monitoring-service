@@ -56,6 +56,12 @@ namespace CourierMicroservice.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -69,6 +75,12 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<string>("Mail")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ModifiedUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -89,7 +101,9 @@ namespace CourierMicroservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1759372b-b833-4617-8eae-509aed610345"),
+                            Id = new Guid("b1cd1340-b48f-4840-af9c-d61d258d122d"),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             FirstName = "FirstName1",
                             LastName = "LastName1",
                             Login = "Login1",

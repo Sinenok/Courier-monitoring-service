@@ -23,5 +23,14 @@ namespace CourierMicroservice.Controllers
 
             return Ok(result);
         }
+
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> QQQQ(CancellationToken cancellationToken)
+        {
+            var result = await _service.QQQQ(cancellationToken);
+
+            return Ok(result);
+        }
     }
 }

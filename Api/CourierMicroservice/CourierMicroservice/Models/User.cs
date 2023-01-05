@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность пользователя
 /// </summary>
-public class User : BaseEntity
+public class User : BaseAuditEntity
 {
     /// <summary>
     /// Имя
