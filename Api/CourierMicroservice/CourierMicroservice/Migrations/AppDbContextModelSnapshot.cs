@@ -22,6 +22,174 @@ namespace CourierMicroservice.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CourierMicroservice.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<float>("DeliveryCost")
+                        .HasColumnType("real");
+
+                    b.Property<string>("DeliveryDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("DeliveryScore")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ModifiedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("OrderStatusId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("PackageInformationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("PaymentMethodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ReceiverAdress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ReceiverUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SenderAdress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("SenderUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TrackNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("PackageInformationId");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("ReceiverUserId");
+
+                    b.HasIndex("SenderUserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.OrderStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ModifiedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderStatuses");
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.PackageInformation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<float>("Cost")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ModifiedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PackageInformations");
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.PaymentMethod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ModifiedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethods");
+                });
+
             modelBuilder.Entity("CourierMicroservice.Models.Right", b =>
                 {
                     b.Property<Guid>("Id")
@@ -101,7 +269,7 @@ namespace CourierMicroservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b1cd1340-b48f-4840-af9c-d61d258d122d"),
+                            Id = new Guid("740a9d53-07eb-4a55-b09d-530c1ab097ec"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             FirstName = "FirstName1",
@@ -111,6 +279,39 @@ namespace CourierMicroservice.Migrations
                             Password = "password1",
                             Phone = "Phone1"
                         });
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.Order", b =>
+                {
+                    b.HasOne("CourierMicroservice.Models.OrderStatus", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId");
+
+                    b.HasOne("CourierMicroservice.Models.PackageInformation", "PackageInformation")
+                        .WithMany()
+                        .HasForeignKey("PackageInformationId");
+
+                    b.HasOne("CourierMicroservice.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId");
+
+                    b.HasOne("CourierMicroservice.Models.User", "ReceiverUser")
+                        .WithMany()
+                        .HasForeignKey("ReceiverUserId");
+
+                    b.HasOne("CourierMicroservice.Models.User", "SenderUser")
+                        .WithMany()
+                        .HasForeignKey("SenderUserId");
+
+                    b.Navigation("OrderStatus");
+
+                    b.Navigation("PackageInformation");
+
+                    b.Navigation("PaymentMethod");
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("SenderUser");
                 });
 
             modelBuilder.Entity("CourierMicroservice.Models.User", b =>
