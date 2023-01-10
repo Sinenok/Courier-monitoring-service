@@ -58,4 +58,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Right> Rights { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderStatus> OrderStatuses { get; set; }
+    public DbSet<PackageInformation> PackageInformations { get; set; }
+    public DbSet<PaymentMethod> PaymentMethods { get; set; }
 }
