@@ -2,12 +2,19 @@ import React, { FormEvent, useState } from 'react';
 // import HeaderStart from '../components/HeaderStart';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 
+import { useAppDispatch } from '../store';
+import { loginUser } from '../store/auth/actionCreators';
+
 const AuthorizationPage = () => {
+	const dispatch = useAppDispatch();
+
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
+
+		dispatch(loginUser({ login, password }));
 	};
 
 	return (
@@ -19,6 +26,7 @@ const AuthorizationPage = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLogin">
 							<Form.Label>Логин</Form.Label>
 							<Form.Control
+								name="login"
 								type="text"
 								placeholder="Введите логин"
 								value={login}
@@ -30,6 +38,7 @@ const AuthorizationPage = () => {
 						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPassword">
 							<Form.Label>Пароль</Form.Label>
 							<Form.Control
+								name="password"
 								type="password"
 								placeholder="Введите пароль"
 								value={password}

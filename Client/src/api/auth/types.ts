@@ -6,5 +6,5 @@ export interface ILoginRequest {
 }
 
 export interface ILoginResponse {
-	accesToken: string; 
+	accessToken: string; 
 }
