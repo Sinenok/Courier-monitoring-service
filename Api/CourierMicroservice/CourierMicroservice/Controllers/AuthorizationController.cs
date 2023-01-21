@@ -1,6 +1,8 @@
 using CourierMicroservice.Models;
 using CourierMicroservice.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace CourierMicroservice.Controllers;
 
@@ -8,12 +10,12 @@ namespace CourierMicroservice.Controllers;
 [Route("api/[controller]")]
 public class AuthorizationController : ControllerBase
 {
-    private readonly IAuthorizationService _service;
+    private readonly Services.IAuthorizationService _service;
 
-    public AuthorizationController(IAuthorizationService service) => _service = service;
+    public AuthorizationController(Services.IAuthorizationService service) => _service = service;
 
     [Route("[action]")]
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "Admin")]
     public async Task<ActionResult<List<User>>> GetUsers(CancellationToken cancellationToken)
     {
         var result = await _service.GetUsers(cancellationToken);

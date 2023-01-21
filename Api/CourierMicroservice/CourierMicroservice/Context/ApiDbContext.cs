@@ -50,18 +50,18 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>(u =>
-        {
-            u.HasData(new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "FirstName1",
-                LastName = "LastName1",
-                Login = "Login1",
-                Mail = "Mail1",
-                Phone = "Phone1",
-                Password = "password1"
-            });
-        });
+        //modelBuilder.Entity<User>(u =>
+        //{
+        //    u.HasData(new User
+        //    {
+        //        Id = Guid.NewGuid(),
+        //        FirstName = "FirstName1",
+        //        LastName = "LastName1",
+        //        Login = "Login1",
+        //        Mail = "Mail1",
+        //        Phone = "Phone1",
+        //        Password = "password1"
+        //    });
+        //});
     }
 }
