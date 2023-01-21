@@ -15,7 +15,7 @@ public class AuthorizationController : ControllerBase
 
     [Route("[action]")]
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "User")]
     public async Task<ActionResult<List<User>>> GetUsers(CancellationToken cancellationToken)
     {
         var result = await _service.GetUsers(cancellationToken);

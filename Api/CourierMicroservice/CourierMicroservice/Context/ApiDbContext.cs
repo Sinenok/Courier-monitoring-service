@@ -28,6 +28,25 @@ public class AppDbContext : DbContext
         optionsBuilder.EnableSensitiveDataLogging();
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Right>(u =>
+        {
+            u.HasData(new Right
+                      {
+                          Id = Guid.Parse("e10222c4-7723-498b-8bf4-83252378e0c9"),
+                          Name = "User",
+                          Code = 0
+                      },
+                      new Right
+                      {
+                          Id = Guid.Parse("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"),
+                          Name = "Admin",
+                          Code = 1
+                      });
+        });
+    }
+
     private void OnBeforeSaving()
     {
         foreach (var auditEntity in ChangeTracker.Entries<BaseAuditEntity>())

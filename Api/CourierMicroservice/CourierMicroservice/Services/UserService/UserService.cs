@@ -8,7 +8,7 @@ public class UserService : IUserService
 
     public UserService(IHttpContextAccessor httpContextAccessor) => _httpContextAccessor = httpContextAccessor;
 
-    public string GetMyName()
+    public string? GetMyName()
     {
         var result = string.Empty;
 

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CourierMicroservice.Migrations
 {
     /// <inheritdoc />
@@ -85,10 +87,15 @@ namespace CourierMicroservice.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Username = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    Login = table.Column<string>(type: "text", nullable: false),
+                    Mail = table.Column<string>(type: "text", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
+                    Phone = table.Column<string>(type: "text", nullable: true),
                     RefreshToken = table.Column<string>(type: "text", nullable: false),
+                    RightId = table.Column<Guid>(type: "uuid", nullable: false),
                     TokenCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TokenExpires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -99,6 +106,12 @@ namespace CourierMicroservice.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Rights_RightId",
+                        column: x => x.RightId,
+                        principalTable: "Rights",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,6 +167,15 @@ namespace CourierMicroservice.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Rights",
+                columns: new[] { "Id", "Code", "Created", "CreatedUserId", "Modified", "ModifiedUserId", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), null, null, "Admin" },
+                    { new Guid("e10222c4-7723-498b-8bf4-83252378e0c9"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), null, null, "User" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderStatusId",
                 table: "Orders",
@@ -178,6 +200,11 @@ namespace CourierMicroservice.Migrations
                 name: "IX_Orders_SenderUserId",
                 table: "Orders",
                 column: "SenderUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RightId",
+                table: "Users",
+                column: "RightId");
         }
 
         /// <inheritdoc />
@@ -185,9 +212,6 @@ namespace CourierMicroservice.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Rights");
 
             migrationBuilder.DropTable(
                 name: "OrderStatuses");
@@ -200,6 +224,9 @@ namespace CourierMicroservice.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Rights");
         }
     }
 }

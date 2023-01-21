@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<string>> Login(UserDto request)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == request.Login);
 
         if (user == null)
         {
@@ -73,7 +73,7 @@ public class AuthController : ControllerBase
 
         var jti = tokens.Claims.First(claim => claim.Type == ClaimTypes.Name)
                         .Value;
-        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == jti);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == jti);
 
         if (user == null)
         {
@@ -107,13 +107,19 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<User>> Register(UserDto request)
     {
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
+        var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User");
 
         await _dbContext.Users.AddAsync(new User
         {
             Id = Guid.NewGuid(),
-            Username = request.Username,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Mail = request.Mail,
+            Phone = request.Phone,
+            Login = request.Login,
             PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt
+            PasswordSalt = passwordSalt,
+            Right = userRight
         });
         await _dbContext.SaveChangesAsync();
         return Ok();
@@ -130,8 +136,8 @@ public class AuthController : ControllerBase
     {
         List<Claim> claims = new()
         {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.Name, user.Login),
+            new Claim(ClaimTypes.Role, "User")
         };
 
         var value = _configuration.GetSection("AppSettings:Token")

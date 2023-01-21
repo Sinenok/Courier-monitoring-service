@@ -217,6 +217,24 @@ namespace CourierMicroservice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rights");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e10222c4-7723-498b-8bf4-83252378e0c9"),
+                            Code = 0,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = new Guid("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"),
+                            Code = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("CourierMicroservice.Models.User", b =>
@@ -229,6 +247,20 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<Guid>("CreatedUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Mail")
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("Modified")
                         .HasColumnType("timestamp with time zone");
@@ -244,9 +276,15 @@ namespace CourierMicroservice.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
                     b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("RightId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("TokenCreated")
                         .HasColumnType("timestamp with time zone");
@@ -254,11 +292,9 @@ namespace CourierMicroservice.Migrations
                     b.Property<DateTime>("TokenExpires")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("RightId");
 
                     b.ToTable("Users");
                 });
@@ -294,6 +330,17 @@ namespace CourierMicroservice.Migrations
                     b.Navigation("ReceiverUser");
 
                     b.Navigation("SenderUser");
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.User", b =>
+                {
+                    b.HasOne("CourierMicroservice.Models.Right", "Right")
+                        .WithMany()
+                        .HasForeignKey("RightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Right");
                 });
 #pragma warning restore 612, 618
         }
