@@ -17,7 +17,18 @@ public class AppDbContext : DbContext
     public DbSet<Right> Rights { get; set; }
     public DbSet<User> Users { get; set; }
 
-    protected void OnBeforeSaving()
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
+    {
+        OnBeforeSaving();
+        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.EnableSensitiveDataLogging();
+    }
+
+    private void OnBeforeSaving()
     {
         foreach (var auditEntity in ChangeTracker.Entries<BaseAuditEntity>())
         {
@@ -33,35 +44,15 @@ public class AppDbContext : DbContext
                                .IsModified = false;
                     auditEntity.Entity.Modified = DateTime.UtcNow;
                     break;
+                case EntityState.Detached:
+                    break;
+                case EntityState.Unchanged:
+                    break;
+                case EntityState.Deleted:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
-    }
-
-    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
-    {
-        OnBeforeSaving();
-        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.EnableSensitiveDataLogging();
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        //modelBuilder.Entity<User>(u =>
-        //{
-        //    u.HasData(new User
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        FirstName = "FirstName1",
-        //        LastName = "LastName1",
-        //        Login = "Login1",
-        //        Mail = "Mail1",
-        //        Phone = "Phone1",
-        //        Password = "password1"
-        //    });
-        //});
     }
 }

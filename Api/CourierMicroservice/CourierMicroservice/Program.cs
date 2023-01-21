@@ -18,14 +18,13 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2",
-        new OpenApiSecurityScheme
-        {
-            Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
-            In = ParameterLocation.Header,
-            Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey
-        });
-
+                                  new OpenApiSecurityScheme
+                                  {
+                                      Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+                                      In = ParameterLocation.Header,
+                                      Name = "Authorization",
+                                      Type = SecuritySchemeType.ApiKey
+                                  });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
@@ -35,25 +34,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            options.TokenValidationParameters = new TokenValidationParameters
            {
                ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                                                                   .GetBytes(builder.Configuration
-                                                                       .GetSection("AppSettings:Token")
-                                                                       .Value)),
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token")
+                                                                                         .Value)),
                ValidateIssuer = false,
                ValidateAudience = false
            };
        });
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp",
-    builder =>
-    {
-        builder.WithOrigins("*")
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    }));
-
-builder.Services.AddDbContext<AppDbContext>(
-    opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
+                                          builder =>
+                                          {
+                                              builder.WithOrigins("*")
+                                                     .AllowAnyMethod()
+                                                     .AllowAnyHeader();
+                                          }));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();

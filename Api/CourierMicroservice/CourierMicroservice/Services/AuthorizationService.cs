@@ -22,6 +22,4 @@ public class AuthorizationService : IAuthorizationService
                                     .ToListAsync(cancellationToken);
         return users;
     }
-
-    public Task<List<UserDto>> QQQQ(CancellationToken cancellationToken) => throw new NotImplementedException();
 }

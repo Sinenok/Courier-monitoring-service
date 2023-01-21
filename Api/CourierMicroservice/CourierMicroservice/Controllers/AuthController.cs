@@ -52,12 +52,9 @@ public class AuthController : ControllerBase
         }
 
         var token = CreateToken(user);
-
         var refreshToken = GenerateRefreshToken();
         SetRefreshToken(refreshToken, user);
-
         await _dbContext.SaveChangesAsync();
-
         return Ok(token);
     }
 
@@ -66,20 +63,26 @@ public class AuthController : ControllerBase
     {
         var refreshToken = Request.Cookies["refreshToken"];
         var accessToken = Request.Cookies["accessToken"];
-
-        var stream = accessToken;
         var handler = new JwtSecurityTokenHandler();
-        var jsonToken = handler.ReadToken(stream);
-        var tokenS = jsonToken as JwtSecurityToken;
+        var jsonToken = handler.ReadToken(accessToken);
 
-        var jti = tokenS.Claims.First(claim => claim.Type == ClaimTypes.Name)
+        if (jsonToken is not JwtSecurityToken tokens)
+        {
+            return Unauthorized("Wrong token.");
+        }
+
+        var jti = tokens.Claims.First(claim => claim.Type == ClaimTypes.Name)
                         .Value;
-
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == jti);
+
+        if (user == null)
+        {
+            return Unauthorized("Cannot find user.");
+        }
 
         if (!user.RefreshToken.Equals(refreshToken))
         {
-            return Unauthorized("Invalid Refresh Token.");
+            return Unauthorized("Invalid refresh token.");
         }
 
         if (user.TokenExpires < DateTime.Now)
@@ -88,10 +91,15 @@ public class AuthController : ControllerBase
         }
 
         var token = CreateToken(user);
+
+        if (string.IsNullOrEmpty(token))
+        {
+            return Unauthorized("CreateToken error.");
+        }
+
         var newRefreshToken = GenerateRefreshToken();
         SetRefreshToken(newRefreshToken, user);
         await _dbContext.SaveChangesAsync();
-
         return Ok(token);
     }
 
@@ -107,43 +115,47 @@ public class AuthController : ControllerBase
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt
         });
-
         await _dbContext.SaveChangesAsync();
-
         return Ok();
     }
 
-    private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+    private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
-        using (var hmac = new HMACSHA512())
-        {
-            passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-        }
+        using var hmac = new HMACSHA512();
+        passwordSalt = hmac.Key;
+        passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
     }
 
     private string CreateToken(User user)
     {
-        List<Claim> claims = new() { new Claim(ClaimTypes.Name, user.Username), new Claim(ClaimTypes.Role, "Admin") };
+        List<Claim> claims = new()
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, "Admin")
+        };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token")
-            .Value));
+        var value = _configuration.GetSection("AppSettings:Token")
+                                  .Value;
 
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        if (value == null)
+        {
+            return string.Empty;
+        }
 
-        var token = new JwtSecurityToken(claims: claims,
-            expires: DateTime.Now.AddDays(1),
-            signingCredentials: creds);
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(value));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddDays(1), signingCredentials: credentials);
 
-        var cookieOptions = new CookieOptions { HttpOnly = true };
-
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true
+        };
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         Response.Cookies.Append("accessToken", jwt, cookieOptions);
-
         return jwt;
     }
 
-    private RefreshToken GenerateRefreshToken()
+    private static RefreshToken GenerateRefreshToken()
     {
         var refreshToken = new RefreshToken
         {
@@ -151,26 +163,26 @@ public class AuthController : ControllerBase
             Expires = DateTime.SpecifyKind(DateTime.Now.AddDays(7), DateTimeKind.Utc),
             Created = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
         };
-
         return refreshToken;
     }
 
     private void SetRefreshToken(RefreshToken newRefreshToken, User user)
     {
-        var cookieOptions = new CookieOptions { HttpOnly = true, Expires = newRefreshToken.Expires };
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = newRefreshToken.Expires
+        };
         Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
-
         user.RefreshToken = newRefreshToken.Token;
         user.TokenCreated = newRefreshToken.Created;
         user.TokenExpires = newRefreshToken.Expires;
     }
 
-    private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    private static bool VerifyPasswordHash(string password, IEnumerable<byte> passwordHash, byte[] passwordSalt)
     {
-        using (var hmac = new HMACSHA512(passwordSalt))
-        {
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return computedHash.SequenceEqual(passwordHash);
-        }
+        using var hmac = new HMACSHA512(passwordSalt);
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return computedHash.SequenceEqual(passwordHash);
     }
 }
