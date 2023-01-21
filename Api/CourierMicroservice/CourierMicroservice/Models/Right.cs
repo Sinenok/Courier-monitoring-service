@@ -6,12 +6,12 @@
 public class Right : BaseAuditEntity
 {
     /// <summary>
-    /// Название доступа
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
     /// Код доступа
     /// </summary>
     public int Code { get; set; }
+
+    /// <summary>
+    /// Название доступа
+    /// </summary>
+    public string Name { get; set; }
 }

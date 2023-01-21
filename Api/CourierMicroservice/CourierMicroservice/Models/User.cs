@@ -21,6 +21,11 @@ public class User : BaseAuditEntity
     public string Login { get; set; }
 
     /// <summary>
+    /// Эл. почта
+    /// </summary>
+    public string? Mail { get; set; }
+
+    /// <summary>
     /// Пароль
     /// </summary>
     public string Password { get; set; }
@@ -29,11 +34,6 @@ public class User : BaseAuditEntity
     /// Номер телефона
     /// </summary>
     public string? Phone { get; set; }
-
-    /// <summary>
-    /// Эл. почта
-    /// </summary>
-    public string? Mail { get; set; }
 
     /// <summary>
     /// Права пользователя
