@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(UserDto request)
+    public async Task<ActionResult<string>> Login(UserLoginDto request)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == request.Login);
 
@@ -104,8 +104,15 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<User>> Register(UserDto request)
+    public async Task<ActionResult<User>> Register(UserRegistrationDto request)
     {
+        var isUserExist = await _dbContext.Users.AnyAsync(u => u.Login == request.Login);
+
+        if (isUserExist)
+        {
+            return Conflict("User with current login exist.");
+        }
+
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
         var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User");
 

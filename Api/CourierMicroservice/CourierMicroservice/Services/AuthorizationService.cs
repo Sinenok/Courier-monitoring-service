@@ -16,7 +16,7 @@ public class AuthorizationService : IAuthorizationService
         _mapper = new DtoMapper();
     }
 
-    public async Task<List<UserDto>> GetUsers(CancellationToken cancellationToken)
+    public async Task<List<UserRegistrationDto>> GetUsers(CancellationToken cancellationToken)
     {
         var users = await _dbContext.Users.Select(x => _mapper.UserToUserDto(x))
                                     .ToListAsync(cancellationToken);
