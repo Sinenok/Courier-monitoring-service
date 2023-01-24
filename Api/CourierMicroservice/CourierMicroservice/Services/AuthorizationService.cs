@@ -3,30 +3,23 @@ using CourierMicroservice.Dtos;
 using CourierMicroservice.MapProfiles;
 using Microsoft.EntityFrameworkCore;
 
-namespace CourierMicroservice.Services
+namespace CourierMicroservice.Services;
+
+public class AuthorizationService : IAuthorizationService
 {
-    public class AuthorizationService : IAuthorizationService
+    private readonly AppDbContext _dbContext;
+    private readonly DtoMapper _mapper;
+
+    public AuthorizationService(AppDbContext productContext)
     {
-        private readonly AppDbContext _dbContext;
-        private readonly DtoMapper _mapper;
+        _dbContext = productContext;
+        _mapper = new DtoMapper();
+    }
 
-        public AuthorizationService(AppDbContext productContext)
-        {
-            _dbContext = productContext;
-            _mapper = new DtoMapper();
-        }
-
-        public async Task<List<UserDto>> GetUsers(CancellationToken cancellationToken)
-        {
-            var users = await _dbContext.Users
-                        .Select(x => _mapper.UserToUserDto(x))
-                        .ToListAsync(cancellationToken);
-            return users;
-        }
-
-        public Task<List<UserDto>> QQQQ(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task<List<UserRegistrationDto>> GetUsers(CancellationToken cancellationToken)
+    {
+        var users = await _dbContext.Users.Select(x => _mapper.UserToUserDto(x))
+                                    .ToListAsync(cancellationToken);
+        return users;
     }
 }

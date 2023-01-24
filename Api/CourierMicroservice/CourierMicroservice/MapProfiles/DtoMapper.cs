@@ -7,7 +7,5 @@ namespace CourierMicroservice.MapProfiles;
 [Mapper(UseDeepCloning = true)]
 public partial class DtoMapper
 {
-    public partial UserDto UserToUserDto(User item);
-
-    public partial RightDto RightToRightDto(Right item);
+    public partial UserRegistrationDto UserToUserDto(User item);
 }

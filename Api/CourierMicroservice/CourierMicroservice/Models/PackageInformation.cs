@@ -6,6 +6,11 @@
 public class PackageInformation : BaseAuditEntity
 {
     /// <summary>
+    /// Цена
+    /// </summary>
+    public float Cost { get; set; }
+
+    /// <summary>
     /// Краткое описание
     /// </summary>
     public string ShortDescription { get; set; }
@@ -14,9 +19,4 @@ public class PackageInformation : BaseAuditEntity
     /// Вес
     /// </summary>
     public string Weight { get; set; }
-
-    /// <summary>
-    /// Цена
-    /// </summary>
-    public float Cost { get; set; }
 }

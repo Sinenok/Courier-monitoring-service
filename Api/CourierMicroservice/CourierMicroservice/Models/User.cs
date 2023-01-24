@@ -16,19 +16,9 @@ public class User : BaseAuditEntity
     public string? LastName { get; set; }
 
     /// <summary>
-    /// Логин
+    /// Логин пользователя
     /// </summary>
-    public string Login { get; set; }
-
-    /// <summary>
-    /// Пароль
-    /// </summary>
-    public string Password { get; set; }
-
-    /// <summary>
-    /// Номер телефона
-    /// </summary>
-    public string? Phone { get; set; }
+    public string Login { get; set; } = string.Empty;
 
     /// <summary>
     /// Эл. почта
@@ -36,7 +26,37 @@ public class User : BaseAuditEntity
     public string? Mail { get; set; }
 
     /// <summary>
+    /// Хеш пароля
+    /// </summary>
+    public byte[] PasswordHash { get; set; }
+
+    /// <summary>
+    /// Соль пароля
+    /// </summary>
+    public byte[] PasswordSalt { get; set; }
+
+    /// <summary>
+    /// Номер телефона
+    /// </summary>
+    public string? Phone { get; set; }
+
+    /// <summary>
+    /// Рефреш токен
+    /// </summary>
+    public string RefreshToken { get; set; } = string.Empty;
+
+    /// <summary>
     /// Права пользователя
     /// </summary>
-    public Right? Right { get; set; }
+    public Right Right { get; set; }
+
+    /// <summary>
+    /// Дата создания токена
+    /// </summary>
+    public DateTime TokenCreated { get; set; }
+
+    /// <summary>
+    /// Дата истечения токена
+    /// </summary>
+    public DateTime TokenExpires { get; set; }
 }

@@ -6,12 +6,12 @@
 public class OrderStatus : BaseAuditEntity
 {
     /// <summary>
-    /// Название статуса 
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
-    /// Код статуса 
+    /// Код статуса
     /// </summary>
     public int Code { get; set; }
+
+    /// <summary>
+    /// Название статуса
+    /// </summary>
+    public string Name { get; set; }
 }

@@ -6,12 +6,12 @@
 public class PaymentMethod : BaseAuditEntity
 {
     /// <summary>
-    /// Название метода оплаты 
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
     /// Код метода оплаты
     /// </summary>
     public int Code { get; set; }
+
+    /// <summary>
+    /// Название метода оплаты
+    /// </summary>
+    public string Name { get; set; }
 }
