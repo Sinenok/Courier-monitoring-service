@@ -1,6 +1,6 @@
 const Endpoints = {
 	AUTH: {
-		LOGIN: '/login',
+		LOGIN: 'http://localhost:8000/api/Auth/login',
 		REFRESH: '/refresh',
 		LOGOUT: '/logout',
 		PROFILE: '/profile'

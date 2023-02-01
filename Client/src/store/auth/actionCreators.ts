@@ -10,6 +10,7 @@ export const loginUser =
 			dispatch(loginStart());
 
 			const res = await api.auth.login(data);
+			console.log('data', res);
 
 			dispatch(loginSucess(res.data.accessToken));
 			// dispatch(getProfile())

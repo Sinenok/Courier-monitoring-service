@@ -1,58 +1,14 @@
-import React, { FormEvent, useState } from 'react';
-// import HeaderStart from '../components/HeaderStart';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
-
-import { useAppDispatch } from '../store';
-import { loginUser } from '../store/auth/actionCreators';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../store';
+import Authorization from './../components/Authorization';
 
 const AuthorizationPage = () => {
-	const dispatch = useAppDispatch();
-
-	const [login, setLogin] = useState('');
-	const [password, setPassword] = useState('');
-
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
-
-		dispatch(loginUser({ login, password }));
-	};
-
+	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (
-		<div className="AuthorizationPage">
-			{/* <HeaderStart /> */}
-			<Form onSubmit={handleSubmit}>
-				<Container className="py-5">
-					<Row className="justify-content-md-center">
-						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLogin">
-							<Form.Label>Логин</Form.Label>
-							<Form.Control
-								name="login"
-								type="text"
-								placeholder="Введите логин"
-								value={login}
-								onChange={(e) => setLogin(e.target.value)}
-							/>
-						</Form.Group>
-					</Row>
-					<Row className="justify-content-md-center">
-						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPassword">
-							<Form.Label>Пароль</Form.Label>
-							<Form.Control
-								name="password"
-								type="password"
-								placeholder="Введите пароль"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-						</Form.Group>
-					</Row>
-					<Row lg="5" className="justify-content-md-center">
-						<Button variant="primary" type="submit">
-							Войти
-						</Button>
-					</Row>
-				</Container>
-			</Form>
+		<div>
+			<h1>dsadsada</h1>
+			{isLoggedIn ? <div>Вы успешно авторизовались</div> : <Authorization />}
 		</div>
 	);
 };
