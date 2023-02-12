@@ -1,8 +1,11 @@
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { IRootState } from '../store';
 
 function HeaderStart() {
+	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>
@@ -15,9 +18,16 @@ function HeaderStart() {
 						<Nav.Link className="me-lg-5" as={Link} to={'/authorization'}>
 							Авторизация
 						</Nav.Link>
-						<Nav.Link as={Link} to={'/receivertracking'}>
-							Регистрация
-						</Nav.Link>
+						{!isLoggedIn && (
+							<Nav.Link as={Link} to={'/receivertracking'}>
+								Регистрация
+							</Nav.Link>
+						)}
+						{isLoggedIn && (
+							<Nav.Link as={Link} to={'/receivertracking'}>
+								Информация о заказе
+							</Nav.Link>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
