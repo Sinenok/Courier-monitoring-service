@@ -20,6 +20,9 @@ const Authorization = () => {
 	return (
 		<div className="Authorization">
 			{/* <HeaderStart /> */}
+			<Container className="text-center pt-5">
+				<h1>Авторизация</h1>
+			</Container>
 			<Form onSubmit={handleSubmit}>
 				<Container className="py-5">
 					<Row className="justify-content-md-center">

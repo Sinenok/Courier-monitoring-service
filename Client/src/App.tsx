@@ -3,6 +3,7 @@ import React from 'react';
 import HeaderStart from './components/HeaderStart';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AuthorizationPage from './pages/AuthorizationPage';
+import RegistrationPage from './pages/RegistrationPage';
 import ReceiverTrackingPage from './pages/ReceiverTrackingPage';
 import Main from './pages/Main';
 import { useSelector } from 'react-redux';
@@ -20,6 +21,10 @@ function App() {
 				<Route
 					path="/receivertracking"
 					element={isLoggedIn ? <ReceiverTrackingPage /> : <Navigate to="/" />}
+				/>
+				<Route
+					path="/registration"
+					element={!isLoggedIn ? <RegistrationPage /> : <Navigate to="/" />}
 				/>
 				{/* <ReceiverTrackingPage /> */}
 				{/* <HeaderStart /> */}

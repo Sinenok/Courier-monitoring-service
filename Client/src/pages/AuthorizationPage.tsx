@@ -13,12 +13,7 @@ const AuthorizationPage = () => {
 			<button onClick={() => dispatch(logoutUser())}>Logout</button>
 		</div>
 	);
-	return (
-		<div>
-			<h1>dsadsada</h1>
-			{isLoggedIn ? renderProfile() : <Authorization />}
-		</div>
-	);
+	return <div>{isLoggedIn ? renderProfile() : <Authorization />}</div>;
 };
 
 export default AuthorizationPage;

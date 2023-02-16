@@ -19,7 +19,7 @@ function HeaderStart() {
 							Авторизация
 						</Nav.Link>
 						{!isLoggedIn && (
-							<Nav.Link as={Link} to={'/receivertracking'}>
+							<Nav.Link as={Link} to={'/registration'}>
 								Регистрация
 							</Nav.Link>
 						)}
