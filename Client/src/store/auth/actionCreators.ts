@@ -1,7 +1,15 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import api from '../../api';
-import { ILoginRequest } from '../../api/auth/types';
-import { loginStart, loginSucess, loginFailure, logoutSuccess } from './authReducer';
+import { ILoginRequest, IRegisterResponce } from '../../api/auth/types';
+import {
+	loginStart,
+	loginSucess,
+	loginFailure,
+	logoutSuccess,
+	registrationStart,
+	registrationSucess,
+	registrationFailure
+} from './authReducer';
 import { history } from '../../utils/history';
 
 export const loginUser =
@@ -16,9 +24,10 @@ export const loginUser =
 			dispatch(loginSucess(res.data.accessToken));
 			// dispatch(getProfile())
 		} catch (e: any) {
-			console.error(e);
+			console.error('Error responce.data: ', e.response.data);
+			console.error('Error: ', e);
 
-			dispatch(loginFailure(e.message));
+			dispatch(loginFailure(e.response.data)); // был e.message
 		}
 	};
 
@@ -33,5 +42,27 @@ export const logoutUser =
 			history.push('/');
 		} catch (e) {
 			console.error(e);
+		}
+	};
+
+export const registerUser =
+	(data: IRegisterResponce) =>
+	async (dispatch: Dispatch): Promise<void> => {
+		try {
+			console.log('data 1:', data);
+
+			dispatch(registrationStart());
+
+			await api.auth.register(data);
+			// console.log('data reg: ', res);
+
+			dispatch(registrationSucess());
+			// console.log('bbb', res.data.isRegistered);
+			// console.log('aaaa', dispatch(registrationSucess(res.data.isRegistered)));
+		} catch (e: any) {
+			console.error(e.response.data);
+			console.log('e', e);
+
+			dispatch(registrationFailure(e.response.data)); // был e.message
 		}
 	};

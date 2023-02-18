@@ -13,8 +13,7 @@ export interface IRegisterResponce {
 	firstName: string;
 	lastName: string;
 	login: string;
-	email: string;
+	mail: string;
 	password: string;
-	repeatPassword: string;
 	phone: string;
 }

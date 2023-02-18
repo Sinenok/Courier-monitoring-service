@@ -24,7 +24,7 @@ const Authorization = () => {
 				<h1>Авторизация</h1>
 			</Container>
 			<Form onSubmit={handleSubmit}>
-				<Container className="py-5">
+				<Container className="py-3">
 					<Row className="justify-content-md-center">
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLogin">
 							<Form.Label>Логин</Form.Label>

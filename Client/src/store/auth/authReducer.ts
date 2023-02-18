@@ -11,6 +11,11 @@ export interface AuthState {
 		isLoading: boolean;
 		error: string | null;
 	};
+	registrData: {
+		isLoading: boolean;
+		isRegistered: boolean;
+		error: string | null;
+	};
 }
 
 const initialState: AuthState = {
@@ -22,6 +27,11 @@ const initialState: AuthState = {
 	profileData: {
 		profile: null,
 		isLoading: false,
+		error: null
+	},
+	registrData: {
+		isLoading: false,
+		isRegistered: false,
 		error: null
 	}
 };
@@ -78,7 +88,32 @@ export const authReducer = createSlice({
 				error: action.payload
 			}
 		}),
-		logoutSuccess: (): AuthState => initialState
+		logoutSuccess: (): AuthState => initialState,
+
+		registrationStart: (state): AuthState => ({
+			...state,
+			registrData: {
+				...state.registrData,
+				isLoading: true
+			}
+		}),
+		registrationSucess: (state): AuthState => ({
+			...state,
+			registrData: {
+				...state.registrData,
+				isLoading: false,
+				isRegistered: true,
+				error: null
+			}
+		}),
+		registrationFailure: (state, action: PayloadAction<string>): AuthState => ({
+			...state,
+			registrData: {
+				...state.registrData,
+				isLoading: false,
+				error: action.payload
+			}
+		})
 	}
 });
 
@@ -89,7 +124,11 @@ export const {
 	loginStart,
 	loginSucess,
 	loginFailure,
-	logoutSuccess
+	logoutSuccess,
+
+	registrationStart,
+	registrationSucess,
+	registrationFailure
 } = authReducer.actions;
 
 export default authReducer.reducer;
