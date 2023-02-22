@@ -1,7 +1,6 @@
 using System.Text;
 using CourierMicroservice.Context;
-using CourierMicroservice.Services;
-using CourierMicroservice.Services.UserService;
+using CourierMicroservice.Services.AuthorizationService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,9 +10,8 @@ using Swashbuckle.AspNetCore.Filters;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -44,10 +42,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(p => p.AddPolicy("corsapp",
                                           builder =>
                                           {
-                                              builder.WithOrigins("*")
+                                              builder.WithOrigins("http://localhost:3000")
                                                      .AllowAnyMethod()
                                                      .AllowAnyHeader()
-                                                        .AllowCredentials();
+                                                     .AllowCredentials();
                                           }));
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
 var app = builder.Build();
