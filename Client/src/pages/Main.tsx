@@ -1,10 +1,11 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 
 function Main() {
 	return (
-		<div className="Main">
-			<h1 className="text-center mt-3">Main</h1>
-		</div>
+		<Container className="text-center pt-5">
+			<h1>Main</h1>
+		</Container>
 	);
 }
 

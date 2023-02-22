@@ -1,18 +1,33 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { IRootState } from '../store';
 
 function HeaderStart() {
+	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>
-				<Navbar.Brand href="/authorization">Название сервиса отслеживания</Navbar.Brand>
+				<Navbar.Brand as={Link} to={'/'}>
+					Название сервиса отслеживания
+				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto">
-						<Nav.Link className="me-lg-5" href="/authorization">
+						<Nav.Link className="me-lg-5" as={Link} to={'/authorization'}>
 							Авторизация
 						</Nav.Link>
-						<Nav.Link href="/authorization">Регистрация</Nav.Link>
+						{!isLoggedIn && (
+							<Nav.Link as={Link} to={'/registration'}>
+								Регистрация
+							</Nav.Link>
+						)}
+						{isLoggedIn && (
+							<Nav.Link as={Link} to={'/receivertracking'}>
+								Информация о заказе
+							</Nav.Link>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

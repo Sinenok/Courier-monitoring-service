@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(UserLoginDto request)
+    public async Task<ActionResult<TokenResultDto>> Login(UserLoginDto request)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == request.Login);
 
@@ -55,7 +55,7 @@ public class AuthController : ControllerBase
         var refreshToken = GenerateRefreshToken();
         SetRefreshToken(refreshToken, user);
         await _dbContext.SaveChangesAsync();
-        return Ok(token);
+        return Ok(new TokenResultDto() { AccessToken = token });
     }
 
     [HttpPost("refresh-token")]
@@ -161,7 +161,7 @@ public class AuthController : ControllerBase
 
         var cookieOptions = new CookieOptions
         {
-            HttpOnly = true
+            HttpOnly = false
         };
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         Response.Cookies.Append("accessToken", jwt, cookieOptions);
