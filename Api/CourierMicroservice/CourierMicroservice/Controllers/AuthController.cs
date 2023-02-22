@@ -161,7 +161,7 @@ public class AuthController : ControllerBase
 
         var cookieOptions = new CookieOptions
         {
-            HttpOnly = true
+            HttpOnly = false
         };
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         Response.Cookies.Append("accessToken", jwt, cookieOptions);

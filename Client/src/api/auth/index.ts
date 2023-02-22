@@ -6,6 +6,9 @@ import { AxiosPromise } from 'axios';
 export const login = (params: ILoginRequest): AxiosPromise<ILoginResponse> =>
 	axiosInstance.post(Endpoints.AUTH.LOGIN, params);
 
+export const refreshToken = (): AxiosPromise<ILoginResponse> =>
+	axiosInstance.post(Endpoints.AUTH.REFRESH);
+
 export const logout = (): AxiosPromise => {
 	return axiosInstance.get(Endpoints.AUTH.LOGOUT);
 };

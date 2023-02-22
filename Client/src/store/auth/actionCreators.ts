@@ -14,7 +14,6 @@ import {
 	loadProfileFailure
 } from './authReducer';
 import { history } from '../../utils/history';
-import { store } from '..';
 import { AxiosPromise } from 'axios';
 
 export const loginUser =
@@ -23,7 +22,9 @@ export const loginUser =
 		try {
 			dispatch(loginStart());
 
+			console.log('before', document.cookie);
 			const res = await api.auth.login(data);
+			console.log('after', document.cookie);
 			console.log('data', res);
 
 			dispatch(loginSucess(res.data.accessToken));
@@ -66,13 +67,25 @@ export const getProfile =
 		}
 	};
 
+// переменная для хранения запроса токена (для избежания race condition)
+let refreshTokenRequest: AxiosPromise<ILoginResponse> | null = null;
+
 export const getAccessToken =
 	() =>
-	(dispatch: Dispatch<any>): string | null => {
+	async (dispatch: Dispatch<any>): Promise<string | null> => {
 		try {
-			const accessToken = store.getState().auth.authData.accessToken;
+			if (refreshTokenRequest === null) {
+				console.log('qqqqq');
+				refreshTokenRequest = api.auth.refreshToken();
+			}
 
-			return accessToken;
+			const res = await refreshTokenRequest;
+			console.log('token', res);
+			refreshTokenRequest = null;
+
+			dispatch(loginSucess(res.data.accessToken));
+
+			return res.data.accessToken;
 		} catch (e) {
 			console.error(e);
 

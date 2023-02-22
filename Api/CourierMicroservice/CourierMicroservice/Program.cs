@@ -46,7 +46,8 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp",
                                           {
                                               builder.WithOrigins("*")
                                                      .AllowAnyMethod()
-                                                     .AllowAnyHeader();
+                                                     .AllowAnyHeader()
+                                                        .AllowCredentials();
                                           }));
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
 var app = builder.Build();
