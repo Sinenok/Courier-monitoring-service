@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import api from '../../api';
-import { ILoginRequest, IRegisterResponce } from '../../api/auth/types';
+import { ILoginRequest, ILoginResponse, IRegisterResponce } from '../../api/auth/types';
 import {
 	loginStart,
 	loginSucess,
@@ -8,13 +8,18 @@ import {
 	logoutSuccess,
 	registrationStart,
 	registrationSucess,
-	registrationFailure
+	registrationFailure,
+	loadProfileStart,
+	loadProfileSucess,
+	loadProfileFailure
 } from './authReducer';
 import { history } from '../../utils/history';
+import { store } from '..';
+import { AxiosPromise } from 'axios';
 
 export const loginUser =
 	(data: ILoginRequest) =>
-	async (dispatch: Dispatch): Promise<void> => {
+	async (dispatch: Dispatch<any>): Promise<void> => {
 		try {
 			dispatch(loginStart());
 
@@ -22,7 +27,7 @@ export const loginUser =
 			console.log('data', res);
 
 			dispatch(loginSucess(res.data.accessToken));
-			// dispatch(getProfile())
+			dispatch(getProfile());
 		} catch (e: any) {
 			console.error('Error responce.data: ', e.response.data);
 			console.error('Error: ', e);
@@ -42,6 +47,36 @@ export const logoutUser =
 			history.push('/');
 		} catch (e) {
 			console.error(e);
+		}
+	};
+export const getProfile =
+	() =>
+	async (dispatch: Dispatch<any>): Promise<void> => {
+		try {
+			dispatch(loadProfileStart());
+
+			const res = await api.auth.getProfile();
+			console.log('profile ', res);
+
+			dispatch(loadProfileSucess(res.data));
+		} catch (e: any) {
+			console.error(e);
+
+			dispatch(loadProfileFailure(e.message));
+		}
+	};
+
+export const getAccessToken =
+	() =>
+	(dispatch: Dispatch<any>): string | null => {
+		try {
+			const accessToken = store.getState().auth.authData.accessToken;
+
+			return accessToken;
+		} catch (e) {
+			console.error(e);
+
+			return null;
 		}
 	};
 

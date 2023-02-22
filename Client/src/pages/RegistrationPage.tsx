@@ -1,13 +1,7 @@
-// import axios from 'axios';
-import { is } from 'immer/dist/internal';
-import React, { useState } from 'react';
-import { Form, Row, Col, Container, Button } from 'react-bootstrap';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import Endpoints from '../api/endpoints';
-import { axiosInstance } from '../api/instance';
 import Registration from '../components/Registration';
-import { IRootState, useAppDispatch } from '../store';
-import { registerUser } from '../store/auth/actionCreators';
+import { IRootState } from '../store';
 
 const RegistrationPage = () => {
 	// const dispatch = useAppDispatch();

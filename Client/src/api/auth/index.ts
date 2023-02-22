@@ -10,6 +10,8 @@ export const logout = (): AxiosPromise => {
 	return axiosInstance.get(Endpoints.AUTH.LOGOUT);
 };
 
+export const getProfile = (): AxiosPromise => axiosInstance.get(Endpoints.AUTH.PROFILE);
+
 export const register = (params: IRegisterResponce): AxiosPromise => {
 	return axiosInstance.post(Endpoints.AUTH.REGISTER, params);
 };

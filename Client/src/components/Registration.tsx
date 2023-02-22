@@ -1,8 +1,5 @@
-// import axios from 'axios';
 import React, { useState } from 'react';
 import { Form, Row, Col, Container, Button } from 'react-bootstrap';
-import Endpoints from '../api/endpoints';
-import { axiosInstance } from '../api/instance';
 import { useAppDispatch } from '../store';
 import { registerUser } from '../store/auth/actionCreators';
 
