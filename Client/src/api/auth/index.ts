@@ -4,7 +4,7 @@ import { ILoginRequest, ILoginResponse, IRegisterResponce } from './types';
 import { AxiosPromise } from 'axios';
 
 export const login = (params: ILoginRequest): AxiosPromise<ILoginResponse> =>
-	axiosInstance.post(Endpoints.AUTH.LOGIN, params);
+	axiosInstance.post(Endpoints.AUTH.LOGIN, params, { withCredentials: true });
 
 export const refreshToken = (): AxiosPromise<ILoginResponse> =>
 	axiosInstance.post(Endpoints.AUTH.REFRESH);

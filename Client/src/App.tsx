@@ -8,6 +8,7 @@ import ReceiverTrackingPage from './pages/ReceiverTrackingPage';
 import Main from './pages/Main';
 import { useSelector } from 'react-redux';
 import { IRootState } from './store';
+import OrderSubmissionPage from './pages/OrderSubmissionPage';
 // import { Container, Navbar, Nav } from 'react-bootstrap';
 
 function App() {
@@ -25,6 +26,10 @@ function App() {
 				<Route
 					path="/registration"
 					element={!isLoggedIn ? <RegistrationPage /> : <Navigate to="/" />}
+				/>
+				<Route
+					path="/ordersubmission"
+					element={!isLoggedIn ? <OrderSubmissionPage /> : <Navigate to="/" />}
 				/>
 				{/* <ReceiverTrackingPage /> */}
 				{/* <HeaderStart /> */}

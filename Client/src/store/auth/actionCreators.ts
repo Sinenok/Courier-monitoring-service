@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import api from '../../api';
-import { ILoginRequest, ILoginResponse, IRegisterResponce } from '../../api/auth/types';
+import { ILoginRequest, IRegisterResponce } from '../../api/auth/types';
 import {
 	loginStart,
 	loginSucess,
@@ -14,7 +14,7 @@ import {
 	loadProfileFailure
 } from './authReducer';
 import { history } from '../../utils/history';
-import { AxiosPromise } from 'axios';
+import { store } from '..';
 
 export const loginUser =
 	(data: ILoginRequest) =>
@@ -68,24 +68,27 @@ export const getProfile =
 	};
 
 // переменная для хранения запроса токена (для избежания race condition)
-let refreshTokenRequest: AxiosPromise<ILoginResponse> | null = null;
+// let refreshTokenRequest: AxiosPromise<ILoginResponse> | null = null;
 
 export const getAccessToken =
 	() =>
-	async (dispatch: Dispatch<any>): Promise<string | null> => {
+	(dispatch: Dispatch<any>): string | null => {
 		try {
-			if (refreshTokenRequest === null) {
-				console.log('qqqqq');
-				refreshTokenRequest = api.auth.refreshToken();
-			}
+			// if (refreshTokenRequest === null) {
+			// 	console.log('qqqqq');
+			// 	refreshTokenRequest = api.auth.refreshToken();
+			// }
 
-			const res = await refreshTokenRequest;
-			console.log('token', res);
-			refreshTokenRequest = null;
+			// const res = await refreshTokenRequest;
+			// console.log('token', res);
+			// refreshTokenRequest = null;
 
-			dispatch(loginSucess(res.data.accessToken));
+			// dispatch(loginSucess(res.data.accessToken));
 
-			return res.data.accessToken;
+			// return res.data.accessToken;
+
+			const accessToken = store.getState().auth.authData.accessToken;
+			return accessToken;
 		} catch (e) {
 			console.error(e);
 
