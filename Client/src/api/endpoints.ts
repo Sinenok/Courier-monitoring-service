@@ -1,11 +1,10 @@
 const Endpoints = {
 	AUTH: {
-		LOGIN: 'https://localhost:44327/api/Auth/login',
-		REFRESH: 'https://localhost:44327/api/Auth/refresh-token',
+		LOGIN: 'http://localhost:8000/api/Authorization/login',
+		REFRESH: 'http://localhost:8000/api/Authorization/refresh-token',
 		LOGOUT: '/logout',
-		PROFILE: 'https://localhost:44327/api/Auth',
-
-		REGISTER: 'https://localhost:44327/api/Auth/register'
+		PROFILE: 'http://localhost:8000/api/Authorization/current-user',
+		REGISTER: 'http://localhost:8000/api/Authorization/register'
 	}
 };
 

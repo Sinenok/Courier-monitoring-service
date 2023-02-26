@@ -28,6 +28,11 @@ function HeaderStart() {
 								Информация о заказе
 							</Nav.Link>
 						)}
+						{!isLoggedIn && (
+							<Nav.Link as={Link} to={'/ordersubmission'}>
+								Отправить заказ
+							</Nav.Link>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
