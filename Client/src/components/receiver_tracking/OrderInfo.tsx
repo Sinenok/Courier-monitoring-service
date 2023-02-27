@@ -11,37 +11,37 @@ const OrderInfo = (props: any) => {
 				<Card.Text>
 					Отправитель:{' '}
 					<a className="text-primary" href="#">
-						{props.post.Sender}
+						{props.postOrderInfo.sender}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Получатель:{' '}
 					<a className="text-primary" href="#">
-						{props.post.Recipient}
+						{props.postOrderInfo.recipient}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Адрес доставки:{' '}
 					<a className="text-primary" href="#">
-						{props.post.DeliveryAddress}
+						{props.postOrderInfo.deliveryAddress}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Плановая дата доставки:{' '}
 					<a className="text-primary" href="#">
-						{props.post.PlannedDeliveryDate}
+						{props.postOrderInfo.plannedDeliveryDate}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Сумма к оплате:{' '}
 					<a className="text-primary" href="#">
-						{props.post.AmountPayable}
+						{props.postOrderInfo.amountPayable}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Способ оплаты:{' '}
 					<a className="text-primary" href="#">
-						{props.post.PaymentMethod}
+						{props.postOrderInfo.paymentMethod}
 					</a>
 				</Card.Text>
 			</Card.Body>

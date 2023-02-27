@@ -34,7 +34,8 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupFirstName">
 							<Form.Label>Имя</Form.Label>
 							<Form.Control
-								/*required*/ name="firstName"
+								required
+								name="firstName"
 								type="text"
 								placeholder="Введите имя"
 								value={firstName}
@@ -46,7 +47,8 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLastName">
 							<Form.Label>Фамилия</Form.Label>
 							<Form.Control
-								/*required*/ name="lastName"
+								required
+								name="lastName"
 								type="text"
 								placeholder="Введите фамилию"
 								value={lastName}
@@ -71,7 +73,8 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupMail">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
-								/*required*/ name="mail"
+								required
+								name="mail"
 								type="email"
 								placeholder="Введите email"
 								value={mail}
@@ -109,6 +112,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPhone">
 							<Form.Label>Телефон</Form.Label>
 							<Form.Control
+								required
 								name="phone"
 								type="phone"
 								placeholder="Введите номер телефона"

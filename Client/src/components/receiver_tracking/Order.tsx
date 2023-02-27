@@ -1,17 +1,19 @@
 import React from 'react';
 import { Row, Card, Button } from 'react-bootstrap';
 
-function Order() {
+function OrderTitle() {
+	const orderNumber = 555;
+	const orderStatus = 'выполнен';
 	return (
 		<Card className="text-center bg-light">
 			<Card.Header as="h4">
 				Заказ №{' '}
 				<a className="text-danger" href="#OrderNumber">
-					555
+					{orderNumber}
 				</a>
 				. Статус доставки{' '}
 				<a className="text-danger" href="#OrderStatus">
-					выполнен
+					{orderStatus}
 				</a>
 			</Card.Header>
 			<Card.Body>
@@ -25,4 +27,4 @@ function Order() {
 	);
 }
 
-export default Order;
+export default OrderTitle;

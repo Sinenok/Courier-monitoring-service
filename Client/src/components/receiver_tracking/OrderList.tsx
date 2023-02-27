@@ -11,25 +11,25 @@ function OrderList(props: any) {
 				<Card.Text>
 					Количество товара:{' '}
 					<a className="text-primary" href="#">
-						{props.post2.Quantity}
+						{props.postOrderList.quantity}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Краткое описание:{' '}
 					<a className="text-primary" href="#">
-						{props.post2.Description}
+						{props.postOrderList.description}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Цена доставки:{' '}
 					<a className="text-primary" href="#">
-						{props.post2.ShippingCost}
+						{props.postOrderList.shippingCost}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Итоговая цена:{' '}
 					<a className="text-primary" href="#">
-						{props.post2.TotalPrice}
+						{props.postOrderList.totalPrice}
 					</a>
 				</Card.Text>
 			</Card.Body>

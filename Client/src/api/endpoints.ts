@@ -1,10 +1,11 @@
+const httpHost = 'http://localhost:8000';
 const Endpoints = {
 	AUTH: {
-		LOGIN: 'http://localhost:8000/api/Authorization/login',
-		REFRESH: 'http://localhost:8000/api/Authorization/refresh-token',
-		LOGOUT: '/logout',
-		PROFILE: 'http://localhost:8000/api/Authorization/current-user',
-		REGISTER: 'http://localhost:8000/api/Authorization/register'
+		LOGIN: `${httpHost}/api/Authorization/login`,
+		REFRESH: `${httpHost}/api/Authorization/refresh-token`,
+		LOGOUT: `${httpHost}/logout`,
+		PROFILE: `${httpHost}/api/Authorization/current-user`,
+		REGISTER: `${httpHost}/api/Authorization/register`
 	}
 };
 

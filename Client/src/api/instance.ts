@@ -18,19 +18,17 @@ axiosInstance.interceptors.request.use(async (config) => {
 	}
 
 	const accessToken = await store.dispatch(getAccessToken());
-	console.log('accessTokenda', accessToken);
 
 	if (accessToken) {
 		const autharization = `Bearer ${accessToken}`;
-		console.log('autharization', autharization);
 
 		config.headers.Authorization = autharization;
-		console.log('dsadsadsadsadsadsdasdsadsdas', config.headers.Authorization);
 	}
 
 	return config;
 });
 
+// ---------------------TO DO for refresh-token--------------------
 // axiosInstance.interceptors.response.use(
 // 	(response) => response,
 // 	(error: AxiosError) => {

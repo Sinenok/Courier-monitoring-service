@@ -1,6 +1,4 @@
 import React from 'react';
-// import ReceiverTrackingPage from './pages/ReceiverTrackingPage';
-import HeaderStart from './components/HeaderStart';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AuthorizationPage from './pages/AuthorizationPage';
 import RegistrationPage from './pages/RegistrationPage';
@@ -9,13 +7,13 @@ import Main from './pages/Main';
 import { useSelector } from 'react-redux';
 import { IRootState } from './store';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
-// import { Container, Navbar, Nav } from 'react-bootstrap';
+import HeaderNavbar from './components/HeaderNavbar';
 
 function App() {
 	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (
 		<Router>
-			<HeaderStart />
+			<HeaderNavbar />
 			<Routes>
 				<Route path="/" element={<Main />} />
 				<Route path="/authorization" element={<AuthorizationPage />} />
@@ -29,10 +27,8 @@ function App() {
 				/>
 				<Route
 					path="/ordersubmission"
-					element={!isLoggedIn ? <OrderSubmissionPage /> : <Navigate to="/" />}
+					element={isLoggedIn ? <OrderSubmissionPage /> : <Navigate to="/" />}
 				/>
-				{/* <ReceiverTrackingPage /> */}
-				{/* <HeaderStart /> */}
 			</Routes>
 		</Router>
 	);

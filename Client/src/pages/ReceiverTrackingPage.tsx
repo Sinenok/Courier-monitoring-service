@@ -1,11 +1,9 @@
 import React from 'react';
-import Body from './../components/Body';
-import Header from './../components/Header';
+import Body from './../components/receiver_tracking/Body';
 
 function ReceiverTrackingPage() {
 	return (
 		<div className="ReceiverTrackingPage">
-			<Header />
 			<Body />
 		</div>
 	);

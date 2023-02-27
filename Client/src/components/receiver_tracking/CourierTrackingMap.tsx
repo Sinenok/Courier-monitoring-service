@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-function Map() {
+function CourierTrackingMap() {
 	return (
 		<Card style={{ height: '700px' }} className="text-center bg-light">
 			<Card.Header as="h4">Карта отслеживания курьера</Card.Header>
@@ -10,4 +10,4 @@ function Map() {
 	);
 }
 
-export default Map;
+export default CourierTrackingMap;

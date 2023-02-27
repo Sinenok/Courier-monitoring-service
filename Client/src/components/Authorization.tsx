@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from 'react';
-// import HeaderStart from '../components/HeaderStart';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 
 import { useAppDispatch } from '../store';
@@ -19,7 +18,6 @@ const Authorization = () => {
 
 	return (
 		<div className="Authorization">
-			{/* <HeaderStart /> */}
 			<Container className="text-center pt-5">
 				<h1>Авторизация</h1>
 			</Container>

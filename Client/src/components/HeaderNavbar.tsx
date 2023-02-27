@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IRootState } from '../store';
 
-function HeaderStart() {
+function HeaderNavbar() {
 	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
@@ -28,7 +28,7 @@ function HeaderStart() {
 								Информация о заказе
 							</Nav.Link>
 						)}
-						{!isLoggedIn && (
+						{isLoggedIn && (
 							<Nav.Link as={Link} to={'/ordersubmission'}>
 								Отправить заказ
 							</Nav.Link>
@@ -40,4 +40,4 @@ function HeaderStart() {
 	);
 }
 
-export default HeaderStart;
+export default HeaderNavbar;
