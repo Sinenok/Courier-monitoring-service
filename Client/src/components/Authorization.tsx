@@ -4,7 +4,25 @@ import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import { useAppDispatch } from '../store';
 import { loginUser } from '../store/auth/actionCreators';
 
-const Authorization = () => {
+/** 
+ * В данном случае всю логику (всё, что до return) можно вынести в файл для логики, сформировав кастомный хук.
+ * https://ru.reactjs.org/docs/hooks-custom.html
+ * При этом его нужно типизировать, чтобы было более удобно работать
+ *
+ * Для оптимизации handleSubmit можно обернуть в useCallback
+ */
+
+/** Виртуально находится в соседнем файле types.ts и не захламляет файл с визуалом  и логикой*/
+interface UseloginResult {
+	login: string,
+		setLogin: React.Dispatch<React.SetStateAction<string >>;
+		password: string,
+		setPassword: React.Dispatch<React.SetStateAction<string >>;
+		handleSubmit: (e: FormEvent) => void
+}
+
+/** Виртуально находится в соседнем файле behavior.ts и не захламляет файл с визуалом */
+const useLogin = (): UseloginResult => {
 	const dispatch = useAppDispatch();
 
 	const [login, setLogin] = useState('');
@@ -12,9 +30,22 @@ const Authorization = () => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-
+	
 		dispatch(loginUser({ login, password }));
-	};
+	}
+
+	return {
+		login,
+		setLogin,
+		password,
+		setPassword,
+		handleSubmit
+	}
+}
+
+const Authorization = () => {
+	
+	const {login, setLogin, password, setPassword, handleSubmit} = useLogin()
 
 	return (
 		<div className="Authorization">

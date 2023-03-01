@@ -9,6 +9,8 @@ import { IRootState } from './store';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
 import HeaderNavbar from './components/HeaderNavbar';
 
+/** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельную функцию */
+
 function App() {
 	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (

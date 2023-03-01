@@ -1,6 +1,11 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
+/** 
+ * Инлайн-стили - плохое решение, Данный стиль нужно вынести в .css файл
+ * 
+*/
+
 function CourierTrackingMap() {
 	return (
 		<Card style={{ height: '700px' }} className="text-center bg-light">
