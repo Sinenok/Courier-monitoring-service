@@ -6,7 +6,7 @@ import { IRootState } from '../store';
 
 /**
  * Условие isLoggedIn можно объединить, используя тернарный оператор
- * Переписал 
+ * Переписал
  */
 
 function HeaderNavbar() {
@@ -35,9 +35,8 @@ function HeaderNavbar() {
 								<Nav.Link as={Link} to={'/ordersubmission'}>
 									Отправить заказ
 								</Nav.Link>
-							</>	
-						)
-						}
+							</>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
