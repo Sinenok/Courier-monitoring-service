@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Registration from '../components/Registration';
 import { IRootState } from '../store';
 
+/** RenderProfile - в отдельный компонент */
 const RegistrationPage = () => {
 	const isLoggedIn = useSelector((state: IRootState) => state.auth.registrData.isRegistered);
 

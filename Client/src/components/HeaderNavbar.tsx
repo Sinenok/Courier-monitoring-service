@@ -4,6 +4,11 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IRootState } from '../store';
 
+/**
+ * Условие isLoggedIn можно объединить, используя тернарный оператор
+ * Переписал
+ */
+
 function HeaderNavbar() {
 	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
 	return (
@@ -18,20 +23,19 @@ function HeaderNavbar() {
 						<Nav.Link className="me-lg-5" as={Link} to={'/authorization'}>
 							Авторизация
 						</Nav.Link>
-						{!isLoggedIn && (
+						{!isLoggedIn ? (
 							<Nav.Link as={Link} to={'/registration'}>
 								Регистрация
 							</Nav.Link>
-						)}
-						{isLoggedIn && (
-							<Nav.Link as={Link} to={'/receivertracking'}>
-								Информация о заказе
-							</Nav.Link>
-						)}
-						{isLoggedIn && (
-							<Nav.Link as={Link} to={'/ordersubmission'}>
-								Отправить заказ
-							</Nav.Link>
+						) : (
+							<>
+								<Nav.Link as={Link} to={'/receivertracking'}>
+									Информация о заказе
+								</Nav.Link>
+								<Nav.Link as={Link} to={'/ordersubmission'}>
+									Отправить заказ
+								</Nav.Link>
+							</>
 						)}
 					</Nav>
 				</Navbar.Collapse>

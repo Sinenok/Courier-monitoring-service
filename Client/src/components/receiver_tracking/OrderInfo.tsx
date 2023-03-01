@@ -1,7 +1,20 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-const OrderInfo = (props: any) => {
+/** 
+ * Использование any перечёркивает все плюсы тайпскрипта
+ * 
+ * Чтобы не писать props.postOrderInfo.sender, props.postOrderInfo.recipient,
+ *  можно воспользоваться деструктуризацией (но полноценно это будет работать, только если убрать any и заменить настоящим типом)
+ * 
+ *  Переписал компонент
+ *  
+ */
+
+const OrderInfo = ({postOrderInfo}: any) => {
+
+	const {sender, recipient, deliveryAddress, plannedDeliveryDate, amountPayable, paymentMethod} = postOrderInfo
+
 	return (
 		<Card className="bg-light">
 			<Card.Header className="text-center" as="h4">
@@ -11,37 +24,37 @@ const OrderInfo = (props: any) => {
 				<Card.Text>
 					Отправитель:{' '}
 					<a className="text-primary" href="#">
-						{props.postOrderInfo.sender}
+						{sender}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Получатель:{' '}
 					<a className="text-primary" href="#">
-						{props.postOrderInfo.recipient}
+						{recipient}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Адрес доставки:{' '}
 					<a className="text-primary" href="#">
-						{props.postOrderInfo.deliveryAddress}
+						{deliveryAddress}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Плановая дата доставки:{' '}
 					<a className="text-primary" href="#">
-						{props.postOrderInfo.plannedDeliveryDate}
+						{plannedDeliveryDate}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Сумма к оплате:{' '}
 					<a className="text-primary" href="#">
-						{props.postOrderInfo.amountPayable}
+						{amountPayable}
 					</a>
 				</Card.Text>
 				<Card.Text>
 					Способ оплаты:{' '}
 					<a className="text-primary" href="#">
-						{props.postOrderInfo.paymentMethod}
+						{paymentMethod}
 					</a>
 				</Card.Text>
 			</Card.Body>

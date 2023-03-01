@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/** Интерфейс AuthState и начальный стейт для читаемости лучше вынести в отдельный файл и импортировать */
+
 export interface AuthState {
 	authData: {
 		accessToken: string | null;

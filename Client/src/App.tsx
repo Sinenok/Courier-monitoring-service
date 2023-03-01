@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AuthorizationPage from './pages/AuthorizationPage';
 import RegistrationPage from './pages/RegistrationPage';
@@ -9,8 +9,24 @@ import { IRootState } from './store';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
 import HeaderNavbar from './components/HeaderNavbar';
 
+/** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельный компонент
+ * Переписал ту часть, где требуется isLoggedIn = true
+ */
+
+interface PropType {
+	component: React.FC;
+}
+
+const PrivateRoute: FC<PropType> = ({ component: Component }) => {
+	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+
+	if (isLoggedIn) return <Component />;
+	return <Navigate to="/" />;
+};
+
 function App() {
 	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+
 	return (
 		<Router>
 			<HeaderNavbar />
@@ -19,7 +35,7 @@ function App() {
 				<Route path="/authorization" element={<AuthorizationPage />} />
 				<Route
 					path="/receivertracking"
-					element={isLoggedIn ? <ReceiverTrackingPage /> : <Navigate to="/" />}
+					element={<PrivateRoute component={ReceiverTrackingPage} />}
 				/>
 				<Route
 					path="/registration"
@@ -27,7 +43,7 @@ function App() {
 				/>
 				<Route
 					path="/ordersubmission"
-					element={isLoggedIn ? <OrderSubmissionPage /> : <Navigate to="/" />}
+					element={<PrivateRoute component={OrderSubmissionPage} />}
 				/>
 			</Routes>
 		</Router>

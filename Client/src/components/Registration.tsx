@@ -20,6 +20,7 @@ const Registration = () => {
 		if (password === repeatPassword) {
 			dispatch(registerUser({ firstName, lastName, login, mail, password, phone }));
 		} else {
+			/** Где будет обработана эта ошибка? */
 			throw new Error('У вас не совпадают пароли');
 		}
 	};

@@ -16,6 +16,12 @@ import {
 import { history } from '../../utils/history';
 import { store } from '..';
 
+/** 
+ * Асинхронные запросы при использовании redux toolkit необходимо осуществлять через createAsyncThunk или, более свежий вариант, RTK Query
+ * Технически тот вариант, который используется, допустим, но сейчас так никто не пишет
+ * https://redux-toolkit.js.org/api/createAsyncThunk
+ */
+
 export const loginUser =
 	(data: ILoginRequest) =>
 	async (dispatch: Dispatch<any>): Promise<void> => {

@@ -1,6 +1,10 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
+/**
+ * props.postOrderList можно деструктуризировать
+ */
+
 function OrderList(props: any) {
 	return (
 		<Card className="h-100 bg-light">
