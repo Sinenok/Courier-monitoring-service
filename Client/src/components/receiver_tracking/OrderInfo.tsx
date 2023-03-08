@@ -1,19 +1,19 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-/** 
+/**
  * Использование any перечёркивает все плюсы тайпскрипта
- * 
+ *
  * Чтобы не писать props.postOrderInfo.sender, props.postOrderInfo.recipient,
  *  можно воспользоваться деструктуризацией (но полноценно это будет работать, только если убрать any и заменить настоящим типом)
- * 
+ *
  *  Переписал компонент
- *  
+ *
  */
 
-const OrderInfo = ({postOrderInfo}: any) => {
-
-	const {sender, recipient, deliveryAddress, plannedDeliveryDate, amountPayable, paymentMethod} = postOrderInfo
+const OrderInfo = ({ postOrderInfo }: any) => {
+	const { sender, recipient, deliveryAddress, plannedDeliveryDate, amountPayable, paymentMethod } =
+		postOrderInfo;
 
 	return (
 		<Card className="bg-light">

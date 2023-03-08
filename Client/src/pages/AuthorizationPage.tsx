@@ -12,7 +12,7 @@ import Authorization from './../components/Authorization';
  */
 
 /**
- * В разделе store (или при увеличении размера приложения в отдельном module store) 
+ * В разделе store (или при увеличении размера приложения в отдельном module store)
  * полезно создавать папку/файл с селекторами для переиспользования селекторов.
  * Также это позволит избежать бойлерплейт кода типа state.auth...
  * Полезная библиотека для этого - reselect
@@ -24,8 +24,6 @@ const AuthorizationPage = () => {
 
 	const profile = useSelector((state: IRootState) => state.auth.profileData.profile);
 	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
-
-	
 
 	const renderProfile = () => (
 		<div>

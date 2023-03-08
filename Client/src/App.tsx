@@ -4,10 +4,9 @@ import AuthorizationPage from './pages/AuthorizationPage';
 import RegistrationPage from './pages/RegistrationPage';
 import ReceiverTrackingPage from './pages/ReceiverTrackingPage';
 import Main from './pages/Main';
-import { useSelector } from 'react-redux';
-import { IRootState } from './store';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
 import HeaderNavbar from './components/HeaderNavbar';
+import { isLogged } from './hooks/IsLoggedIn';
 
 /** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельный компонент
  * Переписал ту часть, где требуется isLoggedIn = true
@@ -18,14 +17,15 @@ interface PropType {
 }
 
 const PrivateRoute: FC<PropType> = ({ component: Component }) => {
-	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+	const isLoggedIn = isLogged();
 
 	if (isLoggedIn) return <Component />;
 	return <Navigate to="/" />;
 };
 
 function App() {
-	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+	// const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+	const isLoggedIn = isLogged();
 
 	return (
 		<Router>
@@ -41,10 +41,7 @@ function App() {
 					path="/registration"
 					element={!isLoggedIn ? <RegistrationPage /> : <Navigate to="/" />}
 				/>
-				<Route
-					path="/ordersubmission"
-					element={<PrivateRoute component={OrderSubmissionPage} />}
-				/>
+				<Route path="/ordersubmission" element={<PrivateRoute component={OrderSubmissionPage} />} />
 			</Routes>
 		</Router>
 	);
