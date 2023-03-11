@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { PostOrderInfo } from '../../api/auth/types';
+import { IOrderInfo } from '../../api/auth/types';
 
 /**
  * Использование any перечёркивает все плюсы тайпскрипта
@@ -12,57 +12,57 @@ import { PostOrderInfo } from '../../api/auth/types';
  *
  */
 
-const OrderInfo = (props: PostOrderInfo) => {
-	// const { sender, recipient, deliveryAddress, plannedDeliveryDate, amountPayable, paymentMethod } =
-	// 	postOrderInfo;
-
-	console.log('qwe', props.sender);
-	return <div></div>;
-	// return (
-	// 	<Card className="bg-light">
-	// 		<Card.Header className="text-center" as="h4">
-	// 			Информация о заказе
-	// 		</Card.Header>
-	// 		<Card.Body>
-	// 			<Card.Text>
-	// 				Отправитель:{' '}
-	// 				<a className="text-primary" href="#">
-	// 					{sender}
-	// 				</a>
-	// 			</Card.Text>
-	// 			<Card.Text>
-	// 				Получатель:{' '}
-	// 				<a className="text-primary" href="#">
-	// 					{recipient}
-	// 				</a>
-	// 			</Card.Text>
-	// 			<Card.Text>
-	// 				Адрес доставки:{' '}
-	// 				<a className="text-primary" href="#">
-	// 					{deliveryAddress}
-	// 				</a>
-	// 			</Card.Text>
-	// 			<Card.Text>
-	// 				Плановая дата доставки:{' '}
-	// 				<a className="text-primary" href="#">
-	// 					{plannedDeliveryDate}
-	// 				</a>
-	// 			</Card.Text>
-	// 			<Card.Text>
-	// 				Сумма к оплате:{' '}
-	// 				<a className="text-primary" href="#">
-	// 					{amountPayable}
-	// 				</a>
-	// 			</Card.Text>
-	// 			<Card.Text>
-	// 				Способ оплаты:{' '}
-	// 				<a className="text-primary" href="#">
-	// 					{paymentMethod}
-	// 				</a>
-	// 			</Card.Text>
-	// 		</Card.Body>
-	// 	</Card>
-	// );
-};
+const OrderInfo: FC<IOrderInfo> = ({
+	sender,
+	recipient,
+	deliveryAddress,
+	plannedDeliveryDate,
+	amountPayable,
+	paymentMethod
+}) => (
+	<Card className="bg-light">
+		<Card.Header className="text-center" as="h4">
+			Информация о заказе
+		</Card.Header>
+		<Card.Body>
+			<Card.Text>
+				Отправитель:{' '}
+				<a className="text-primary" href="#">
+					{sender}
+				</a>
+			</Card.Text>
+			<Card.Text>
+				Получатель:{' '}
+				<a className="text-primary" href="#">
+					{recipient}
+				</a>
+			</Card.Text>
+			<Card.Text>
+				Адрес доставки:{' '}
+				<a className="text-primary" href="#">
+					{deliveryAddress}
+				</a>
+			</Card.Text>
+			<Card.Text>
+				Плановая дата доставки:{' '}
+				<a className="text-primary" href="#">
+					{plannedDeliveryDate}
+				</a>
+			</Card.Text>
+			<Card.Text>
+				Сумма к оплате:{' '}
+				<a className="text-primary" href="#">
+					{amountPayable}
+				</a>
+			</Card.Text>
+			<Card.Text>
+				Способ оплаты:{' '}
+				<a className="text-primary" href="#">
+					{paymentMethod}
+				</a>
+			</Card.Text>
+		</Card.Body>
+	</Card>
+);
 
 export default OrderInfo;

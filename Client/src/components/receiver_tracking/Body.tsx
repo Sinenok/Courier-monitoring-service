@@ -4,7 +4,7 @@ import OrderTitle from './Order';
 import OrderInfo from './OrderInfo';
 import OrderList from './OrderList';
 import CourierTrackingMap from './CourierTrackingMap';
-import { PostOrderInfo } from '../../api/auth/types';
+import { IOrderInfo, IOrderList } from '../../api/auth/types';
 
 /**
  * Слишком большое количество констант.
@@ -21,22 +21,22 @@ import { PostOrderInfo } from '../../api/auth/types';
  *  */
 
 function Body() {
-	// postOrderInfo property:
-	const qqq: PostOrderInfo = {
-		sender: 'Название магазина'
-		// recipient: 'ФИО клиента',
-		// deliveryAddress: 'Адрес доставки',
-		// plannedDeliveryDate: 'Дата доставки',
-		// amountPayable: 'Цена покупки',
-		// paymentMethod: 'Карта/наличные'
+	const orderInfo: IOrderInfo = {
+		sender: 'Название магазина',
+		recipient: 'ФИО клиента',
+		deliveryAddress: 'Адрес доставки',
+		plannedDeliveryDate: 'Дата доставки',
+		amountPayable: 'Цена покупки',
+		paymentMethod: 'Карта/наличные'
 	};
-	var sss = qqq.sender;
 
-	// OrderList property
-	const quantityProducts = 1;
-	const productDescription = 'Описание товара';
-	const shippingCost = 'Цена';
-	const totalPrice = 'Цена товара + дотставки';
+	const orderList: IOrderList = {
+		quantityProducts: 1,
+		productDescription: 'Описание товара',
+		shippingCost: 'Цена',
+		totalPrice: 'Цена товара + дотставки'
+	};
+
 	return (
 		<Container className="py-3">
 			<Row className="justify-content-center mb-3">
@@ -46,17 +46,10 @@ function Body() {
 			</Row>
 			<Row className="justify-content-center mb-3">
 				<Col md="5" className="p-0 me-1">
-					<OrderInfo sender={qqq.sender} />
+					<OrderInfo {...orderInfo} />
 				</Col>
 				<Col md="5" className="p-0">
-					<OrderList
-						postOrderList={{
-							quantity: `${quantityProducts} товар(а/ов)`,
-							description: `${productDescription}`,
-							shippingCost: `${shippingCost}`,
-							totalPrice: `${totalPrice}`
-						}}
-					/>
+					<OrderList {...orderList} />
 				</Col>
 			</Row>
 			<Row className="justify-content-center">
