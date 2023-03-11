@@ -15,8 +15,10 @@ import { AxiosPromise } from 'axios';
  * AxiosPromise<any>, с чем впоследствии будет неудобно работать
  */
 
-export const login = (params: ILoginRequest): AxiosPromise<ILoginResponse> =>
-	axiosInstance.post(Endpoints.AUTH.LOGIN, params, { withCredentials: true });
+export const login = function (params: ILoginRequest): AxiosPromise<ILoginResponse> {
+	var qqq = axiosInstance.post(Endpoints.AUTH.LOGIN, params, { withCredentials: true });
+	return qqq;
+};
 
 export const refreshToken = (): AxiosPromise<ILoginResponse> =>
 	axiosInstance.post(Endpoints.AUTH.REFRESH);

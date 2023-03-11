@@ -7,6 +7,8 @@ import Main from './pages/Main';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
 import HeaderNavbar from './components/HeaderNavbar';
 import { isLogged } from './hooks/IsLoggedIn';
+import { useSelector } from 'react-redux';
+import { IRootState } from './store';
 
 /** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельный компонент
  * Переписал ту часть, где требуется isLoggedIn = true
@@ -24,8 +26,8 @@ const PrivateRoute: FC<PropType> = ({ component: Component }) => {
 };
 
 function App() {
-	// const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
-	const isLoggedIn = isLogged();
+	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+	// const isLoggedIn = isLogged();
 
 	return (
 		<Router>

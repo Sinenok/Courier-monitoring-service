@@ -5,7 +5,7 @@ import { useAppDispatch } from '../store';
 import { loginUser } from '../store/auth/actionCreators';
 
 /**
- * В данном случае всю логику (всё, что до return) можно вынести в файл для логики, сформировав кастомный хук.
+ * В данном случае всю логику (всё, что доc:\Users\Ivan\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\code\electron-sandbox\workbench\workbench.html return) можно вынести в файл для логики, сформировав кастомный хук.
  * https://ru.reactjs.org/docs/hooks-custom.html
  * При этом его нужно типизировать, чтобы было более удобно работать
  *
@@ -29,13 +29,16 @@ const useLogin = (): UseloginResult => {
 	const [password, setPassword] = useState('');
 
 	const handleSubmit = useCallback(
-		() => (e: FormEvent) => {
+		(e: FormEvent) => {
 			e.preventDefault();
+			console.log('dsaddsadsada');
+			console.log('dsadsa', login);
 
 			dispatch(loginUser({ login, password }));
 		},
-		[]
+		[login, password]
 	);
+	console.log('login', login);
 
 	return {
 		login,
@@ -48,7 +51,6 @@ const useLogin = (): UseloginResult => {
 
 const Authorization = () => {
 	const { login, setLogin, password, setPassword, handleSubmit } = useLogin();
-
 	return (
 		<div className="Authorization">
 			<Container className="text-center pt-5">

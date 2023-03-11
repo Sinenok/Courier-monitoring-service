@@ -17,3 +17,12 @@ export interface IRegisterResponce {
 	password: string;
 	phone: string;
 }
+
+export interface PostOrderInfo {
+	sender: string;
+	// recipient: string;
+	// deliveryAddress: string;
+	// plannedDeliveryDate: string;
+	// amountPayable: string;
+	// paymentMethod: string;
+}

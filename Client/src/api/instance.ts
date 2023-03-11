@@ -26,21 +26,15 @@ const urlsSkipAuth = [
  */
 
 axiosInstance.interceptors.request.use(async (config) => {
-	const result = structuredClone(config);
-
-	if (result.url && urlsSkipAuth.includes(result.url)) {
-		return result;
+	if (config.url && urlsSkipAuth.includes(config.url)) {
+		return config;
 	}
-
 	const accessToken = await store.dispatch(getAccessToken());
-
 	if (accessToken) {
 		const autharization = `Bearer ${accessToken}`;
-
-		result.headers.Authorization = autharization;
+		config.headers.Authorization = autharization;
 	}
-
-	return result;
+	return config;
 });
 
 // ---------------------TO DO for refresh-token--------------------

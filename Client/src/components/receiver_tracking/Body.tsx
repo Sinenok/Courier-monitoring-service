@@ -4,6 +4,7 @@ import OrderTitle from './Order';
 import OrderInfo from './OrderInfo';
 import OrderList from './OrderList';
 import CourierTrackingMap from './CourierTrackingMap';
+import { PostOrderInfo } from '../../api/auth/types';
 
 /**
  * Слишком большое количество констант.
@@ -21,12 +22,15 @@ import CourierTrackingMap from './CourierTrackingMap';
 
 function Body() {
 	// postOrderInfo property:
-	const sender = 'Название магазина';
-	const recipient = 'ФИО клиента';
-	const deliveryAddress = 'Адрес доставки';
-	const plannedDeliveryDate = 'Дата доставки';
-	const amountPayable = 'Цена покупки';
-	const paymentMethod = 'Карта/наличные';
+	const qqq: PostOrderInfo = {
+		sender: 'Название магазина'
+		// recipient: 'ФИО клиента',
+		// deliveryAddress: 'Адрес доставки',
+		// plannedDeliveryDate: 'Дата доставки',
+		// amountPayable: 'Цена покупки',
+		// paymentMethod: 'Карта/наличные'
+	};
+	var sss = qqq.sender;
 
 	// OrderList property
 	const quantityProducts = 1;
@@ -42,16 +46,7 @@ function Body() {
 			</Row>
 			<Row className="justify-content-center mb-3">
 				<Col md="5" className="p-0 me-1">
-					<OrderInfo
-						postOrderInfo={{
-							sender: `${sender}`,
-							recipient: `${recipient}`,
-							deliveryAddress: `${deliveryAddress}`,
-							plannedDeliveryDate: `${plannedDeliveryDate}`,
-							amountPayable: `${amountPayable}`,
-							paymentMethod: `${paymentMethod}`
-						}}
-					/>
+					<OrderInfo sender={qqq.sender} />
 				</Col>
 				<Col md="5" className="p-0">
 					<OrderList

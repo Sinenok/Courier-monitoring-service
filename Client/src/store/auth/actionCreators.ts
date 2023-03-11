@@ -27,13 +27,15 @@ export const loginUser =
 	async (dispatch: Dispatch<any>): Promise<void> => {
 		try {
 			dispatch(loginStart());
+			console.log('dsadsadas', data);
 
 			const res = await api.auth.login(data);
+			console.log('res ', res);
 
 			dispatch(loginSucess(res.data.accessToken));
-			dispatch(getProfile());
+			// dispatch(getProfile());
 		} catch (e: any) {
-			console.error('Error responce.data: ', e.response.data);
+			console.error('Error responce.data: ', e);
 
 			dispatch(loginFailure(e.response.data));
 		}
