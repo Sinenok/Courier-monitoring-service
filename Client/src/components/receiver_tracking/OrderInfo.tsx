@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { IOrderInfo } from '../../api/auth/types';
+import { IOrderInfo } from './body/types';
 
 /**
  * Использование any перечёркивает все плюсы тайпскрипта
@@ -9,7 +9,7 @@ import { IOrderInfo } from '../../api/auth/types';
  *  можно воспользоваться деструктуризацией (но полноценно это будет работать, только если убрать any и заменить настоящим типом)
  *
  *  Переписал компонент
- *
+ * -------------------------------------------------ИСПРАВЛЕНО---------------------------------------------------------------------------------
  */
 
 const OrderInfo: FC<IOrderInfo> = ({

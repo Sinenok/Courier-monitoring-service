@@ -1,16 +1,14 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AuthorizationPage from './pages/AuthorizationPage';
+import AuthorizationPage from './pages/authorization-page/AuthorizationPage';
 import RegistrationPage from './pages/RegistrationPage';
 import ReceiverTrackingPage from './pages/ReceiverTrackingPage';
 import Main from './pages/Main';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
 import HeaderNavbar from './components/HeaderNavbar';
 import { isLogged } from './hooks/IsLoggedIn';
-import { useSelector } from 'react-redux';
-import { IRootState } from './store';
 
-/** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельный компонент
+/** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельный компонент - ИСПРАВЛЕНО
  * Переписал ту часть, где требуется isLoggedIn = true
  */
 
@@ -26,8 +24,7 @@ const PrivateRoute: FC<PropType> = ({ component: Component }) => {
 };
 
 function App() {
-	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
-	// const isLoggedIn = isLogged();
+	const isLoggedIn = isLogged();
 
 	return (
 		<Router>

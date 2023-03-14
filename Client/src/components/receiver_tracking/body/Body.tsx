@@ -1,10 +1,10 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import OrderTitle from './Order';
-import OrderInfo from './OrderInfo';
-import OrderList from './OrderList';
-import CourierTrackingMap from './CourierTrackingMap';
-import { IOrderInfo, IOrderList } from '../../api/auth/types';
+import OrderTitle from './../OrderTitle';
+import OrderInfo from './../OrderInfo';
+import OrderList from './../OrderList';
+import CourierTrackingMap from './../CourierTrackingMap';
+import { orderInfo, orderList, orderTitle } from './behavior';
 
 /**
  * Слишком большое количество констант.
@@ -18,30 +18,16 @@ import { IOrderInfo, IOrderList } from '../../api/auth/types';
  * index.ts - для экспорта
  *
  * Отделение логики от визуала резко повышает читабельность кода
+ *
+ * ----------------------------------------------ИСПРАВЛЕНО---------------------------------------------------------------------------
  *  */
 
 function Body() {
-	const orderInfo: IOrderInfo = {
-		sender: 'Название магазина',
-		recipient: 'ФИО клиента',
-		deliveryAddress: 'Адрес доставки',
-		plannedDeliveryDate: 'Дата доставки',
-		amountPayable: 'Цена покупки',
-		paymentMethod: 'Карта/наличные'
-	};
-
-	const orderList: IOrderList = {
-		quantityProducts: 1,
-		productDescription: 'Описание товара',
-		shippingCost: 'Цена',
-		totalPrice: 'Цена товара + дотставки'
-	};
-
 	return (
 		<Container className="py-3">
 			<Row className="justify-content-center mb-3">
 				<Col md="10" className="p-0">
-					<OrderTitle />
+					<OrderTitle {...orderTitle} />
 				</Col>
 			</Row>
 			<Row className="justify-content-center mb-3">

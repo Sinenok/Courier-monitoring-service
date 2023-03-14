@@ -1,8 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IRootState } from '../store';
+import { isLogged } from '../hooks/IsLoggedIn';
 
 /**
  * Условие isLoggedIn можно объединить, используя тернарный оператор
@@ -10,7 +9,7 @@ import { IRootState } from '../store';
  */
 
 function HeaderNavbar() {
-	const isLoggedIn = useSelector((state: IRootState) => !!state.auth.authData.accessToken);
+	const isLoggedIn = isLogged();
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>

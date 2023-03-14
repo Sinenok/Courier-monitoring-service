@@ -1,8 +1,6 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React from 'react';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
-
-import { useAppDispatch } from '../store';
-import { loginUser } from '../store/auth/actionCreators';
+import { useLogin } from './behavior';
 
 /**
  * В данном случае всю логику (всё, что доc:\Users\Ivan\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\code\electron-sandbox\workbench\workbench.html return) можно вынести в файл для логики, сформировав кастомный хук.
@@ -10,45 +8,8 @@ import { loginUser } from '../store/auth/actionCreators';
  * При этом его нужно типизировать, чтобы было более удобно работать
  *
  * Для оптимизации ререндеров handleSubmit можно обернуть в useCallback https://habr.com/ru/post/529950/
+ * -------------------------------------------ИСПРАВЛЕНО---------------------------------------------------------------
  */
-
-/** Виртуально находится в соседнем файле types.ts и не захламляет файл с визуалом  и логикой*/
-interface UseloginResult {
-	login: string;
-	setLogin: React.Dispatch<React.SetStateAction<string>>;
-	password: string;
-	setPassword: React.Dispatch<React.SetStateAction<string>>;
-	handleSubmit: (e: FormEvent) => void;
-}
-
-/** Виртуально находится в соседнем файле behavior.ts и не захламляет файл с визуалом */
-const useLogin = (): UseloginResult => {
-	const dispatch = useAppDispatch();
-
-	const [login, setLogin] = useState('');
-	const [password, setPassword] = useState('');
-
-	const handleSubmit = useCallback(
-		(e: FormEvent) => {
-			e.preventDefault();
-			console.log('dsaddsadsada');
-			console.log('dsadsa', login);
-
-			dispatch(loginUser({ login, password }));
-		},
-		[login, password]
-	);
-	console.log('login', login);
-
-	return {
-		login,
-		setLogin,
-		password,
-		setPassword,
-		handleSubmit
-	};
-};
-
 const Authorization = () => {
 	const { login, setLogin, password, setPassword, handleSubmit } = useLogin();
 	return (

@@ -1,42 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthState, initialState } from './types';
 
 /** Интерфейс AuthState и начальный стейт для читаемости лучше вынести в отдельный файл и импортировать */
-
-export interface AuthState {
-	authData: {
-		accessToken: string | null;
-		isLoading: boolean;
-		error: string | null;
-	};
-	profileData: {
-		profile: string | null;
-		isLoading: boolean;
-		error: string | null;
-	};
-	registrData: {
-		isLoading: boolean;
-		isRegistered: boolean;
-		error: string | null;
-	};
-}
-
-const initialState: AuthState = {
-	authData: {
-		accessToken: null,
-		isLoading: false,
-		error: null
-	},
-	profileData: {
-		profile: null,
-		isLoading: false,
-		error: null
-	},
-	registrData: {
-		isLoading: false,
-		isRegistered: false,
-		error: null
-	}
-};
+// ------------------------------ИСПРАВИЛ---------------------------------------------------------------------------
 
 export const authReducer = createSlice({
 	name: 'auth',

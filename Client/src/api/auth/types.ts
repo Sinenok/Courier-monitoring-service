@@ -18,18 +18,3 @@ export interface IRegisterResponce {
 	phone: string;
 }
 
-export interface IOrderInfo {
-	sender: string;
-	recipient: string;
-	deliveryAddress: string;
-	plannedDeliveryDate: string;
-	amountPayable: string;
-	paymentMethod: string;
-}
-
-export interface IOrderList {
-	quantityProducts: number;
-	productDescription: string;
-	shippingCost: string;
-	totalPrice: string;
-}

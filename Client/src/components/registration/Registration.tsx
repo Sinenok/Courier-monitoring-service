@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Row, Col, Container, Button } from 'react-bootstrap';
-import { useAppDispatch } from '../store';
-import { registerUser } from '../store/auth/actionCreators';
+import { useRegister } from './behaivor';
+
+// -----------------------------КАК И С АВТОРИЗАЦИЕЙ ВЫНЕС ЛОГИКУ--------------------------------------------
 
 const Registration = () => {
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [login, setLogin] = useState('');
-	const [mail, setMail] = useState('');
-	const [password, setPassword] = useState('');
-	const [repeatPassword, setRepeatPassword] = useState('');
-	const [phone, setPhone] = useState('');
-
-	const dispatch = useAppDispatch();
-
-	const handleSubmit = async (e: { preventDefault: () => void }) => {
-		e.preventDefault();
-
-		if (password === repeatPassword) {
-			dispatch(registerUser({ firstName, lastName, login, mail, password, phone }));
-		} else {
-			/** Где будет обработана эта ошибка? */
-			throw new Error('У вас не совпадают пароли');
-		}
-	};
+	const {
+		firstName,
+		setFirstName,
+		lastName,
+		setLastName,
+		login,
+		setLogin,
+		mail,
+		setMail,
+		password,
+		setPassword,
+		repeatPassword,
+		setRepeatPassword,
+		phone,
+		setPhone,
+		handleSubmit
+	} = useRegister();
 	return (
 		<div className="Registration">
 			<Container className="text-center pt-5">

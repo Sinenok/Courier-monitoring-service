@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { IOrderList } from '../../api/auth/types';
+import { IOrderList } from './body/types';
 
 /**
- * props.postOrderList можно деструктуризировать
+ * props.postOrderList можно деструктуризировать - ИСПРАВЛЕНО
  */
 
 const OrderList: FC<IOrderList> = ({
