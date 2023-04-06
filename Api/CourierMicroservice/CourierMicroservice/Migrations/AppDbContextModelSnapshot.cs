@@ -27,6 +27,9 @@ namespace CourierMicroservice.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("CourierUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -85,6 +88,8 @@ namespace CourierMicroservice.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourierUserId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -188,6 +193,32 @@ namespace CourierMicroservice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d353d9a8-b9e2-4b8e-9207-e898ef328b52"),
+                            Code = 0,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Cash"
+                        },
+                        new
+                        {
+                            Id = new Guid("7373f370-6206-41c7-b4e7-91caddf1a35a"),
+                            Code = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Card"
+                        },
+                        new
+                        {
+                            Id = new Guid("424b93cd-ca77-4bb5-b20b-e0f1201bc350"),
+                            Code = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Online"
+                        });
                 });
 
             modelBuilder.Entity("CourierMicroservice.Models.Right", b =>
@@ -301,6 +332,10 @@ namespace CourierMicroservice.Migrations
 
             modelBuilder.Entity("CourierMicroservice.Models.Order", b =>
                 {
+                    b.HasOne("CourierMicroservice.Models.User", "CourierUser")
+                        .WithMany()
+                        .HasForeignKey("CourierUserId");
+
                     b.HasOne("CourierMicroservice.Models.OrderStatus", "OrderStatus")
                         .WithMany()
                         .HasForeignKey("OrderStatusId");
@@ -320,6 +355,8 @@ namespace CourierMicroservice.Migrations
                     b.HasOne("CourierMicroservice.Models.User", "SenderUser")
                         .WithMany()
                         .HasForeignKey("SenderUserId");
+
+                    b.Navigation("CourierUser");
 
                     b.Navigation("OrderStatus");
 

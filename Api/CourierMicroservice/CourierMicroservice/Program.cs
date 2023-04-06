@@ -1,6 +1,7 @@
 using System.Text;
 using CourierMicroservice.Context;
 using CourierMicroservice.Services.AuthorizationService;
+using CourierMicroservice.Services.OrderService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

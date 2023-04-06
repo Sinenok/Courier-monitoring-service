@@ -30,6 +30,28 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<PaymentMethod>(u =>
+        {
+            u.HasData(new PaymentMethod
+            {
+                Id = Guid.Parse("d353d9a8-b9e2-4b8e-9207-e898ef328b52"),
+                Name = "Cash",
+                Code = 0
+            },
+            new PaymentMethod
+            {
+                Id = Guid.Parse("7373f370-6206-41c7-b4e7-91caddf1a35a"),
+                Name = "Card",
+                Code = 1
+            },
+            new PaymentMethod
+            {
+                Id = Guid.Parse("424b93cd-ca77-4bb5-b20b-e0f1201bc350"),
+                Name = "Online",
+                Code = 2
+            });
+        });
+
         modelBuilder.Entity<Right>(u =>
         {
             u.HasData(new Right

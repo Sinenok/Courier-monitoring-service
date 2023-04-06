@@ -69,4 +69,9 @@ public class Order : BaseAuditEntity
     /// Трек номер
     /// </summary>
     public string TrackNumber { get; set; }
+
+    /// <summary>
+    /// Информация о курьере
+    /// </summary>
+    public User? CourierUser { get; set; }
 }
