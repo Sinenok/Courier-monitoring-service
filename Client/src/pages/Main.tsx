@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import './../styles/pages-styles/MainPage.css';
 
 function Main() {
 	return (

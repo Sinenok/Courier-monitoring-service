@@ -7,6 +7,8 @@ import Main from './pages/Main';
 import OrderSubmissionPage from './pages/OrderSubmissionPage';
 import HeaderNavbar from './components/HeaderNavbar';
 import { isLogged } from './hooks/IsLoggedIn';
+import Footer from './components/Footer';
+import './styles/App.css';
 
 /** Повторяющийся код с проверкой условия `isLoggedIn` нужно вынести в отдельный компонент - ИСПРАВЛЕНО
  * Переписал ту часть, где требуется isLoggedIn = true
@@ -28,20 +30,26 @@ function App() {
 
 	return (
 		<Router>
-			<HeaderNavbar />
-			<Routes>
-				<Route path="/" element={<Main />} />
-				<Route path="/authorization" element={<AuthorizationPage />} />
-				<Route
-					path="/receivertracking"
-					element={<PrivateRoute component={ReceiverTrackingPage} />}
-				/>
-				<Route
-					path="/registration"
-					element={!isLoggedIn ? <RegistrationPage /> : <Navigate to="/" />}
-				/>
-				<Route path="/ordersubmission" element={<PrivateRoute component={OrderSubmissionPage} />} />
-			</Routes>
+			<div className="page">
+				<HeaderNavbar />
+				<Routes>
+					<Route path="/" element={<Main />} />
+					<Route path="/authorization" element={<AuthorizationPage />} />
+					<Route
+						path="/receivertracking"
+						element={<PrivateRoute component={ReceiverTrackingPage} />}
+					/>
+					<Route
+						path="/registration"
+						element={!isLoggedIn ? <RegistrationPage /> : <Navigate to="/" />}
+					/>
+					<Route
+						path="/ordersubmission"
+						element={<PrivateRoute component={OrderSubmissionPage} />}
+					/>
+				</Routes>
+				<Footer />
+			</div>
 		</Router>
 	);
 }
