@@ -31,20 +31,27 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
-           options.TokenValidationParameters = new TokenValidationParameters
+           var value = builder.Configuration
+                              .GetSection("AppSettings:Token")
+                              .Value;
+
+           if (value !=
+               null)
            {
-               ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token")
-                                                                                         .Value)),
-               ValidateIssuer = false,
-               ValidateAudience = false
-           };
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(value)),
+                   ValidateIssuer = false,
+                   ValidateAudience = false
+               };
+           }
        });
 
-builder.Services.AddCors(p => p.AddPolicy("corsapp",
-                                          builder =>
+builder.Services.AddCors(p => p.AddPolicy("corsApp",
+                                          policyBuilder =>
                                           {
-                                              builder.WithOrigins("http://localhost:3000")
+                                              policyBuilder.WithOrigins("http://localhost:3000")
                                                      .AllowAnyMethod()
                                                      .AllowAnyHeader()
                                                      .AllowCredentials();
@@ -53,7 +60,7 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configu
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors("corsapp");
+app.UseCors("corsApp");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

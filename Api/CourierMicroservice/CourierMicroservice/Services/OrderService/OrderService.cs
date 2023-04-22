@@ -1,4 +1,5 @@
-﻿using CourierMicroservice.Context;
+﻿using System.Globalization;
+using CourierMicroservice.Context;
 using CourierMicroservice.Dtos;
 using CourierMicroservice.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,7 @@ namespace CourierMicroservice.Services.OrderService
     public class OrderService : IOrderService
     {
         private readonly AppDbContext _appDbContext;
-        public OrderService(AppDbContext appDbContext)
-        {
-            _appDbContext = appDbContext;
-        }
+        public OrderService(AppDbContext appDbContext) => _appDbContext = appDbContext;
 
         public async Task<string> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
         {
@@ -22,11 +20,11 @@ namespace CourierMicroservice.Services.OrderService
                 DeliveryCost = 10,
                 TrackNumber = "qwe",
                 DeliveryScore = 15,
-                ReceiverAdress = orderDto.ReceiverAdress,
+                ReceiverAdress = orderDto.ReceiverAddress,
                 ReceiverName = orderDto.ReceiverName,
-                SenderAdress = orderDto.SenderAdress,
+                SenderAdress = orderDto.SenderAddress,
                 SenderName = orderDto.SenderName,
-                DeliveryDate = DateTime.UtcNow.AddDays(-10).ToString(),
+                DeliveryDate = DateTime.UtcNow.AddDays(-10).ToString(CultureInfo.InvariantCulture),
             };
             _appDbContext.Add(order);
             await _appDbContext.SaveChangesAsync(cancellationToken);
