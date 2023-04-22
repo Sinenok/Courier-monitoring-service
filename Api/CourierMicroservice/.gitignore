@@ -33,6 +33,9 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 
+# Idea
+.idea/
+
 # Common IntelliJ Platform excludes
 
 # User specific
@@ -56,9 +59,6 @@ msbuild.wrn
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
 
-*.suo
-*.user
-.vs/
 [Bb]in/
 [Oo]bj/
 _UpgradeReport_Files/
