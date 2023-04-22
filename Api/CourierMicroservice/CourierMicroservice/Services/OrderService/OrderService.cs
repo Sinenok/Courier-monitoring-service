@@ -4,37 +4,39 @@ using CourierMicroservice.Dtos;
 using CourierMicroservice.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CourierMicroservice.Services.OrderService
+namespace CourierMicroservice.Services.OrderService;
+
+public class OrderService : IOrderService
 {
-    public class OrderService : IOrderService
+    private readonly AppDbContext _appDbContext;
+
+    public OrderService(AppDbContext appDbContext) => _appDbContext = appDbContext;
+
+    public async Task<string> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
     {
-        private readonly AppDbContext _appDbContext;
-        public OrderService(AppDbContext appDbContext) => _appDbContext = appDbContext;
+        var orderId = Guid.NewGuid();
 
-        public async Task<string> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
+        var order = new Order
         {
-            var orderId = Guid.NewGuid();
-            var order = new Order()
-            {
-                Id = orderId,
-                DeliveryCost = 10,
-                TrackNumber = "qwe",
-                DeliveryScore = 15,
-                ReceiverAdress = orderDto.ReceiverAddress,
-                ReceiverName = orderDto.ReceiverName,
-                SenderAdress = orderDto.SenderAddress,
-                SenderName = orderDto.SenderName,
-                DeliveryDate = DateTime.UtcNow.AddDays(-10).ToString(CultureInfo.InvariantCulture),
-            };
-            _appDbContext.Add(order);
-            await _appDbContext.SaveChangesAsync(cancellationToken);
-            return orderId.ToString();
-        }
+            Id = orderId,
+            DeliveryCost = 10,
+            TrackNumber = "qwe",
+            DeliveryScore = 15,
+            ReceiverAdress = orderDto.ReceiverAddress,
+            ReceiverName = orderDto.ReceiverName,
+            SenderAdress = orderDto.SenderAddress,
+            SenderName = orderDto.SenderName,
+            DeliveryDate = DateTime.UtcNow.AddDays(-10)
+                                   .ToString(CultureInfo.InvariantCulture)
+        };
+        _appDbContext.Add(order);
+        await _appDbContext.SaveChangesAsync(cancellationToken);
+        return orderId.ToString();
+    }
 
-        public async Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken)
-        {
-            var result = await _appDbContext.PaymentMethods.ToListAsync(cancellationToken);
-            return result;
-        }
+    public async Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken)
+    {
+        var result = await _appDbContext.PaymentMethods.ToListAsync(cancellationToken);
+        return result;
     }
 }

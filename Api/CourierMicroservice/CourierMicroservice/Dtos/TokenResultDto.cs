@@ -1,7 +1,6 @@
-﻿namespace CourierMicroservice.Dtos
+﻿namespace CourierMicroservice.Dtos;
+
+public class TokenResultDto
 {
-    public class TokenResultDto
-    {
-        public string AccessToken { get; set; }
-    }
+    public string AccessToken { get; set; }
 }

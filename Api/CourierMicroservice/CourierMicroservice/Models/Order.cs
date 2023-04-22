@@ -6,6 +6,11 @@
 public class Order : BaseAuditEntity
 {
     /// <summary>
+    /// Информация о курьере
+    /// </summary>
+    public User? CourierUser { get; set; }
+
+    /// <summary>
     /// Стоимость доставки
     /// </summary>
     public float DeliveryCost { get; set; }
@@ -69,9 +74,4 @@ public class Order : BaseAuditEntity
     /// Трек номер
     /// </summary>
     public string TrackNumber { get; set; }
-
-    /// <summary>
-    /// Информация о курьере
-    /// </summary>
-    public User? CourierUser { get; set; }
 }
