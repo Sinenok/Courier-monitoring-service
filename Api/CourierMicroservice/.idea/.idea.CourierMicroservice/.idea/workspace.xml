@@ -10,17 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecc9122c-f49f-4bc8-9ddc-8ab30b1a4771" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CourierMicroservice/.idea/dictionaries/Ramil.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CourierMicroservice/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CourierMicroservice/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CourierMicroservice/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CourierMicroservice.sln.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CourierMicroservice/Context/ApiDbContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CourierMicroservice/Dtos/OrderDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CourierMicroservice/Dtos/OrderDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CourierMicroservice/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CourierMicroservice/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CourierMicroservice/Services/OrderService/OrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CourierMicroservice/Services/OrderService/OrderService.cs" afterDir="false" />
-    </list>
+    <list default="true" id="ecc9122c-f49f-4bc8-9ddc-8ab30b1a4771" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +36,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.jetbrains.rider.settings.RiderSettingsDialogFactory$filter$stub$1",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.spelling",
     "settings.editor.splitter.proportion": "0.30142567",
     "vue.rearranger.settings.migration": "true"
   },
@@ -89,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1681547770054</updated>
       <workItem from="1681547770844" duration="5205000" />
-      <workItem from="1682156808439" duration="1040000" />
+      <workItem from="1682156808439" duration="1228000" />
     </task>
     <servers />
   </component>
