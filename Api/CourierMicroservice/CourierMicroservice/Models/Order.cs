@@ -1,77 +1,77 @@
 ﻿namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с заказом
+/// Представляет сущность заказа.
 /// </summary>
 public class Order : BaseAuditEntity
 {
     /// <summary>
-    /// Информация о курьере
+    /// Возвращает информацию о курьере.
     /// </summary>
     public User? CourierUser { get; set; }
 
     /// <summary>
-    /// Стоимость доставки
+    /// Возвращает стоимость доставки.
     /// </summary>
     public float DeliveryCost { get; set; }
 
     /// <summary>
-    /// Дата доставки
+    /// Возвращает дату доставки.
     /// </summary>
     public string DeliveryDate { get; set; }
 
     /// <summary>
-    /// Оценка доставки
+    /// Возвращает оценку доставки.
     /// </summary>
     public int DeliveryScore { get; set; }
 
     /// <summary>
-    /// Информация о статусе заказа
+    /// Возвращает информацию о статусе заказа.
     /// </summary>
     public OrderStatus? OrderStatus { get; set; }
 
     /// <summary>
-    /// Информация о послылке
+    /// Возвращает информацию о посылке.
     /// </summary>
     public PackageInformation? PackageInformation { get; set; }
 
     /// <summary>
-    /// Метод оплаты заказа
+    /// Возвращает метод оплаты заказа.
     /// </summary>
     public PaymentMethod? PaymentMethod { get; set; }
 
     /// <summary>
-    /// Адресс получателя
+    /// Возвращает адрес получателя.
     /// </summary>
     public string ReceiverAdress { get; set; }
 
     /// <summary>
-    /// Имя получателя
+    /// Возвращает имя получателя.
     /// </summary>
     public string ReceiverName { get; set; }
 
     /// <summary>
-    /// Информация об получателе
+    /// Возвращает информацию об получателе.
     /// </summary>
     public User? ReceiverUser { get; set; }
 
     /// <summary>
-    /// Адресс отправителя
+    /// Возвращает адрес отправителя.
     /// </summary>
     public string SenderAdress { get; set; }
 
     /// <summary>
-    /// Имя отправителя
+    /// Возвращает имя отправителя.
     /// </summary>
     public string SenderName { get; set; }
 
     /// <summary>
-    /// Информация об отправителе
+    /// Возвращает информацию об отправителе.
     /// </summary>
     public User? SenderUser { get; set; }
 
     /// <summary>
-    /// Трек номер
+    /// Возвращает трек номер.
     /// </summary>
     public string TrackNumber { get; set; }
 }

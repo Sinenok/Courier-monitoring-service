@@ -1,17 +1,17 @@
 ﻿namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с правами пользователя
+/// Представляет сущность прав пользователя.
 /// </summary>
 public class Right : BaseAuditEntity
 {
     /// <summary>
-    /// Код доступа
+    /// Возвращает код доступа.
     /// </summary>
     public int Code { get; set; }
 
     /// <summary>
-    /// Название доступа
+    /// Возвращает название доступа.
     /// </summary>
     public string Name { get; set; }
 }

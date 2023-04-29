@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Базовая сущность
+/// Представляет базовую сущность.
 /// </summary>
 public abstract class BaseEntity
 {
     /// <summary>
-    /// Идентификатор сущности
+    /// Идентификатор сущности.
     /// </summary>
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]

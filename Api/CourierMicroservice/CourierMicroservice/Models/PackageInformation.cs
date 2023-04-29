@@ -1,22 +1,22 @@
 ﻿namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с информацией о посылке
+/// Представляет сущность с информацией о посылке.
 /// </summary>
 public class PackageInformation : BaseAuditEntity
 {
     /// <summary>
-    /// Цена
+    /// Возвращает цену.
     /// </summary>
     public float Cost { get; set; }
 
     /// <summary>
-    /// Краткое описание
+    /// Возвращает краткое описание.
     /// </summary>
     public string ShortDescription { get; set; }
 
     /// <summary>
-    /// Вес
+    /// Возвращает вес.
     /// </summary>
     public string Weight { get; set; }
 }

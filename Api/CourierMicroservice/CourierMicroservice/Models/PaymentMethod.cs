@@ -1,17 +1,17 @@
 ﻿namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с информацией о методе оплаты заказа
+/// Представляет сущность метода оплаты заказа.
 /// </summary>
 public class PaymentMethod : BaseAuditEntity
 {
     /// <summary>
-    /// Код метода оплаты
+    /// Возвращает код метода оплаты.
     /// </summary>
     public int Code { get; set; }
 
     /// <summary>
-    /// Название метода оплаты
+    /// Возвращает название метода оплаты.
     /// </summary>
     public string Name { get; set; }
 }

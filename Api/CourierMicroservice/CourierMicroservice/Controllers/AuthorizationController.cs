@@ -27,10 +27,7 @@ public class AuthorizationController : ControllerBase
     {
         var token = await _authorizationService.Login(request, cancellationToken);
 
-        return Ok(new TokenResultDto
-        {
-            AccessToken = token
-        });
+        return Ok(new TokenResultDto(token));
     }
 
     [HttpPost("refresh-token")]

@@ -1,27 +1,27 @@
 ﻿namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Базовая сущность с аудитом
+/// Представляет базовую сущность с аудитом.
 /// </summary>
 public abstract class BaseAuditEntity : BaseEntity
 {
     /// <summary>
-    /// Время создания
+    /// Время создания.
     /// </summary>
     public DateTime Created { get; set; }
 
     /// <summary>
-    /// Кто создал
+    /// Кто создал.
     /// </summary>
     public Guid CreatedUserId { get; set; }
 
     /// <summary>
-    /// Время изменения
+    /// Время изменения.
     /// </summary>
     public DateTime? Modified { get; set; }
 
     /// <summary>
-    /// Кем изменено
+    /// Кем изменено.
     /// </summary>
     public Guid? ModifiedUserId { get; set; }
 }
