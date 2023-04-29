@@ -1,10 +1,35 @@
-﻿namespace CourierMicroservice.Models;
+﻿using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Core.Primitives;
+
+namespace CourierMicroservice.Models;
 
 /// <summary>
 /// Представляет сущность заказа.
 /// </summary>
-public class Order : BaseAuditEntity
+public class Order : Entity<SequentialGuid>
 {
+    public Order(SequentialGuid id, string deliveryDate, string receiverAddress, string receiverName, string senderAddress, string senderName, string trackNumber)
+        : base(id)
+    {
+        DeliveryDate = deliveryDate;
+        ReceiverAddress = receiverAddress;
+        ReceiverName = receiverName;
+        SenderAddress = senderAddress;
+        SenderName = senderName;
+        TrackNumber = trackNumber;
+    }
+
+    protected Order()
+        : base(SequentialGuid.Empty)
+    {
+        DeliveryDate = null!;
+        ReceiverAddress = null!;
+        ReceiverName = null!;
+        SenderAddress = null!;
+        SenderName = null!;
+        TrackNumber = null!;
+    }
+
     /// <summary>
     /// Возвращает информацию о курьере.
     /// </summary>
@@ -43,7 +68,7 @@ public class Order : BaseAuditEntity
     /// <summary>
     /// Возвращает адрес получателя.
     /// </summary>
-    public string ReceiverAdress { get; set; }
+    public string ReceiverAddress { get; set; }
 
     /// <summary>
     /// Возвращает имя получателя.
@@ -58,7 +83,7 @@ public class Order : BaseAuditEntity
     /// <summary>
     /// Возвращает адрес отправителя.
     /// </summary>
-    public string SenderAdress { get; set; }
+    public string SenderAddress { get; set; }
 
     /// <summary>
     /// Возвращает имя отправителя.

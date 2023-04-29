@@ -5,6 +5,7 @@ using System.Text;
 using CourierMicroservice.Context;
 using CourierMicroservice.Dtos;
 using CourierMicroservice.Models;
+using CourierMicroservice.Models.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -116,17 +117,12 @@ public class AuthorizationService : IAuthorizationService
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
         var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User", cancellationToken);
 
-        await _dbContext.Users.AddAsync(new User
+        await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.FirstName, passwordHash, passwordSalt, userRight)
                                         {
-                                            Id = Guid.NewGuid(),
-                                            FirstName = request.FirstName,
                                             LastName = request.LastName,
                                             Mail = request.Mail,
                                             Phone = request.Phone,
-                                            Login = request.Login,
-                                            PasswordHash = passwordHash,
-                                            PasswordSalt = passwordSalt,
-                                            Right = userRight
+                                            Login = request.Login
                                         },
                                         cancellationToken);
 
@@ -171,9 +167,8 @@ public class AuthorizationService : IAuthorizationService
 
     private static RefreshToken GenerateRefreshToken()
     {
-        var refreshToken = new RefreshToken
+        var refreshToken = new RefreshToken(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)))
         {
-            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
             Expires = DateTime.SpecifyKind(DateTime.Now.AddDays(7), DateTimeKind.Utc),
             Created = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
         };

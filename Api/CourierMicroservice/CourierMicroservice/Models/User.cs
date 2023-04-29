@@ -1,10 +1,31 @@
-﻿namespace CourierMicroservice.Models;
+﻿using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Core.Primitives;
+
+namespace CourierMicroservice.Models;
 
 /// <summary>
 /// Представляет сущность пользователя.
 /// </summary>
-public class User : BaseAuditEntity
+public class User : Entity<SequentialGuid>
 {
+    public User(SequentialGuid id, string firstName, byte[] passwordHash, byte[] passwordSalt, Right right)
+        : base(id)
+    {
+        FirstName = firstName;
+        PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
+        Right = right;
+    }
+
+    protected User()
+        : base(SequentialGuid.Empty)
+    {
+        FirstName = null!;
+        PasswordHash = null!;
+        PasswordSalt = null!;
+        Right = null!;
+    }
+
     /// <summary>
     /// Возвращает имя.
     /// </summary>

@@ -1,99 +1,68 @@
 ﻿using CourierMicroservice.Models;
+using CourierMicroservice.Models.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Context;
 
-public class AppDbContext : DbContext
+/// <summary>
+/// Представляет контекст для работы с БД.
+/// </summary>
+/// <seealso cref="DbContext" />
+public sealed class AppDbContext : DbContext, IAppDbContext
 {
+    /// <summary>
+    /// Инициализирует новый экземпляр типа <see cref="AppDbContext" />.
+    /// </summary>
+    /// <param name="options">Опции.</param>
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
 
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderStatus> OrderStatuses { get; set; }
-    public DbSet<PackageInformation> PackageInformation { get; set; }
-    public DbSet<PaymentMethod> PaymentMethods { get; set; }
-    public DbSet<Right> Rights { get; set; }
-    public DbSet<User> Users { get; set; }
+    /// <inheritdoc />
+    public DbSet<Order> Orders => Set<Order>();
 
-    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
+    /// <inheritdoc />
+    public DbSet<OrderStatus> OrderStatuses => Set<OrderStatus>();
+
+    /// <inheritdoc />
+    public DbSet<PackageInformation> PackageInformation => Set<PackageInformation>();
+
+    /// <inheritdoc />
+    public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();
+
+    /// <inheritdoc />
+    public DbSet<Right> Rights => Set<Right>();
+
+    /// <inheritdoc cref="DbContext" />
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
-        OnBeforeSaving();
-        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        foreach (var entry in ChangeTracker.Entries()
+                                           .Where(x => x.Entity is ITrackedEntity))
+        {
+            if (entry.State == EntityState.Added)
+            {
+                ((ITrackedEntity)entry.Entity).SetCreatedDate();
+                ((ITrackedEntity)entry.Entity).SetUpdatedDate();
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                ((ITrackedEntity)entry.Entity).SetUpdatedDate();
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 
+    /// <inheritdoc />
+    public DbSet<User> Users { get; set; }
+
+    /// <inheritdoc />
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<PaymentMethod>(u =>
-        {
-            u.HasData(new PaymentMethod
-                      {
-                          Id = Guid.Parse("d353d9a8-b9e2-4b8e-9207-e898ef328b52"),
-                          Name = "Cash",
-                          Code = 0
-                      },
-                      new PaymentMethod
-                      {
-                          Id = Guid.Parse("7373f370-6206-41c7-b4e7-91caddf1a35a"),
-                          Name = "Card",
-                          Code = 1
-                      },
-                      new PaymentMethod
-                      {
-                          Id = Guid.Parse("424b93cd-ca77-4bb5-b20b-e0f1201bc350"),
-                          Name = "Online",
-                          Code = 2
-                      });
-        });
-
-        modelBuilder.Entity<Right>(u =>
-        {
-            u.HasData(new Right
-                      {
-                          Id = Guid.Parse("e10222c4-7723-498b-8bf4-83252378e0c9"),
-                          Name = "User",
-                          Code = 0
-                      },
-                      new Right
-                      {
-                          Id = Guid.Parse("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"),
-                          Name = "Admin",
-                          Code = 1
-                      });
-        });
-    }
-
-    private void OnBeforeSaving()
-    {
-        foreach (var auditEntity in ChangeTracker.Entries<BaseAuditEntity>())
-        {
-            switch (auditEntity.State)
-            {
-                case EntityState.Added:
-                    auditEntity.Property(x => x.Modified)
-                               .IsModified = false;
-                    auditEntity.Entity.Created = DateTime.UtcNow;
-                    break;
-                case EntityState.Modified:
-                    auditEntity.Property(x => x.Created)
-                               .IsModified = false;
-                    auditEntity.Entity.Modified = DateTime.UtcNow;
-                    break;
-                case EntityState.Detached:
-                    break;
-                case EntityState.Unchanged:
-                    break;
-                case EntityState.Deleted:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-    }
+    /// <inheritdoc />
+    protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 }
