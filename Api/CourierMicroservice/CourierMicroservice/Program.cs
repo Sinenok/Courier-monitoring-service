@@ -31,12 +31,10 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
-           var value = builder.Configuration
-                              .GetSection("AppSettings:Token")
+           var value = builder.Configuration.GetSection("AppSettings:Token")
                               .Value;
 
-           if (value !=
-               null)
+           if (value != null)
            {
                options.TokenValidationParameters = new TokenValidationParameters
                {
@@ -52,9 +50,9 @@ builder.Services.AddCors(p => p.AddPolicy("corsApp",
                                           policyBuilder =>
                                           {
                                               policyBuilder.WithOrigins("http://localhost:3000")
-                                                     .AllowAnyMethod()
-                                                     .AllowAnyHeader()
-                                                     .AllowCredentials();
+                                                           .AllowAnyMethod()
+                                                           .AllowAnyHeader()
+                                                           .AllowCredentials();
                                           }));
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
 var app = builder.Build();
