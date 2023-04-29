@@ -9,9 +9,9 @@ namespace CourierMicroservice.Services.OrderService;
 
 public class OrderService : IOrderService
 {
-    private readonly AppDbContext _appDbContext;
+    private readonly IAppDbContext _appDbContext;
 
-    public OrderService(AppDbContext appDbContext) => _appDbContext = appDbContext;
+    public OrderService(IAppDbContext appDbContext) => _appDbContext = appDbContext;
 
     public async Task<string> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
     {
@@ -25,7 +25,7 @@ public class OrderService : IOrderService
             DeliveryCost = 10,
             DeliveryScore = 15
         };
-        _appDbContext.Add(order);
+        _appDbContext.Orders.Add(order);
         await _appDbContext.SaveChangesAsync(cancellationToken);
         return orderId.ToString();
     }

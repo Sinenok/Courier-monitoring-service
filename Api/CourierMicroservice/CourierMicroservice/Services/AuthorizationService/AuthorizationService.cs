@@ -15,9 +15,9 @@ public class AuthorizationService : IAuthorizationService
 {
     private readonly IConfiguration _configuration;
     private readonly IHttpContextAccessor _contextAccessor;
-    private readonly AppDbContext _dbContext;
+    private readonly IAppDbContext _dbContext;
 
-    public AuthorizationService(IHttpContextAccessor contextAccessor, IConfiguration configuration, AppDbContext productContext)
+    public AuthorizationService(IHttpContextAccessor contextAccessor, IConfiguration configuration, IAppDbContext productContext)
     {
         _contextAccessor = contextAccessor;
         _configuration = configuration;
