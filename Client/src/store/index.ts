@@ -3,10 +3,12 @@ import authReducer from './auth/authReducer';
 import { useDispatch } from 'react-redux';
 
 import logger from 'redux-logger';
+import orderReducer from './order/orderReducer';
 
 export const store = configureStore({
 	reducer: {
-		auth: authReducer
+		auth: authReducer,
+		order: orderReducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(...(process.env.NODE_ENV !== 'production' ? [logger] : []))

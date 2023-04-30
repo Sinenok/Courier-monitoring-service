@@ -1,12 +1,12 @@
 import React, { FormEvent } from 'react';
 export interface IUseOrderSubmissionResult {
-	senderFirstName: string;
-	setSenderFirstName: React.Dispatch<React.SetStateAction<string>>;
-	senderAddress: string;
-	setSenderAddress: React.Dispatch<React.SetStateAction<string>>;
-	receiverFirstName: string;
-	setReceiverFirstName: React.Dispatch<React.SetStateAction<string>>;
-	receiverAddress: string;
-	setReceiverAddress: React.Dispatch<React.SetStateAction<string>>;
-	// handleSubmit: (e: FormEvent) => void;
+	senderName: string;
+	setSenderName: React.Dispatch<React.SetStateAction<string>>;
+	senderAdress: string;
+	setSenderAdress: React.Dispatch<React.SetStateAction<string>>;
+	receiverName: string;
+	setReceiverName: React.Dispatch<React.SetStateAction<string>>;
+	receiverAdress: string;
+	setReceiverAdress: React.Dispatch<React.SetStateAction<string>>;
+	handleSubmit: (e: FormEvent) => void;
 }

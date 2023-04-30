@@ -9,7 +9,10 @@ const urlsSkipAuth = [
 	Endpoints.AUTH.LOGIN,
 	Endpoints.AUTH.REFRESH,
 	Endpoints.AUTH.LOGOUT,
-	Endpoints.AUTH.REGISTER
+	Endpoints.AUTH.REGISTER,
+
+	Endpoints.ORDER.CREATE,
+	Endpoints.ORDER.PAYMENT
 ];
 
 /**

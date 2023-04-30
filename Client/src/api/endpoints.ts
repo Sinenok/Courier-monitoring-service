@@ -6,6 +6,10 @@ const Endpoints = {
 		LOGOUT: `${httpHost}/logout`,
 		PROFILE: `${httpHost}/api/Authorization/current-user`,
 		REGISTER: `${httpHost}/api/Authorization/register`
+	},
+	ORDER: {
+		CREATE: `${httpHost}/api/Order/create-order`,
+		PAYMENT: `${httpHost}/api/Order/get-payment-methods`
 	}
 };
 

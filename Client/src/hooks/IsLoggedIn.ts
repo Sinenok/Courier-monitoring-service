@@ -12,3 +12,7 @@ export const getsProfile = () => {
 export const isRegistered = () => {
 	return useSelector((state: IRootState) => state.auth.registrData.isRegistered);
 };
+
+export const isOrderSending = () => {
+	return useSelector((state: IRootState) => state.order.createOrderData.trackNumber);
+};

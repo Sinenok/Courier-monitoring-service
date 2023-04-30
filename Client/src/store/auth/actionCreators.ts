@@ -30,7 +30,7 @@ export const loginUser =
 			console.log('dsadsadas', data);
 
 			const res = await api.auth.login(data);
-			console.log('res ', res);
+			console.log('res ', res.data.accessToken);
 
 			dispatch(loginSucess(res.data.accessToken));
 			dispatch(getProfile());
