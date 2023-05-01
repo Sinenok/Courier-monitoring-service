@@ -8,7 +8,7 @@ namespace CourierMicroservice.Services.AuthorizationService;
 public interface IAuthorizationService
 {
     /// <summary>
-    /// Полученине имени текущего пользователя.
+    /// Получение имени текущего пользователя.
     /// </summary>
     /// <returns></returns>
     public string? GetMyName();

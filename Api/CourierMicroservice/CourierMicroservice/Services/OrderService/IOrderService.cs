@@ -8,7 +8,16 @@ namespace CourierMicroservice.Services.OrderService;
 /// </summary>
 public interface IOrderService
 {
+    /// <summary>
+    /// Создает заказ.
+    /// </summary>
+    /// <param name="orderDto"></param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     public Task<string> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Получение вариантов метода оплаты.
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены.</param>
     public Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken);
 }

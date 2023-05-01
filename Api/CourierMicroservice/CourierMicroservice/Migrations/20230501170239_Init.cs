@@ -110,23 +110,86 @@ namespace CourierMicroservice.Migrations
                 comment: "Пользователи");
 
             migrationBuilder.CreateTable(
+                name: "couriers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_couriers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_couriers_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Курьеры");
+
+            migrationBuilder.CreateTable(
+                name: "receivers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_receivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_receivers_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Получатель");
+
+            migrationBuilder.CreateTable(
+                name: "senders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_senders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_senders_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Отправитель");
+
+            migrationBuilder.CreateTable(
                 name: "orders",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
-                    CourierUserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CourierId = table.Column<Guid>(type: "uuid", nullable: true),
                     DeliveryCost = table.Column<float>(type: "real", nullable: false),
                     DeliveryDate = table.Column<string>(type: "text", nullable: false),
                     DeliveryScore = table.Column<int>(type: "integer", nullable: false),
                     OrderStatusId = table.Column<Guid>(type: "uuid", nullable: true),
                     PackageInformationId = table.Column<Guid>(type: "uuid", nullable: true),
                     PaymentMethodId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ReceiverId = table.Column<Guid>(type: "uuid", nullable: true),
                     ReceiverAddress = table.Column<string>(type: "text", nullable: false),
                     ReceiverName = table.Column<string>(type: "text", nullable: false),
-                    ReceiverUserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    SenderId = table.Column<Guid>(type: "uuid", nullable: true),
                     SenderAddress = table.Column<string>(type: "text", nullable: false),
                     SenderName = table.Column<string>(type: "text", nullable: false),
-                    SenderUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     TrackNumber = table.Column<string>(type: "text", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
@@ -134,6 +197,11 @@ namespace CourierMicroservice.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_orders_couriers_CourierId",
+                        column: x => x.CourierId,
+                        principalTable: "couriers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_orders_orderStatuses_OrderStatusId",
                         column: x => x.OrderStatusId,
@@ -150,19 +218,14 @@ namespace CourierMicroservice.Migrations
                         principalTable: "paymentMethods",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_orders_users_CourierUserId",
-                        column: x => x.CourierUserId,
-                        principalTable: "users",
+                        name: "FK_orders_receivers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "receivers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_orders_users_ReceiverUserId",
-                        column: x => x.ReceiverUserId,
-                        principalTable: "users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_orders_users_SenderUserId",
-                        column: x => x.SenderUserId,
-                        principalTable: "users",
+                        name: "FK_orders_senders_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "senders",
                         principalColumn: "Id");
                 },
                 comment: "Заказ");
@@ -187,9 +250,14 @@ namespace CourierMicroservice.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_CourierUserId",
+                name: "IX_couriers_UserId",
+                table: "couriers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orders_CourierId",
                 table: "orders",
-                column: "CourierUserId");
+                column: "CourierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_orders_OrderStatusId",
@@ -207,14 +275,24 @@ namespace CourierMicroservice.Migrations
                 column: "PaymentMethodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_ReceiverUserId",
+                name: "IX_orders_ReceiverId",
                 table: "orders",
-                column: "ReceiverUserId");
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_SenderUserId",
+                name: "IX_orders_SenderId",
                 table: "orders",
-                column: "SenderUserId");
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_receivers_UserId",
+                table: "receivers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_senders_UserId",
+                table: "senders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_RightId",
@@ -229,6 +307,9 @@ namespace CourierMicroservice.Migrations
                 name: "orders");
 
             migrationBuilder.DropTable(
+                name: "couriers");
+
+            migrationBuilder.DropTable(
                 name: "orderStatuses");
 
             migrationBuilder.DropTable(
@@ -236,6 +317,12 @@ namespace CourierMicroservice.Migrations
 
             migrationBuilder.DropTable(
                 name: "paymentMethods");
+
+            migrationBuilder.DropTable(
+                name: "receivers");
+
+            migrationBuilder.DropTable(
+                name: "senders");
 
             migrationBuilder.DropTable(
                 name: "users");

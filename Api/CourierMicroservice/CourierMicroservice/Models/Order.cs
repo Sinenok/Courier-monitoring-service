@@ -33,22 +33,8 @@ public class Order : Entity<SequentialGuid>
     /// <summary>
     /// Возвращает информацию о курьере.
     /// </summary>
-    public User? CourierUser { get; set; }
+    public Courier? Courier { get; set; }
 
-    /// <summary>
-    /// Возвращает стоимость доставки.
-    /// </summary>
-    public float DeliveryCost { get; set; }
-
-    /// <summary>
-    /// Возвращает дату доставки.
-    /// </summary>
-    public string DeliveryDate { get; set; }
-
-    /// <summary>
-    /// Возвращает оценку доставки.
-    /// </summary>
-    public int DeliveryScore { get; set; }
 
     /// <summary>
     /// Возвращает информацию о статусе заказа.
@@ -66,34 +52,14 @@ public class Order : Entity<SequentialGuid>
     public PaymentMethod? PaymentMethod { get; set; }
 
     /// <summary>
-    /// Возвращает адрес получателя.
-    /// </summary>
-    public string ReceiverAddress { get; set; }
-
-    /// <summary>
-    /// Возвращает имя получателя.
-    /// </summary>
-    public string ReceiverName { get; set; }
-
-    /// <summary>
     /// Возвращает информацию об получателе.
     /// </summary>
-    public User? ReceiverUser { get; set; }
-
-    /// <summary>
-    /// Возвращает адрес отправителя.
-    /// </summary>
-    public string SenderAddress { get; set; }
-
-    /// <summary>
-    /// Возвращает имя отправителя.
-    /// </summary>
-    public string SenderName { get; set; }
+    public Receiver? Receiver { get; set; }
 
     /// <summary>
     /// Возвращает информацию об отправителе.
     /// </summary>
-    public User? SenderUser { get; set; }
+    public Sender? Sender { get; set; }
 
     /// <summary>
     /// Возвращает трек номер.
