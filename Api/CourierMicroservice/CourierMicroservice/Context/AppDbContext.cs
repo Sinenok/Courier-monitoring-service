@@ -61,6 +61,7 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.UseLazyLoadingProxies();
     }
 
     /// <inheritdoc />

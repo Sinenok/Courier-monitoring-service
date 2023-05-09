@@ -21,6 +21,13 @@ public class OrderController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("order-info/{trackNumber:guid}")]
+    public async Task<ActionResult> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
+    {
+        var result = await _orderService.GetOrder(trackNumber, cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("get-payment-methods")]
     public async Task<ActionResult> GetPaymentMethods(CancellationToken cancellationToken)
     {
