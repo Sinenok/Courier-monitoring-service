@@ -8,32 +8,26 @@ namespace CourierMicroservice.Models;
 /// </summary>
 public class PackageInformation : Entity<SequentialGuid>
 {
-    public PackageInformation(SequentialGuid id, string shortDescription, string weight)
+    public PackageInformation(SequentialGuid id, string shortDescription, decimal weight, decimal cost)
         : base(id)
     {
-        ShortDescription = shortDescription;
+        ShortDescription = shortDescription ?? throw new ArgumentNullException(nameof(shortDescription));
         Weight = weight;
-    }
-
-    protected PackageInformation()
-        : base(SequentialGuid.Empty)
-    {
-        ShortDescription = null!;
-        Weight = null!;
+        Cost = cost;
     }
 
     /// <summary>
     /// Возвращает цену.
     /// </summary>
-    public float Cost { get; set; }
+    public decimal Cost { get; }
 
     /// <summary>
     /// Возвращает краткое описание.
     /// </summary>
-    public string ShortDescription { get; set; }
+    public string ShortDescription { get; }
 
     /// <summary>
     /// Возвращает вес.
     /// </summary>
-    public string Weight { get; set; }
+    public decimal Weight { get; }
 }

@@ -1,7 +1,9 @@
 using System.Text;
 using CourierMicroservice.Context;
+using CourierMicroservice.IoC;
 using CourierMicroservice.Services.AuthorizationService;
 using CourierMicroservice.Services.OrderService;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
+// builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddDefaultProblemDetails();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
@@ -57,6 +61,9 @@ builder.Services.AddCors(p => p.AddPolicy("corsApp",
                                           }));
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
 var app = builder.Build();
+// app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseProblemDetails();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("corsApp");

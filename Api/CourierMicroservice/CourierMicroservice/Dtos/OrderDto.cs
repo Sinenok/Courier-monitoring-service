@@ -3,8 +3,21 @@
 /// <summary>
 /// Представляет сущность заказа.
 /// </summary>
-/// <param name="ReceiverAddress"></param>
-/// <param name="ReceiverName"></param>
-/// <param name="SenderAddress"></param>
 /// <param name="SenderName"></param>
-public record OrderDto(string ReceiverAddress, string ReceiverName, string SenderAddress, string SenderName);
+/// <param name="SenderAddress"></param>
+/// <param name="ReceiverName"></param>
+/// <param name="ReceiverAddress"></param>
+/// <param name="DeliveryCost"></param>
+/// <param name="PaymentMethod"></param>
+/// <param name="ProductCost"></param>
+/// <param name="ProductDescription"></param>
+/// <param name="ProductWeight"></param>
+public record OrderDto(string SenderName,
+                       string SenderAddress,
+                       string ReceiverName,
+                       string ReceiverAddress,
+                       decimal DeliveryCost,
+                       int PaymentMethod,
+                       decimal ProductCost,
+                       string ProductDescription,
+                       decimal ProductWeight);

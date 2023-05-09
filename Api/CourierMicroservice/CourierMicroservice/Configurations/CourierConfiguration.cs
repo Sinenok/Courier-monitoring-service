@@ -16,5 +16,12 @@ internal class CourierConfiguration : EntityTypeConfigurationBase<Courier>
     protected override void OnConfigure(EntityTypeBuilder<Courier> builder)
     {
         builder.ToTable("couriers", t => t.HasComment("Курьеры"));
+
+        builder.HasOne(p => p.User)
+               .WithMany()
+               .HasForeignKey("user_id");
+
+        builder.Property("user_id")
+               .HasComment("Идентификатор пользователя");
     }
 }

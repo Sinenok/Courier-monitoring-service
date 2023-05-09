@@ -16,5 +16,11 @@ internal class OrderStatusConfiguration : EntityTypeConfigurationBase<OrderStatu
     protected override void OnConfigure(EntityTypeBuilder<OrderStatus> builder)
     {
         builder.ToTable("orderStatuses", t => t.HasComment("Статус заказа"));
+
+        builder.Property(p => p.Code)
+               .HasComment("Код статуса");
+
+        builder.Property(p => p.Name)
+               .HasComment("Название статуса");
     }
 }

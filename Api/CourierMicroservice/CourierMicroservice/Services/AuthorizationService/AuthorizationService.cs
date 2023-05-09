@@ -117,12 +117,10 @@ public class AuthorizationService : IAuthorizationService
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
         var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User", cancellationToken);
 
-        await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.FirstName, passwordHash, passwordSalt, userRight)
+        await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
                                         {
                                             LastName = request.LastName,
-                                            Mail = request.Mail,
-                                            Phone = request.Phone,
-                                            Login = request.Login
+                                            Phone = request.Phone
                                         },
                                         cancellationToken);
 

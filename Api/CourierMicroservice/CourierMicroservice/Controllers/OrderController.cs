@@ -13,6 +13,8 @@ public class OrderController : ControllerBase
     public OrderController(IOrderService orderService) => _orderService = orderService;
 
     [HttpPost("create-order")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
     {
         var result = await _orderService.CreateOrder(orderDto, cancellationToken);

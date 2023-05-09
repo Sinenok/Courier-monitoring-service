@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CourierMicroservice.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230501170239_Init")]
-    partial class Init
+    [Migration("20230509105314_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,12 +41,13 @@ namespace CourierMicroservice.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<Guid>("user_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор пользователя");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("user_id");
 
                     b.ToTable("couriers", null, t =>
                         {
@@ -60,77 +61,85 @@ namespace CourierMicroservice.Migrations
                         .HasColumnType("uuid")
                         .HasComment("Уникальный идентификатор");
 
-                    b.Property<Guid?>("CourierId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
-                    b.Property<float>("DeliveryCost")
-                        .HasColumnType("real");
+                    b.Property<decimal>("DeliveryCost")
+                        .HasColumnType("numeric")
+                        .HasComment("Цена доставки");
 
-                    b.Property<string>("DeliveryDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("DeliveryScore")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("OrderStatusId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("PackageInformationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("PaymentMethodId")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime?>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Дата доставки");
 
                     b.Property<string>("ReceiverAddress")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("ReceiverId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text")
+                        .HasComment("Адрес получателя");
 
                     b.Property<string>("ReceiverName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Имя получателя");
 
                     b.Property<string>("SenderAddress")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("SenderId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text")
+                        .HasComment("Адрес отправителя");
 
                     b.Property<string>("SenderName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Имя отправителя");
 
-                    b.Property<string>("TrackNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("TrackNumber")
+                        .HasColumnType("uuid")
+                        .HasComment("Номер отслеживания");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
+                    b.Property<Guid?>("courier_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор курьера");
+
+                    b.Property<Guid?>("order_status_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор статуса заказа");
+
+                    b.Property<Guid>("package_information_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор посылки");
+
+                    b.Property<Guid>("payment_method_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор метода оплаты");
+
+                    b.Property<Guid?>("receiver_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор получателя");
+
+                    b.Property<Guid?>("sender_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор связанной цели");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourierId");
+                    b.HasIndex("courier_id");
 
-                    b.HasIndex("OrderStatusId");
+                    b.HasIndex("order_status_id");
 
-                    b.HasIndex("PackageInformationId");
+                    b.HasIndex("package_information_id");
 
-                    b.HasIndex("PaymentMethodId");
+                    b.HasIndex("payment_method_id");
 
-                    b.HasIndex("ReceiverId");
+                    b.HasIndex("receiver_id");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex("sender_id");
 
                     b.ToTable("orders", null, t =>
                         {
@@ -145,7 +154,8 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Уникальный идентификатор");
 
                     b.Property<int>("Code")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasComment("Код статуса");
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -154,7 +164,8 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Название статуса");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -175,8 +186,9 @@ namespace CourierMicroservice.Migrations
                         .HasColumnType("uuid")
                         .HasComment("Уникальный идентификатор");
 
-                    b.Property<float>("Cost")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Цена");
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -185,16 +197,17 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Краткое описание");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Вес");
 
                     b.HasKey("Id");
 
@@ -211,7 +224,8 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Уникальный идентификатор");
 
                     b.Property<int>("Code")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasComment("Код");
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -220,7 +234,8 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Название");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -261,35 +276,6 @@ namespace CourierMicroservice.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourierMicroservice.Models.Receiver", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasComment("Уникальный идентификатор");
-
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-                    b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("receivers", null, t =>
-                        {
-                            t.HasComment("Получатель");
-                        });
-                });
-
             modelBuilder.Entity("CourierMicroservice.Models.Right", b =>
                 {
                     b.Property<Guid>("Id")
@@ -297,7 +283,8 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Уникальный идентификатор");
 
                     b.Property<int>("Code")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasComment("Код");
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -306,7 +293,8 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Название");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -339,35 +327,6 @@ namespace CourierMicroservice.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourierMicroservice.Models.Sender", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasComment("Уникальный идентификатор");
-
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-                    b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("senders", null, t =>
-                        {
-                            t.HasComment("Отправитель");
-                        });
-                });
-
             modelBuilder.Entity("CourierMicroservice.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -381,50 +340,62 @@ namespace CourierMicroservice.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Имя");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Фамилия");
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Логин пользователя");
 
                     b.Property<string>("Mail")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Эл. почта");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasComment("Хеш пароля");
 
                     b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasComment("Соль пароля");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasComment("Номер телефона");
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("RightId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text")
+                        .HasComment("Рефреш-токен");
 
                     b.Property<DateTime>("TokenCreated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Дата создания токена");
 
                     b.Property<DateTime>("TokenExpires")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Дата истечения токена");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
+                    b.Property<Guid>("right_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор прав пользователя");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RightId");
+                    b.HasIndex("right_id");
 
                     b.ToTable("users", null, t =>
                         {
@@ -436,7 +407,7 @@ namespace CourierMicroservice.Migrations
                 {
                     b.HasOne("CourierMicroservice.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -447,27 +418,31 @@ namespace CourierMicroservice.Migrations
                 {
                     b.HasOne("CourierMicroservice.Models.Courier", "Courier")
                         .WithMany()
-                        .HasForeignKey("CourierId");
+                        .HasForeignKey("courier_id");
 
                     b.HasOne("CourierMicroservice.Models.OrderStatus", "OrderStatus")
                         .WithMany()
-                        .HasForeignKey("OrderStatusId");
+                        .HasForeignKey("order_status_id");
 
                     b.HasOne("CourierMicroservice.Models.PackageInformation", "PackageInformation")
                         .WithMany()
-                        .HasForeignKey("PackageInformationId");
+                        .HasForeignKey("package_information_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CourierMicroservice.Models.PaymentMethod", "PaymentMethod")
                         .WithMany()
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("payment_method_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CourierMicroservice.Models.Receiver", "Receiver")
+                    b.HasOne("CourierMicroservice.Models.User", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId");
+                        .HasForeignKey("receiver_id");
 
-                    b.HasOne("CourierMicroservice.Models.Sender", "Sender")
+                    b.HasOne("CourierMicroservice.Models.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("sender_id");
 
                     b.Navigation("Courier");
 
@@ -482,33 +457,11 @@ namespace CourierMicroservice.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("CourierMicroservice.Models.Receiver", b =>
-                {
-                    b.HasOne("CourierMicroservice.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CourierMicroservice.Models.Sender", b =>
-                {
-                    b.HasOne("CourierMicroservice.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("CourierMicroservice.Models.User", b =>
                 {
                     b.HasOne("CourierMicroservice.Models.Right", "Right")
                         .WithMany()
-                        .HasForeignKey("RightId")
+                        .HasForeignKey("right_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -8,18 +8,26 @@ namespace CourierMicroservice.Models;
 /// </summary>
 public class User : Entity<SequentialGuid>
 {
-    public User(SequentialGuid id, string firstName, byte[] passwordHash, byte[] passwordSalt, Right right)
+    public User(SequentialGuid id, string login, string mail, string firstName, byte[] passwordHash, byte[] passwordSalt, Right right)
         : base(id)
     {
-        FirstName = firstName;
-        PasswordHash = passwordHash;
-        PasswordSalt = passwordSalt;
-        Right = right;
+        Login = login ?? throw new ArgumentNullException(nameof(login));
+        Mail = mail ?? throw new ArgumentNullException(nameof(mail));
+        FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+        PasswordHash = passwordHash ?? throw new ArgumentNullException(nameof(passwordHash));
+        PasswordSalt = passwordSalt ?? throw new ArgumentNullException(nameof(passwordSalt));
+        Right = right ?? throw new ArgumentNullException(nameof(right));
     }
 
+    /// <summary>
+    /// Инициализирует новый экземпляр типа <see cref="User" />.
+    /// </summary>
+    /// <remarks>Конструктор для EF.</remarks>
     protected User()
         : base(SequentialGuid.Empty)
     {
+        Login = null!;
+        Mail = null!;
         FirstName = null!;
         PasswordHash = null!;
         PasswordSalt = null!;
@@ -39,12 +47,12 @@ public class User : Entity<SequentialGuid>
     /// <summary>
     /// Возвращает логин пользователя.
     /// </summary>
-    public string Login { get; set; } = string.Empty;
+    public string Login { get; set; }
 
     /// <summary>
     /// Возвращает эл. почту.
     /// </summary>
-    public string? Mail { get; set; }
+    public string Mail { get; set; }
 
     /// <summary>
     /// Возвращает хеш пароля.
@@ -69,7 +77,7 @@ public class User : Entity<SequentialGuid>
     /// <summary>
     /// Возвращает права пользователя.
     /// </summary>
-    public Right Right { get; set; }
+    public virtual Right Right { get; }
 
     /// <summary>
     /// Возвращает дату создания токена.

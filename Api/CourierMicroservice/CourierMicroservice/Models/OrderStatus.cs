@@ -8,13 +8,12 @@ namespace CourierMicroservice.Models;
 /// </summary>
 public class OrderStatus : Entity<SequentialGuid>
 {
-    public OrderStatus(SequentialGuid id, string name)
-        : base(id) =>
-        Name = name;
-
-    protected OrderStatus()
-        : base(SequentialGuid.Empty) =>
-        Name = null!;
+    public OrderStatus(SequentialGuid id, string name, int code)
+        : base(id)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Code = code;
+    }
 
     /// <summary>
     /// Возвращает код статуса.

@@ -16,5 +16,16 @@ internal class PackageInformationConfiguration : EntityTypeConfigurationBase<Pac
     protected override void OnConfigure(EntityTypeBuilder<PackageInformation> builder)
     {
         builder.ToTable("packageInformation", t => t.HasComment("Информация о посылке"));
+
+        builder.Property(p => p.Cost)
+               .HasComment("Цена")
+               .HasColumnType("decimal(18,2)");
+
+        builder.Property(p => p.ShortDescription)
+               .HasComment("Краткое описание");
+
+        builder.Property(p => p.Weight)
+               .HasComment("Вес")
+               .HasColumnType("decimal(18,2)");
     }
 }

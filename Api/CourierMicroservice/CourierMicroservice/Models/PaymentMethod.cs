@@ -8,13 +8,12 @@ namespace CourierMicroservice.Models;
 /// </summary>
 public class PaymentMethod : Entity<SequentialGuid>
 {
-    public PaymentMethod(SequentialGuid id, string name)
-        : base(id) =>
-        Name = name;
-
-    protected PaymentMethod()
-        : base(SequentialGuid.Empty) =>
-        Name = null!;
+    public PaymentMethod(SequentialGuid id, string name, int code)
+        : base(id)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Code = code;
+    }
 
     /// <summary>
     /// Возвращает код метода оплаты.

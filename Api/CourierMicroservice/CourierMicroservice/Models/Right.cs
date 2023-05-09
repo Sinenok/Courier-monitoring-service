@@ -8,13 +8,12 @@ namespace CourierMicroservice.Models;
 /// </summary>
 public class Right : Entity<SequentialGuid>
 {
-    public Right(SequentialGuid id, string name)
-        : base(id) =>
-        Name = name;
-
-    protected Right()
-        : base(SequentialGuid.Empty) =>
-        Name = null!;
+    public Right(SequentialGuid id, string name, int code)
+        : base(id)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Code = code;
+    }
 
     /// <summary>
     /// Возвращает код доступа.
