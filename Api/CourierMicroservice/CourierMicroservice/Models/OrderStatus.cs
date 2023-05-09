@@ -1,17 +1,27 @@
-﻿namespace CourierMicroservice.Models;
+﻿using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Core.Primitives;
+
+namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с информацией о статусе заказа
+/// Представляет сущность статуса заказа.
 /// </summary>
-public class OrderStatus : BaseAuditEntity
+public class OrderStatus : Entity<SequentialGuid>
 {
+    public OrderStatus(SequentialGuid id, string name, int code)
+        : base(id)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Code = code;
+    }
+
     /// <summary>
-    /// Код статуса
+    /// Возвращает код статуса.
     /// </summary>
     public int Code { get; set; }
 
     /// <summary>
-    /// Название статуса
+    /// Возвращает название статуса.
     /// </summary>
     public string Name { get; set; }
 }

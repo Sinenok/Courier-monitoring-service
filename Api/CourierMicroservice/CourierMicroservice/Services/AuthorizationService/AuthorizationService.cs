@@ -1,54 +1,39 @@
-﻿using CourierMicroservice.Context;
-using CourierMicroservice.Dtos;
-using CourierMicroservice.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using CourierMicroservice.Context;
+using CourierMicroservice.Dtos;
+using CourierMicroservice.Models;
+using CourierMicroservice.Models.Core.Primitives;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CourierMicroservice.Services.AuthorizationService;
 
 public class AuthorizationService : IAuthorizationService
 {
-    private readonly IHttpContextAccessor _contextAccessor;
     private readonly IConfiguration _configuration;
-    private readonly AppDbContext _dbContext;
+    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IAppDbContext _dbContext;
 
-    public AuthorizationService(IHttpContextAccessor contextAccessor, IConfiguration configuration, AppDbContext productContext)
+    public AuthorizationService(IHttpContextAccessor contextAccessor, IConfiguration configuration, IAppDbContext productContext)
     {
         _contextAccessor = contextAccessor;
         _configuration = configuration;
         _dbContext = productContext;
     }
 
-    public async Task Register(UserRegistrationDto request, CancellationToken cancellationToken)
+    public string? GetMyName()
     {
-        var isUserExist = await _dbContext.Users.AnyAsync(u => u.Login == request.Login, cancellationToken);
+        var result = string.Empty;
 
-        if (isUserExist)
+        if (_contextAccessor.HttpContext != null)
         {
-            throw new ArgumentException("User with current login exist.");
+            result = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
-        CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
-        var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User", cancellationToken);
-
-        await _dbContext.Users.AddAsync(new User
-        {
-            Id = Guid.NewGuid(),
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Mail = request.Mail,
-            Phone = request.Phone,
-            Login = request.Login,
-            PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt,
-            Right = userRight
-        }, cancellationToken);
-
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        return result;
     }
 
     public async Task<string> Login(UserLoginDto request, CancellationToken cancellationToken)
@@ -120,17 +105,33 @@ public class AuthorizationService : IAuthorizationService
         return token;
     }
 
-    private void SetRefreshToken(RefreshToken newRefreshToken, User user)
+    public async Task Register(UserRegistrationDto request, CancellationToken cancellationToken)
     {
-        var cookieOptions = new CookieOptions
+        var isUserExist = await _dbContext.Users.AnyAsync(u => u.Login == request.Login, cancellationToken);
+
+        if (isUserExist)
         {
-            HttpOnly = true,
-            Expires = newRefreshToken.Expires
-        };
-        _contextAccessor?.HttpContext?.Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
-        user.RefreshToken = newRefreshToken.Token;
-        user.TokenCreated = newRefreshToken.Created;
-        user.TokenExpires = newRefreshToken.Expires;
+            throw new ArgumentException("User with current login exist.");
+        }
+
+        CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
+        var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User", cancellationToken);
+
+        await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
+                                        {
+                                            LastName = request.LastName,
+                                            Phone = request.Phone
+                                        },
+                                        cancellationToken);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+    {
+        using var hmac = new HMACSHA512();
+        passwordSalt = hmac.Key;
+        passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
     }
 
     private string CreateToken(User user)
@@ -164,13 +165,25 @@ public class AuthorizationService : IAuthorizationService
 
     private static RefreshToken GenerateRefreshToken()
     {
-        var refreshToken = new RefreshToken
+        var refreshToken = new RefreshToken(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)))
         {
-            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
             Expires = DateTime.SpecifyKind(DateTime.Now.AddDays(7), DateTimeKind.Utc),
             Created = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
         };
         return refreshToken;
+    }
+
+    private void SetRefreshToken(RefreshToken newRefreshToken, User user)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = newRefreshToken.Expires
+        };
+        _contextAccessor?.HttpContext?.Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
+        user.RefreshToken = newRefreshToken.Token;
+        user.TokenCreated = newRefreshToken.Created;
+        user.TokenExpires = newRefreshToken.Expires;
     }
 
     private static bool VerifyPasswordHash(string password, IEnumerable<byte> passwordHash, byte[] passwordSalt)
@@ -179,24 +192,4 @@ public class AuthorizationService : IAuthorizationService
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         return computedHash.SequenceEqual(passwordHash);
     }
-
-    private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-    {
-        using var hmac = new HMACSHA512();
-        passwordSalt = hmac.Key;
-        passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-    }
-
-    public string? GetMyName()
-    {
-        var result = string.Empty;
-
-        if (_contextAccessor.HttpContext != null)
-        {
-            result = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
-        }
-
-        return result;
-    }
 }
-

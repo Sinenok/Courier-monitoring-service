@@ -1,22 +1,33 @@
-﻿namespace CourierMicroservice.Models;
+﻿using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Core.Primitives;
+
+namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с информацией о посылке
+/// Представляет сущность с информацией о посылке.
 /// </summary>
-public class PackageInformation : BaseAuditEntity
+public class PackageInformation : Entity<SequentialGuid>
 {
-    /// <summary>
-    /// Цена
-    /// </summary>
-    public float Cost { get; set; }
+    public PackageInformation(SequentialGuid id, string shortDescription, decimal weight, decimal cost)
+        : base(id)
+    {
+        ShortDescription = shortDescription ?? throw new ArgumentNullException(nameof(shortDescription));
+        Weight = weight;
+        Cost = cost;
+    }
 
     /// <summary>
-    /// Краткое описание
+    /// Возвращает цену.
     /// </summary>
-    public string ShortDescription { get; set; }
+    public decimal Cost { get; }
 
     /// <summary>
-    /// Вес
+    /// Возвращает краткое описание.
     /// </summary>
-    public string Weight { get; set; }
+    public string ShortDescription { get; }
+
+    /// <summary>
+    /// Возвращает вес.
+    /// </summary>
+    public decimal Weight { get; }
 }

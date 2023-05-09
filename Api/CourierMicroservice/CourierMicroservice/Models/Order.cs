@@ -1,77 +1,112 @@
-﻿namespace CourierMicroservice.Models;
+﻿using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Core.Primitives;
+
+namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность с заказом
+/// Представляет сущность заказа.
 /// </summary>
-public class Order : BaseAuditEntity
+public class Order : Entity<SequentialGuid>
 {
-    /// <summary>
-    /// Стоимость доставки
-    /// </summary>
-    public float DeliveryCost { get; set; }
+    public Order(SequentialGuid id,
+                 //User sender,
+                 string senderName,
+                 string senderAddress,
+                 string receiverName,
+                 string receiverAddress,
+                 decimal deliveryCost,
+                 PaymentMethod paymentMethod,
+                 PackageInformation packageInformation)
+        : base(id)
+    {
+        //Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        SenderName = senderName ?? throw new ArgumentNullException(nameof(senderName));
+        SenderAddress = senderAddress ?? throw new ArgumentNullException(nameof(senderAddress));
+        ReceiverName = receiverName ?? throw new ArgumentNullException(nameof(receiverName));
+        ReceiverAddress = receiverAddress ?? throw new ArgumentNullException(nameof(receiverAddress));
+        DeliveryCost = deliveryCost;
+        PaymentMethod = paymentMethod ?? throw new ArgumentNullException(nameof(paymentMethod));
+        PackageInformation = packageInformation ?? throw new ArgumentNullException(nameof(packageInformation));
+    }
 
     /// <summary>
-    /// Дата доставки
+    /// Инициализирует новый экземпляр типа <see cref="Order" />.
     /// </summary>
-    public string DeliveryDate { get; set; }
+    /// <remarks>Конструктор для EF.</remarks>
+    protected Order()
+        : base(SequentialGuid.Empty)
+    {
+        //Sender = null!;
+        SenderName = null!;
+        SenderAddress = null!;
+        ReceiverName = null!;
+        ReceiverAddress = null!;
+        PaymentMethod = null!;
+        PackageInformation = null!;
+    }
 
     /// <summary>
-    /// Оценка доставки
+    /// Возвращает информацию о курьере.
     /// </summary>
-    public int DeliveryScore { get; set; }
+    public virtual Courier? Courier { get; set; }
 
     /// <summary>
-    /// Информация о статусе заказа
+    /// Возвращает цену доставки.
     /// </summary>
-    public OrderStatus? OrderStatus { get; set; }
+    public decimal DeliveryCost { get; }
 
     /// <summary>
-    /// Информация о послылке
+    /// Возвращает информацию о дате доставки.
     /// </summary>
-    public PackageInformation? PackageInformation { get; set; }
+    public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
-    /// Метод оплаты заказа
+    /// Возвращает информацию о статусе заказа.
     /// </summary>
-    public PaymentMethod? PaymentMethod { get; set; }
+    public virtual OrderStatus? OrderStatus { get; set; }
 
     /// <summary>
-    /// Адресс получателя
+    /// Возвращает информацию о посылке.
     /// </summary>
-    public string ReceiverAdress { get; set; }
+    public virtual PackageInformation PackageInformation { get; }
 
     /// <summary>
-    /// Имя получателя
+    /// Возвращает метод оплаты заказа.
     /// </summary>
-    public string ReceiverName { get; set; }
+    public virtual PaymentMethod PaymentMethod { get; }
 
     /// <summary>
-    /// Информация об получателе
+    /// Возвращает получателя.
     /// </summary>
-    public User? ReceiverUser { get; set; }
+    public virtual User? Receiver { get; set; }
 
     /// <summary>
-    /// Адресс отправителя
+    /// Возвращает адрес получателя.
     /// </summary>
-    public string SenderAdress { get; set; }
+    public string ReceiverAddress { get; }
 
     /// <summary>
-    /// Имя отправителя
+    /// Возвращает имя получателя.
     /// </summary>
-    public string SenderName { get; set; }
+    public string ReceiverName { get; }
 
     /// <summary>
-    /// Информация об отправителе
+    /// Возвращает отправителя.
     /// </summary>
-    public User? SenderUser { get; set; }
+    public virtual User? Sender { get; }
 
     /// <summary>
-    /// Трек номер
+    /// Возвращает адрес отправителя.
     /// </summary>
-    public string TrackNumber { get; set; }
+    public string SenderAddress { get; }
 
     /// <summary>
-    /// Информация о курьере
+    /// Возвращает имя отправителя.
     /// </summary>
-    public User? CourierUser { get; set; }
+    public string SenderName { get; }
+
+    /// <summary>
+    /// Возвращает трек номер.
+    /// </summary>
+    public Guid TrackNumber { get; } = Guid.NewGuid();
 }

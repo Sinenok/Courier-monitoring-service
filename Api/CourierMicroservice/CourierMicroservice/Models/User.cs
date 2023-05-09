@@ -1,62 +1,91 @@
-﻿namespace CourierMicroservice.Models;
+﻿using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Core.Primitives;
+
+namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Сущность пользователя
+/// Представляет сущность пользователя.
 /// </summary>
-public class User : BaseAuditEntity
+public class User : Entity<SequentialGuid>
 {
+    public User(SequentialGuid id, string login, string mail, string firstName, byte[] passwordHash, byte[] passwordSalt, Right right)
+        : base(id)
+    {
+        Login = login ?? throw new ArgumentNullException(nameof(login));
+        Mail = mail ?? throw new ArgumentNullException(nameof(mail));
+        FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+        PasswordHash = passwordHash ?? throw new ArgumentNullException(nameof(passwordHash));
+        PasswordSalt = passwordSalt ?? throw new ArgumentNullException(nameof(passwordSalt));
+        Right = right ?? throw new ArgumentNullException(nameof(right));
+    }
+
     /// <summary>
-    /// Имя
+    /// Инициализирует новый экземпляр типа <see cref="User" />.
+    /// </summary>
+    /// <remarks>Конструктор для EF.</remarks>
+    protected User()
+        : base(SequentialGuid.Empty)
+    {
+        Login = null!;
+        Mail = null!;
+        FirstName = null!;
+        PasswordHash = null!;
+        PasswordSalt = null!;
+        Right = null!;
+    }
+
+    /// <summary>
+    /// Возвращает имя.
     /// </summary>
     public string FirstName { get; set; }
 
     /// <summary>
-    /// Фамилия
+    /// Возвращает фамилию.
     /// </summary>
     public string? LastName { get; set; }
 
     /// <summary>
-    /// Логин пользователя
+    /// Возвращает логин пользователя.
     /// </summary>
-    public string Login { get; set; } = string.Empty;
+    public string Login { get; set; }
 
     /// <summary>
-    /// Эл. почта
+    /// Возвращает эл. почту.
     /// </summary>
-    public string? Mail { get; set; }
+    public string Mail { get; set; }
 
     /// <summary>
-    /// Хеш пароля
+    /// Возвращает хеш пароля.
     /// </summary>
     public byte[] PasswordHash { get; set; }
 
     /// <summary>
-    /// Соль пароля
+    /// Возвращает соль пароля.
     /// </summary>
     public byte[] PasswordSalt { get; set; }
 
     /// <summary>
-    /// Номер телефона
+    /// Возвращает номер телефона.
     /// </summary>
     public string? Phone { get; set; }
 
     /// <summary>
-    /// Рефреш токен
+    /// Возвращает рефреш-токен.
     /// </summary>
     public string RefreshToken { get; set; } = string.Empty;
 
     /// <summary>
-    /// Права пользователя
+    /// Возвращает права пользователя.
     /// </summary>
-    public Right Right { get; set; }
+    public virtual Right Right { get; }
 
     /// <summary>
-    /// Дата создания токена
+    /// Возвращает дату создания токена.
     /// </summary>
     public DateTime TokenCreated { get; set; }
 
     /// <summary>
-    /// Дата истечения токена
+    /// Возвращает дату истечения токена.
     /// </summary>
     public DateTime TokenExpires { get; set; }
 }

@@ -2,6 +2,7 @@
 using CourierMicroservice.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using IAuthorizationService = CourierMicroservice.Services.AuthorizationService.IAuthorizationService;
 
 namespace CourierMicroservice.Controllers;
 
@@ -9,25 +10,24 @@ namespace CourierMicroservice.Controllers;
 [ApiController]
 public class AuthorizationController : ControllerBase
 {
-    private readonly Services.AuthorizationService.IAuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public AuthorizationController(Services.AuthorizationService.IAuthorizationService authorizationService)
-    {
-        _authorizationService = authorizationService;
-    }
+    public AuthorizationController(IAuthorizationService authorizationService) => _authorizationService = authorizationService;
 
-    [HttpPost("register")]
-    public async Task<ActionResult<User>> Register(UserRegistrationDto request, CancellationToken cancellationToken)
+    [Authorize]
+    [HttpGet("current-user")]
+    public ActionResult<string> GetMe()
     {
-        await _authorizationService.Register(request, cancellationToken);
-        return Ok();
+        var userName = _authorizationService.GetMyName();
+        return Ok(userName);
     }
 
     [HttpPost("login")]
     public async Task<ActionResult<TokenResultDto>> Login(UserLoginDto request, CancellationToken cancellationToken)
     {
         var token = await _authorizationService.Login(request, cancellationToken);
-        return Ok(new TokenResultDto() { AccessToken = token });
+
+        return Ok(new TokenResultDto(token));
     }
 
     [HttpPost("refresh-token")]
@@ -37,11 +37,10 @@ public class AuthorizationController : ControllerBase
         return Ok(token);
     }
 
-    [Authorize]
-    [HttpGet("current-user")]
-    public ActionResult<string> GetMe()
+    [HttpPost("register")]
+    public async Task<ActionResult<User>> Register(UserRegistrationDto request, CancellationToken cancellationToken)
     {
-        var userName = _authorizationService.GetMyName();
-        return Ok(userName);
+        await _authorizationService.Register(request, cancellationToken);
+        return Ok();
     }
 }

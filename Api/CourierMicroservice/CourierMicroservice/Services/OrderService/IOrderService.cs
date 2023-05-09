@@ -1,15 +1,30 @@
 ﻿using CourierMicroservice.Dtos;
 using CourierMicroservice.Models;
 
-namespace CourierMicroservice.Services.OrderService
+namespace CourierMicroservice.Services.OrderService;
+
+/// <summary>
+/// Представляет сервис заказа
+/// </summary>
+public interface IOrderService
 {
     /// <summary>
-    /// Представляет сервис заказа
+    /// Создает заказ.
     /// </summary>
-    public interface IOrderService
-    {
-        public Task<string> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken);
-        public Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken);
+    /// <param name="orderDto"></param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<Guid> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken);
 
-    }
+    /// <summary>
+    /// Получение заказа по идентификатору.
+    /// </summary>
+    /// <param name="trackNumber"></param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<FullOrderInfo> GetOrder(Guid trackNumber, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получение вариантов метода оплаты.
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken);
 }

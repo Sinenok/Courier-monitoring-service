@@ -1,7 +1,9 @@
 using System.Text;
 using CourierMicroservice.Context;
+using CourierMicroservice.IoC;
 using CourierMicroservice.Services.AuthorizationService;
 using CourierMicroservice.Services.OrderService;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,8 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
+// builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddDefaultProblemDetails();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -31,29 +36,37 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
-           options.TokenValidationParameters = new TokenValidationParameters
+           var value = builder.Configuration.GetSection("AppSettings:Token")
+                              .Value;
+
+           if (value != null)
            {
-               ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token")
-                                                                                         .Value)),
-               ValidateIssuer = false,
-               ValidateAudience = false
-           };
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(value)),
+                   ValidateIssuer = false,
+                   ValidateAudience = false
+               };
+           }
        });
 
-builder.Services.AddCors(p => p.AddPolicy("corsapp",
-                                          builder =>
+builder.Services.AddCors(p => p.AddPolicy("corsApp",
+                                          policyBuilder =>
                                           {
-                                              builder.WithOrigins("http://localhost:3000")
-                                                     .AllowAnyMethod()
-                                                     .AllowAnyHeader()
-                                                     .AllowCredentials();
+                                              policyBuilder.WithOrigins("http://localhost:3000")
+                                                           .AllowAnyMethod()
+                                                           .AllowAnyHeader()
+                                                           .AllowCredentials();
                                           }));
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("courierDB")));
 var app = builder.Build();
+// app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseProblemDetails();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors("corsapp");
+app.UseCors("corsApp");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

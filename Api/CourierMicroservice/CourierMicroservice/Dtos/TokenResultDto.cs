@@ -1,7 +1,7 @@
-﻿namespace CourierMicroservice.Dtos
-{
-    public class TokenResultDto
-    {
-        public string AccessToken { get; set; }
-    }
-}
+﻿namespace CourierMicroservice.Dtos;
+
+/// <summary>
+/// Представляет сущность токена.
+/// </summary>
+/// <param name="AccessToken"></param>
+public record TokenResultDto(string AccessToken);

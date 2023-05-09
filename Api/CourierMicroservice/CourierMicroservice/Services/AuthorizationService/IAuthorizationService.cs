@@ -8,6 +8,12 @@ namespace CourierMicroservice.Services.AuthorizationService;
 public interface IAuthorizationService
 {
     /// <summary>
+    /// Получение имени текущего пользователя.
+    /// </summary>
+    /// <returns></returns>
+    public string? GetMyName();
+
+    /// <summary>
     /// Авторизация пользователя.
     /// </summary>
     /// <param name="request"></param>
@@ -29,10 +35,4 @@ public interface IAuthorizationService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public Task Register(UserRegistrationDto request, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Полученине имени текущего пользователя.
-    /// </summary>
-    /// <returns></returns>
-    public string? GetMyName();
 }
