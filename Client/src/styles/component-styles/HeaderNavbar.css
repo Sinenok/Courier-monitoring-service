@@ -26,8 +26,50 @@
     /* border: 1px solid red; */
     display: flex;
     padding: 0 25px 0 25px !important;
+    /* white-space: nowrap; */
+}
+
+.text {
+    font-size: 20px !important;    
+    display: flex;
+    padding: 0 10px 0 25px !important;
+    /* border: 3px solid red; */
+    justify-content: center;
+}
+.nav-link-user {
+    padding: 0 !important;
+    text-decoration: underline !important;
+    color: #00e3ff !important;
+    /* border: 3px solid red; */
+    letter-spacing: 1.2px ;
+}
+.user-nav-wrap {
+    /* border: 3px solid red; */
+    display: flex;
+    margin-right: 0;
+}
+
+@media (max-width: 1205px) {
+    .nav-link {
+        font-size: 17px !important;
+        /* border: 1px solid red; */
+        display: flex;
+        padding: 0 15px 0 15px !important;
+        /* white-space: nowrap; */
+    }
+    .text {
+        font-size: 17px !important;    
+        display: flex;
+        padding: 0 8px 0 15px !important;
+        /* border: 3px solid red; */
+        justify-content: center;
+    }
+    .nav-link-user {
+        padding: 0 !important;
+    }
 }
 
 .nav-text {
     /* border: 3px solid white; */
+    display: flex;
 }

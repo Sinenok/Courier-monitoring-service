@@ -21,9 +21,14 @@ export interface IRegisterResponce {
 // order
 export interface IOrderCreateRequest {
 	senderName: string;
-	senderAdress: string;
+	senderAddress: string;
 	receiverName: string;
-	receiverAdress: string;
+	receiverAddress: string;
+	deliveryCost: number;
+	paymentMethod: number;
+	productCost: number;
+	productDescription: string;
+	productWeight: number;
 }
 
 export interface IOrderCreateResponce {

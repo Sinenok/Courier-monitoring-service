@@ -10,7 +10,6 @@ export const createOrder =
 			dispatch(orderSendStart());
 
 			const res = await api.order.orderCreate(data);
-
 			dispatch(orderSendSucess(String(res.data))); //Убрать стринг, завернуть трэк номер на бэке в объект (аналог аксес-токен)
 		} catch (e: any) {
 			console.error(e.response.data);

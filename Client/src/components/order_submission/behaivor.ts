@@ -6,9 +6,15 @@ import { IPaymentMethodsResponce } from '../../api/order/types';
 
 export const useOrderSubmission = (): IUseOrderSubmissionResult => {
 	const [senderName, setSenderName] = useState('');
-	const [senderAdress, setSenderAdress] = useState('');
+	const [senderAddress, setSenderAdress] = useState('');
 	const [receiverName, setReceiverName] = useState('');
-	const [receiverAdress, setReceiverAdress] = useState('');
+	const [receiverAddress, setReceiverAdress] = useState('');
+
+	const [deliveryCost, setDeliveryCost] = useState(0.0);
+	const [paymentMethod, setPaymentMethod] = useState<number>(2);
+	const [productCost, setProductCost] = useState(0.0);
+	const [productDescription, setProductDescription] = useState('');
+	const [productWeight, setProductWeight] = useState(0.0);
 
 	const dispatch = useAppDispatch();
 
@@ -16,20 +22,53 @@ export const useOrderSubmission = (): IUseOrderSubmissionResult => {
 		(e: FormEvent) => {
 			e.preventDefault();
 
-			dispatch(createOrder({ senderName, senderAdress, receiverName, receiverAdress }));
+			dispatch(
+				createOrder({
+					senderName,
+					senderAddress,
+					receiverName,
+					receiverAddress,
+					deliveryCost,
+					paymentMethod,
+					productCost,
+					productDescription,
+					productWeight
+				})
+			);
 		},
-		[senderName, senderAdress, receiverName, receiverAdress]
+		[
+			senderName,
+			senderAddress,
+			receiverName,
+			receiverAddress,
+			deliveryCost,
+			paymentMethod,
+			productCost,
+			productDescription,
+			productWeight
+		]
 	);
 
 	return {
 		senderName,
 		setSenderName,
-		senderAdress,
+		senderAddress,
 		setSenderAdress,
 		receiverName,
 		setReceiverName,
-		receiverAdress,
+		receiverAddress,
 		setReceiverAdress,
+
+		deliveryCost,
+		setDeliveryCost,
+		paymentMethod,
+		setPaymentMethod,
+		productCost,
+		setProductCost,
+		productDescription,
+		setProductDescription,
+		productWeight,
+		setProductWeight,
 		handleSubmit
 	};
 };

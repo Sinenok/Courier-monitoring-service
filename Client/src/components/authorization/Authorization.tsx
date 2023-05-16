@@ -46,7 +46,7 @@ const Authorization = () => {
 							/>
 						</Form.Group>
 					</Row>
-					<Row lg="5" className="justify-content-md-center">
+					<Row lg="5" className="justify-content-md-center mb-4">
 						<Button variant="primary" type="submit">
 							Войти
 						</Button>

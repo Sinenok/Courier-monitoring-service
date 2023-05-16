@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { store } from '../store';
 import { getAccessToken } from '../store/auth/actionCreators';
 import Endpoints from './endpoints';
@@ -33,7 +33,7 @@ axiosInstance.interceptors.request.use(async (config) => {
 		return config;
 	}
 	const accessToken = await store.dispatch(getAccessToken());
-	console.warn('asdasd', accessToken);
+	// console.warn('asdasd', accessToken);
 	if (accessToken) {
 		const autharization = `Bearer ${accessToken}`;
 		config.headers.Authorization = autharization;
@@ -42,19 +42,19 @@ axiosInstance.interceptors.request.use(async (config) => {
 });
 
 // ---------------------TO DO for refresh-token--------------------
-axiosInstance.interceptors.response.use(
-	(response) => response,
-	(error: AxiosError) => {
-		const isLoggedIn = !!store.getState().auth.authData.accessToken;
+// axiosInstance.interceptors.response.use(
+// 	(response) => response,
+// 	(error: AxiosError) => {
+// 		const isLoggedIn = !!store.getState().auth.authData.accessToken;
 
-		if (
-			error.response?.status === 401 &&
-			isLoggedIn &&
-			error.request.url !== Endpoints.AUTH.LOGOUT
-		) {
-			// store.dispatch(logoutUser());
-		}
+// 		if (
+// 			error.response?.status === 401 &&
+// 			isLoggedIn &&
+// 			error.request.url !== Endpoints.AUTH.LOGOUT
+// 		) {
+// 			store.dispatch(logoutUser());
+// 		}
 
-		throw error;
-	}
-);
+// 		throw error;
+// 	}
+// );

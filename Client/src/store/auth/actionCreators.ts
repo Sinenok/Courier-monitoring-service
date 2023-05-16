@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import api from '../../api';
-import { ILoginRequest, ILoginResponse, IRegisterResponce } from '../../api/auth/types';
+import { ILoginRequest, IRegisterResponce } from '../../api/auth/types';
 import {
 	loginStart,
 	loginSucess,
@@ -14,7 +14,8 @@ import {
 	loadProfileFailure
 } from './authReducer';
 import { history } from '../../utils/history';
-import { AxiosPromise } from 'axios';
+// import { AxiosPromise } from 'axios';
+import { store } from '..';
 
 /**
  * Асинхронные запросы при использовании redux toolkit необходимо осуществлять через createAsyncThunk или, более свежий вариант, RTK Query
@@ -27,12 +28,11 @@ export const loginUser =
 	async (dispatch: Dispatch<any>): Promise<void> => {
 		try {
 			dispatch(loginStart());
-			console.log('dsadsadas', data);
 
 			const res = await api.auth.login(data);
-			console.log('res ', res.data.accessToken);
 
 			dispatch(loginSucess(res.data.accessToken));
+			sessionStorage.setItem('token', res.data.accessToken);
 			dispatch(getProfile());
 		} catch (e: any) {
 			console.error('Error responce.data: ', e);
@@ -61,8 +61,9 @@ export const getProfile =
 			dispatch(loadProfileStart());
 
 			const res = await api.auth.getProfile();
-
 			dispatch(loadProfileSucess(res.data));
+
+			sessionStorage.setItem('userName', res.data);
 		} catch (e: any) {
 			console.error(e);
 
@@ -71,33 +72,31 @@ export const getProfile =
 	};
 
 // переменная для хранения запроса токена (для избежания race condition)
-let refreshTokenRequest: AxiosPromise<ILoginResponse> | null = null;
+// let refreshTokenRequest: AxiosPromise<ILoginResponse> | null = null;
 
-export const getAccessToken =
-	() =>
-	async (dispatch: Dispatch<any>): Promise<string | null> => {
-		try {
-			// const accessToken = store.getState().auth.authData.accessToken;
-			// return accessToken;
+export const getAccessToken = () => (): string | null => {
+	try {
+		const accessToken = store.getState().auth.authData.accessToken;
+		return accessToken;
 
-			if (refreshTokenRequest === null) {
-				refreshTokenRequest = api.auth.refreshToken();
-				console.warn('refreshTokenRequest', refreshTokenRequest);
-			}
+		// if (refreshTokenRequest === null) {
+		// refreshTokenRequest = api.auth.refreshToken();
+		// console.warn('refreshTokenRequest', refreshTokenRequest);
+		// }
 
-			const res = await refreshTokenRequest;
+		// const res = await refreshTokenRequest;
 
-			refreshTokenRequest = null;
+		// refreshTokenRequest = null;
 
-			dispatch(loginSucess(res.data.accessToken));
+		// dispatch(loginSucess(res.data.accessToken));
 
-			return res.data.accessToken;
-		} catch (e) {
-			console.error(e);
+		// return res.data.accessToken;
+	} catch (e) {
+		console.error(e);
 
-			return null;
-		}
-	};
+		return null;
+	}
+};
 
 export const registerUser =
 	(data: IRegisterResponce) =>

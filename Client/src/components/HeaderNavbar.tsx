@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { isLogged } from '../hooks/IsLoggedIn';
+import { getsProfile, isLogged } from '../hooks/IsLoggedIn';
 import './../styles/component-styles/HeaderNavbar.css';
 import imgMainLogo from './../img/logo/logoNav.png';
 
@@ -12,6 +12,8 @@ import imgMainLogo from './../img/logo/logoNav.png';
 
 function HeaderNavbar() {
 	const isLoggedIn = isLogged();
+	const profile = getsProfile();
+	
 	return (
 		<div className="HeaderNavbar">
 			<Navbar className="navbar" bg="dark" variant="dark" expand="lg">
@@ -37,6 +39,14 @@ function HeaderNavbar() {
 									<Nav.Link className="nav-link" as={Link} to={'/ordersubmission'}>
 										Отправить заказ
 									</Nav.Link>
+									{profile ? (
+										<div className="user-nav-wrap">
+											<Navbar.Text className="text">Здравствуйте,</Navbar.Text>
+											<Nav.Link className="nav-link-user" as={Link} to={'/authorization'}>
+												{profile}
+											</Nav.Link>
+										</div>
+									) : null}
 								</>
 							)}
 						</Nav>

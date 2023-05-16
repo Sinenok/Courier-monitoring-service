@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Row, Col, Container, Button, InputGroup } from 'react-bootstrap';
 import { useOrderSubmission, usePaymentMethods } from './behaivor';
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+// import { Decimal } from 'decimal.js';
 
 const OrderSubmission = () => {
 	const {
 		senderName,
 		setSenderName,
-		senderAdress,
+		senderAddress,
 		setSenderAdress,
 		receiverName,
 		setReceiverName,
-		receiverAdress,
+		receiverAddress,
 		setReceiverAdress,
+
+		deliveryCost,
+		setDeliveryCost,
+		paymentMethod,
+		setPaymentMethod,
+		productCost,
+		setProductCost,
+		productDescription,
+		setProductDescription,
+		productWeight,
+		setProductWeight,
 		handleSubmit
 	} = useOrderSubmission();
 
-	const [paymentMethod, setPaymentMethod] = useState('Online');
+	// const [paymentMethod, setPaymentMethod] = useState<number>(2);
 
 	const { paymentMethodList } = usePaymentMethods();
 
-	const [deliveryCost, setDeliveryCost] = useState('0,0');
-	const [productCost, setProductCost] = useState('0,0');
-	const [productDescription, setProductDescription] = useState('');
-	const [productWeight, setProductWeight] = useState('0,00');
+	// const [deliveryCost, setDeliveryCost] = useState(0.0);
+	// const [productCost, setProductCost] = useState(0.0);
+	// const [productDescription, setProductDescription] = useState('');
+	// const [productWeight, setProductWeight] = useState(0.0);
+	// console.log('productWeight', productWeight);
 
 	const defaultState = {
 		center: [55.751574, 37.573856],
@@ -60,10 +73,10 @@ const OrderSubmission = () => {
 							<Form.Label>Адрес отправителя</Form.Label>
 							<Form.Control
 								required
-								name="senderAdress"
+								name="senderAddress"
 								type="text"
 								placeholder="Введите адрес отправителя"
-								value={senderAdress}
+								value={senderAddress}
 								onChange={(e) => setSenderAdress(e.target.value)}
 							/>
 						</Form.Group>
@@ -86,10 +99,10 @@ const OrderSubmission = () => {
 							<Form.Label>Адрес получателя</Form.Label>
 							<Form.Control
 								required
-								name="receiverAdress"
+								name="receiverAddress"
 								type="text"
 								placeholder="Введите адрес получателя"
-								value={receiverAdress}
+								value={receiverAddress}
 								onChange={(e) => setReceiverAdress(e.target.value)}
 							/>
 						</Form.Group>
@@ -101,11 +114,11 @@ const OrderSubmission = () => {
 								<Form.Control
 									required
 									name="deliveryCost"
+									placeholder="Введите стоимость доставки в рублях"
 									type="number"
 									step="0.1"
-									placeholder="Введите стоимость доставки в рублях"
-									value={deliveryCost}
-									onChange={(e) => setDeliveryCost(e.target.value)}
+									// value={deliveryCost}
+									onChange={(e) => setDeliveryCost(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{deliveryCost}</InputGroup.Text>
 								<InputGroup.Text>руб</InputGroup.Text>
@@ -115,10 +128,12 @@ const OrderSubmission = () => {
 					<Row className="justify-content-md-center">
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupPaymentMethod">
 							<Form.Label>Выберите метод оплаты</Form.Label>
-							<Form.Select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+							<Form.Select
+								value={paymentMethod}
+								onChange={(e) => setPaymentMethod(Number(e.target.value))}>
 								{paymentMethodList.map((method, index) => {
 									return (
-										<option key={index} value={method.name}>
+										<option key={index} value={method.code}>
 											{method.name}
 										</option>
 									);
@@ -136,8 +151,8 @@ const OrderSubmission = () => {
 									type="number"
 									step="0.1"
 									placeholder="Введите стоимость товара в рублях"
-									value={productCost}
-									onChange={(e) => setProductCost(e.target.value)}
+									// value={productCost}
+									onChange={(e) => setProductCost(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{productCost}</InputGroup.Text>
 								<InputGroup.Text>руб</InputGroup.Text>
@@ -165,13 +180,13 @@ const OrderSubmission = () => {
 									required
 									name="productWeight"
 									type="number"
-									step="0.01"
-									placeholder="Введите вес товара в кг"
-									value={productWeight}
-									onChange={(e) => setProductWeight(e.target.value)}
+									step="0.1"
+									placeholder="Введите вес товара в граммах"
+									// value={productWeight}
+									onChange={(e) => setProductWeight(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{productWeight}</InputGroup.Text>
-								<InputGroup.Text>кг</InputGroup.Text>
+								<InputGroup.Text>г</InputGroup.Text>
 							</InputGroup>
 						</Form.Group>
 					</Row>
