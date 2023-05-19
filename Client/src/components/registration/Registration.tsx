@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Row, Col, Container, Button } from 'react-bootstrap';
 import { useRegister } from './behaivor';
+import './../../styles/component-styles/Registration.css';
 
 // -----------------------------КАК И С АВТОРИЗАЦИЕЙ ВЫНЕС ЛОГИКУ--------------------------------------------
 
@@ -25,7 +26,7 @@ const Registration = () => {
 	return (
 		<div className="Registration">
 			<Container className="text-center pt-5">
-				<h1>Регистрация</h1>
+				<h2>Регистрация</h2>
 			</Container>
 			<Form onSubmit={handleSubmit}>
 				<Container className="py-3">
@@ -33,6 +34,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupFirstName">
 							<Form.Label>Имя</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="firstName"
 								type="text"
@@ -46,6 +48,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLastName">
 							<Form.Label>Фамилия</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="lastName"
 								type="text"
@@ -59,6 +62,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLogin">
 							<Form.Label>Логин</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="login"
 								type="text"
@@ -72,6 +76,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupMail">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="mail"
 								type="email"
@@ -85,6 +90,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupPassword">
 							<Form.Label>Пароль</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="password"
 								type="password"
@@ -98,6 +104,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupRepassword">
 							<Form.Label>Повтор пароля</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="repassword"
 								type="password"
@@ -111,6 +118,7 @@ const Registration = () => {
 						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPhone">
 							<Form.Label>Телефон</Form.Label>
 							<Form.Control
+								className="input"
 								required
 								name="phone"
 								type="phone"

@@ -20,7 +20,7 @@ import Authorization from './../../components/authorization/Authorization';
 
 const AuthorizationPage = () => {
 	const isLoggedIn = isLogged();
-	return <div>{isLoggedIn ? <RenderProfile /> : <Authorization />}</div>;
+	return <div>{!isLoggedIn ? <Authorization /> : <RenderProfile />}</div>;
 };
 
 export default AuthorizationPage;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import { useLogin } from './behavior';
+import './../../styles/component-styles/Authorization.css';
 
 /**
  * В данном случае всю логику (всё, что доc:\Users\Ivan\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\code\electron-sandbox\workbench\workbench.html return) можно вынести в файл для логики, сформировав кастомный хук.
@@ -15,7 +16,7 @@ const Authorization = () => {
 	return (
 		<div className="Authorization">
 			<Container className="text-center pt-5">
-				<h1>Авторизация</h1>
+				<h2>Авторизация</h2>
 			</Container>
 			<Form onSubmit={handleSubmit}>
 				<Container className="py-3">
@@ -23,6 +24,7 @@ const Authorization = () => {
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupLogin">
 							<Form.Label>Логин</Form.Label>
 							<Form.Control
+								className="input"
 								name="login"
 								type="text"
 								placeholder="Введите логин"
@@ -35,6 +37,7 @@ const Authorization = () => {
 						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPassword">
 							<Form.Label>Пароль</Form.Label>
 							<Form.Control
+								className="input"
 								name="password"
 								type="password"
 								placeholder="Введите пароль"
@@ -43,7 +46,7 @@ const Authorization = () => {
 							/>
 						</Form.Group>
 					</Row>
-					<Row lg="5" className="justify-content-md-center">
+					<Row lg="5" className="justify-content-md-center mb-4">
 						<Button variant="primary" type="submit">
 							Войти
 						</Button>

@@ -5,7 +5,9 @@ import CheckTrackNumber from '../components/receiver_tracking/check_track_number
 function ReceiverTrackingPage() {
 	const trackNumberCheck = false;
 	return (
-		<div className="ReceiverTrackingPage">{trackNumberCheck ? <Body /> : <CheckTrackNumber />}</div>
+		<div className="ReceiverTrackingPage">
+			{!trackNumberCheck ? <Body /> : <CheckTrackNumber />}
+		</div>
 	);
 }
 

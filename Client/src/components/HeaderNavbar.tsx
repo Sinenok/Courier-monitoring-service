@@ -1,7 +1,9 @@
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { isLogged } from '../hooks/IsLoggedIn';
+import { getsProfile, isLogged } from '../hooks/IsLoggedIn';
+import './../styles/component-styles/HeaderNavbar.css';
+import imgMainLogo from './../img/logo/logoNav.png';
 
 /**
  * Условие isLoggedIn можно объединить, используя тернарный оператор
@@ -10,36 +12,48 @@ import { isLogged } from '../hooks/IsLoggedIn';
 
 function HeaderNavbar() {
 	const isLoggedIn = isLogged();
+	const profile = getsProfile();
+	
 	return (
-		<Navbar bg="dark" variant="dark" expand="lg">
-			<Container>
-				<Navbar.Brand as={Link} to={'/'}>
-					Название сервиса отслеживания
-				</Navbar.Brand>
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
-				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto">
-						<Nav.Link className="me-lg-5" as={Link} to={'/authorization'}>
-							Авторизация
-						</Nav.Link>
-						{!isLoggedIn ? (
-							<Nav.Link as={Link} to={'/registration'}>
-								Регистрация
+		<div className="HeaderNavbar">
+			<Navbar className="navbar" bg="dark" variant="dark" expand="lg">
+				<Container className="navbar-wrap">
+					<Navbar.Brand as={Link} to={'/'}>
+						<img className="logo-img" src={imgMainLogo} alt="" />
+					</Navbar.Brand>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse id="basic-navbar-nav">
+						<Nav className="nav-text ms-auto">
+							<Nav.Link className="nav-link" as={Link} to={'/authorization'}>
+								Авторизация
 							</Nav.Link>
-						) : (
-							<>
-								<Nav.Link as={Link} to={'/receivertracking'}>
-									Информация о заказе
+							{!isLoggedIn ? (
+								<Nav.Link className="nav-link" as={Link} to={'/registration'}>
+									Регистрация
 								</Nav.Link>
-								<Nav.Link as={Link} to={'/ordersubmission'}>
-									Отправить заказ
-								</Nav.Link>
-							</>
-						)}
-					</Nav>
-				</Navbar.Collapse>
-			</Container>
-		</Navbar>
+							) : (
+								<>
+									<Nav.Link className="nav-link" as={Link} to={'/receivertracking'}>
+										Информация о заказе
+									</Nav.Link>
+									<Nav.Link className="nav-link" as={Link} to={'/ordersubmission'}>
+										Отправить заказ
+									</Nav.Link>
+									{profile ? (
+										<div className="user-nav-wrap">
+											<Navbar.Text className="text">Здравствуйте,</Navbar.Text>
+											<Nav.Link className="nav-link-user" as={Link} to={'/authorization'}>
+												{profile}
+											</Nav.Link>
+										</div>
+									) : null}
+								</>
+							)}
+						</Nav>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
+		</div>
 	);
 }
 
