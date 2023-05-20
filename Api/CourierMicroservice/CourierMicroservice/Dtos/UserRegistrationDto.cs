@@ -9,4 +9,5 @@
 /// <param name="Mail"></param>
 /// <param name="Password"></param>
 /// <param name="Phone"></param>
-public record UserRegistrationDto(string FirstName, string LastName, string Login, string Mail, string Password, string Phone);
+/// <param name="Role"></param>
+public record UserRegistrationDto(string FirstName, string LastName, string Login, string Mail, string Password, string Phone, string Role);

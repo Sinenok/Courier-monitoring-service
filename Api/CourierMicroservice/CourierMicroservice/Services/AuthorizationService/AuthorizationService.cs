@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using CourierMicroservice.Context;
 using CourierMicroservice.Dtos;
+using CourierMicroservice.Exceptions;
 using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
@@ -121,7 +122,12 @@ public class AuthorizationService : IAuthorizationService
         }
 
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
-        var userRight = await _dbContext.Rights.FirstAsync(c => c.Name == "User", cancellationToken);
+        var userRight = await _dbContext.Rights.FirstOrDefaultAsync(c => c.Name.ToLower() == request.Role.ToLower(), cancellationToken);
+
+        if (userRight == null)
+        {
+            throw new NotFoundException("Role not found.");
+        }
 
         await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
                                         {
