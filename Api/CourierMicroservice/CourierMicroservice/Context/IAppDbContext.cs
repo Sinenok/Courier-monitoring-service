@@ -14,16 +14,6 @@ public interface IAppDbContext
     DbSet<Order> Orders { get; }
 
     /// <summary>
-    /// Возвращает набор статуса заказа.
-    /// </summary>
-    DbSet<OrderStatus> OrderStatuses { get; }
-
-    /// <summary>
-    /// Возвращает набор информацией о посылке.
-    /// </summary>
-    DbSet<PackageInformation> PackageInformation { get; }
-
-    /// <summary>
     /// Возвращает набор метода оплаты заказа.
     /// </summary>
     DbSet<PaymentMethod> PaymentMethods { get; }

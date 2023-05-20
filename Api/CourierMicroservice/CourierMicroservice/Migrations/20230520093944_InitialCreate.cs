@@ -20,8 +20,8 @@ namespace CourierMicroservice.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
                     Code = table.Column<int>(type: "integer", nullable: false, comment: "Код статуса"),
                     Name = table.Column<string>(type: "text", nullable: false, comment: "Название статуса"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,8 +37,8 @@ namespace CourierMicroservice.Migrations
                     Cost = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "Цена"),
                     ShortDescription = table.Column<string>(type: "text", nullable: false, comment: "Краткое описание"),
                     Weight = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "Вес"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,8 +53,8 @@ namespace CourierMicroservice.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
                     Code = table.Column<int>(type: "integer", nullable: false, comment: "Код"),
                     Name = table.Column<string>(type: "text", nullable: false, comment: "Название"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,8 +69,8 @@ namespace CourierMicroservice.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
                     Code = table.Column<int>(type: "integer", nullable: false, comment: "Код"),
                     Name = table.Column<string>(type: "text", nullable: false, comment: "Название"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,8 +94,8 @@ namespace CourierMicroservice.Migrations
                     rightid = table.Column<Guid>(name: "right_id", type: "uuid", nullable: false, comment: "Идентификатор прав пользователя"),
                     TokenCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, comment: "Дата создания токена"),
                     TokenExpires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, comment: "Дата истечения токена"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,8 +115,8 @@ namespace CourierMicroservice.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
                     userid = table.Column<Guid>(name: "user_id", type: "uuid", nullable: false, comment: "Идентификатор пользователя"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -148,8 +148,8 @@ namespace CourierMicroservice.Migrations
                     SenderAddress = table.Column<string>(type: "text", nullable: false, comment: "Адрес отправителя"),
                     SenderName = table.Column<string>(type: "text", nullable: false, comment: "Имя отправителя"),
                     TrackNumber = table.Column<Guid>(type: "uuid", nullable: false, comment: "Номер отслеживания"),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)))
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,21 +191,21 @@ namespace CourierMicroservice.Migrations
 
             migrationBuilder.InsertData(
                 table: "paymentMethods",
-                columns: new[] { "Id", "Code", "Name" },
+                columns: new[] { "Id", "Code", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("424b93cd-ca77-4bb5-b20b-e0f1201bc350"), 2, "Online" },
-                    { new Guid("7373f370-6206-41c7-b4e7-91caddf1a35a"), 1, "Card" },
-                    { new Guid("d353d9a8-b9e2-4b8e-9207-e898ef328b52"), 0, "Cash" }
+                    { new Guid("424b93cd-ca77-4bb5-b20b-e0f1201bc350"), 2, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Online", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("7373f370-6206-41c7-b4e7-91caddf1a35a"), 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Card", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("d353d9a8-b9e2-4b8e-9207-e898ef328b52"), 0, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Cash", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
                 table: "rights",
-                columns: new[] { "Id", "Code", "Name" },
+                columns: new[] { "Id", "Code", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"), 1, "Admin" },
-                    { new Guid("e10222c4-7723-498b-8bf4-83252378e0c9"), 0, "User" }
+                    { new Guid("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"), 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Admin", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("e10222c4-7723-498b-8bf4-83252378e0c9"), 0, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "User", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) }
                 });
 
             migrationBuilder.CreateIndex(

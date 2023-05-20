@@ -20,7 +20,7 @@ public interface IOrderService
     /// </summary>
     /// <param name="trackNumber"></param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    public Task<FullOrderInfo> GetOrder(Guid trackNumber, CancellationToken cancellationToken);
+    public Task<OrderDto> GetOrder(Guid trackNumber, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение вариантов метода оплаты.

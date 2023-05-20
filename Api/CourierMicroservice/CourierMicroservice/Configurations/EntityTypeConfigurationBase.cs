@@ -24,13 +24,8 @@ internal abstract class EntityTypeConfigurationBase<T> : IEntityTypeConfiguratio
         builder.Property(p => p.Id)
                .HasConversion(p => (Guid)p, p => p)
                .HasComment("Уникальный идентификатор");
-
-        // TODO убрать HasDefaultValueSql
-        builder.Property(p => p.CreatedDate)
-               .HasDefaultValue(new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero));
-
-        builder.Property(p => p.UpdatedDate)
-               .HasDefaultValue(new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero));
+        builder.Property(p => p.CreatedDate);
+        builder.Property(p => p.UpdatedDate);
         OnConfigure(builder);
     }
 }

@@ -33,21 +33,23 @@ public class OrderService : IOrderService
         return order.TrackNumber;
     }
 
-    public async Task<FullOrderInfo> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
+    public async Task<OrderDto> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
     {
-        var result = await _appDbContext.Orders.Where(q => q.TrackNumber == trackNumber)
+        var result = await _appDbContext.Orders.Where(order => order.TrackNumber == trackNumber)
+                                        .Include(o => o.PaymentMethod)
+                                        .Include(o => o.PackageInformation)
                                         .FirstOrDefaultAsync(cancellationToken) ??
                      throw new NotFoundException(typeof(Order), trackNumber);
 
-        return new FullOrderInfo(result.SenderName,
-                                 result.SenderAddress,
-                                 result.ReceiverName,
-                                 result.ReceiverAddress,
-                                 result.DeliveryCost,
-                                 result.PaymentMethod.Code,
-                                 result.PackageInformation.Cost,
-                                 result.PackageInformation.ShortDescription,
-                                 result.PackageInformation.Weight);
+        return new OrderDto(result.SenderName,
+                            result.SenderAddress,
+                            result.ReceiverName,
+                            result.ReceiverAddress,
+                            result.DeliveryCost,
+                            result.PaymentMethod.Code,
+                            result.PackageInformation.Cost,
+                            result.PackageInformation.ShortDescription,
+                            result.PackageInformation.Weight);
     }
 
     public async Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken)

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CourierMicroservice.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230509105314_InitialCreate")]
+    [Migration("20230520093944_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,10 @@ namespace CourierMicroservice.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -32,14 +35,10 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Уникальный идентификатор");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("user_id")
                         .HasColumnType("uuid")
@@ -62,9 +61,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Уникальный идентификатор");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("DeliveryCost")
                         .HasColumnType("numeric")
@@ -99,9 +96,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Номер отслеживания");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("courier_id")
                         .HasColumnType("uuid")
@@ -158,9 +153,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Код статуса");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -168,9 +161,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Название статуса");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -191,9 +182,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Цена");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
@@ -201,9 +190,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Краткое описание");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("decimal(18,2)")
@@ -228,9 +215,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Код");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -238,9 +223,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Название");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -287,9 +270,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Код");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -297,9 +278,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Название");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -334,9 +313,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Уникальный идентификатор");
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -385,9 +362,7 @@ namespace CourierMicroservice.Migrations
                         .HasComment("Дата истечения токена");
 
                     b.Property<DateTimeOffset>("UpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("right_id")
                         .HasColumnType("uuid")
