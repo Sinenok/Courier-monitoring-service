@@ -1,9 +1,9 @@
 ﻿namespace CourierMicroservice.Models;
 
 /// <summary>
-/// Представляет сущность рефреш-токена.
+/// Представляет рефреш-токен.
 /// </summary>
-public class RefreshToken
+internal class RefreshToken
 {
     public RefreshToken(string token) => Token = token;
 

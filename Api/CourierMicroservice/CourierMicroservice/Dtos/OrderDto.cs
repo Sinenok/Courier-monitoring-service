@@ -1,17 +1,17 @@
 ﻿namespace CourierMicroservice.Dtos;
 
 /// <summary>
-/// Представляет сущность заказа.
+/// Представляет заказ.
 /// </summary>
-/// <param name="SenderName"></param>
-/// <param name="SenderAddress"></param>
-/// <param name="ReceiverName"></param>
-/// <param name="ReceiverAddress"></param>
-/// <param name="DeliveryCost"></param>
-/// <param name="PaymentMethod"></param>
-/// <param name="ProductCost"></param>
-/// <param name="ProductDescription"></param>
-/// <param name="ProductWeight"></param>
+/// <param name="SenderName">Имя отправителя.</param>
+/// <param name="SenderAddress">Адрес отправителя.</param>
+/// <param name="ReceiverName">Имя получателя.</param>
+/// <param name="ReceiverAddress">Адрес получателя.</param>
+/// <param name="DeliveryCost">Стоимость доставки.</param>
+/// <param name="PaymentMethod">Метод оплаты.</param>
+/// <param name="ProductCost">Стоимость посылки.</param>
+/// <param name="ProductDescription">Описание посылки.</param>
+/// <param name="ProductWeight">Вес посылки.</param>
 public record OrderDto(string SenderName,
                        string SenderAddress,
                        string ReceiverName,

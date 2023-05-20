@@ -1,13 +1,13 @@
 ﻿namespace CourierMicroservice.Dtos;
 
 /// <summary>
-/// Представляет сущность регистрации.
+/// Представляет информацию о регистрации.
 /// </summary>
-/// <param name="FirstName"></param>
-/// <param name="LastName"></param>
-/// <param name="Login"></param>
-/// <param name="Mail"></param>
-/// <param name="Password"></param>
-/// <param name="Phone"></param>
-/// <param name="Role"></param>
+/// <param name="FirstName">Имя.</param>
+/// <param name="LastName">Фамилия.</param>
+/// <param name="Login">Логин.</param>
+/// <param name="Mail">Эл. почта.</param>
+/// <param name="Password">Пароль.</param>
+/// <param name="Phone">Номер телефона.</param>
+/// <param name="Role">Роль.</param>
 public record UserRegistrationDto(string FirstName, string LastName, string Login, string Mail, string Password, string Phone, string Role);
