@@ -2,7 +2,7 @@ using CourierMicroservice.Exceptions;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CourierMicroservice.IoC;
+namespace CourierMicroservice.Infrastructure.IoC;
 
 /// <summary>
 /// Содержит набор методов расширения для регистрации служб ProblemDetails в контейнере внедрения зависимостей.
