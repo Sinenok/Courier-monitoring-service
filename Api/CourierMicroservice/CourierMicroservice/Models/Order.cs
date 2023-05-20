@@ -1,5 +1,6 @@
 ﻿using CourierMicroservice.Models.Core;
 using CourierMicroservice.Models.Core.Primitives;
+using CourierMicroservice.Models.Dictionaries;
 
 namespace CourierMicroservice.Models;
 
@@ -16,7 +17,8 @@ public class Order : Entity<SequentialGuid>
                  string receiverAddress,
                  decimal deliveryCost,
                  PaymentMethod paymentMethod,
-                 PackageInformation packageInformation)
+                 PackageInformation packageInformation,
+                 OrderStatus orderStatus)
         : base(id)
     {
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
@@ -27,6 +29,7 @@ public class Order : Entity<SequentialGuid>
         DeliveryCost = deliveryCost;
         PaymentMethod = paymentMethod ?? throw new ArgumentNullException(nameof(paymentMethod));
         PackageInformation = packageInformation ?? throw new ArgumentNullException(nameof(packageInformation));
+        OrderStatus = orderStatus ?? throw new ArgumentNullException(nameof(orderStatus));
     }
 
     /// <summary>
@@ -43,6 +46,7 @@ public class Order : Entity<SequentialGuid>
         ReceiverAddress = null!;
         PaymentMethod = null!;
         PackageInformation = null!;
+        OrderStatus = null!;
     }
 
     /// <summary>
@@ -63,7 +67,7 @@ public class Order : Entity<SequentialGuid>
     /// <summary>
     /// Возвращает информацию о статусе заказа.
     /// </summary>
-    public virtual OrderStatus? OrderStatus { get; set; }
+    public virtual OrderStatus OrderStatus { get; set; }
 
     /// <summary>
     /// Возвращает информацию о посылке.

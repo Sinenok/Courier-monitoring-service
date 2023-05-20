@@ -1,5 +1,6 @@
 ﻿using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Context;
@@ -20,13 +21,13 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     }
 
     /// <inheritdoc />
-    public DbSet<Order> Orders => Set<Order>();
-
-    /// <inheritdoc />
     public DbSet<OrderStatus> OrderStatuses => Set<OrderStatus>();
 
     /// <inheritdoc />
     public DbSet<PackageInformation> PackageInformation => Set<PackageInformation>();
+
+    /// <inheritdoc />
+    public DbSet<Order> Orders => Set<Order>();
 
     /// <inheritdoc />
     public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();

@@ -1,5 +1,6 @@
 ﻿using CourierMicroservice.Models.Core;
 using CourierMicroservice.Models.Core.Primitives;
+using CourierMicroservice.Models.Dictionaries;
 
 namespace CourierMicroservice.Models;
 

@@ -1,6 +1,6 @@
 ﻿using CourierMicroservice.Dtos;
 using CourierMicroservice.Dtos.Common;
-using CourierMicroservice.Models;
+using CourierMicroservice.Models.Dictionaries;
 
 namespace CourierMicroservice.Services.OrderService;
 

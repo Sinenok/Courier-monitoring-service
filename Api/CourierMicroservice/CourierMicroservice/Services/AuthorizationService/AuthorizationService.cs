@@ -7,6 +7,7 @@ using CourierMicroservice.Dtos;
 using CourierMicroservice.Exceptions;
 using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core.Primitives;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 

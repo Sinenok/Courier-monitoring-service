@@ -1,4 +1,5 @@
 using CourierMicroservice.Models;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Context;

@@ -1,7 +1,7 @@
 ﻿using CourierMicroservice.Models.Core;
 using CourierMicroservice.Models.Core.Primitives;
 
-namespace CourierMicroservice.Models;
+namespace CourierMicroservice.Models.Dictionaries;
 
 /// <summary>
 /// Представляет сущность прав пользователя.

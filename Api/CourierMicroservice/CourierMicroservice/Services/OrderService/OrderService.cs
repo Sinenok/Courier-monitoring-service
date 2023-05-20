@@ -6,6 +6,7 @@ using CourierMicroservice.Exceptions;
 using CourierMicroservice.Extensions;
 using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core.Primitives;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Services.OrderService;
@@ -37,7 +38,8 @@ public class OrderService : IOrderService
                               orderDto.ReceiverAddress,
                               orderDto.DeliveryCost,
                               paymentMethod,
-                              packageInformation);
+                              packageInformation,
+                              OrderStatus.Created);
 
         _appDbContext.Orders.Add(order);
         await _appDbContext.SaveChangesAsync(cancellationToken);
@@ -72,7 +74,7 @@ public class OrderService : IOrderService
     /// <summary>
     /// Получение всех заказов пользователя.
     /// </summary>
-    /// <param name="skip">Смещение для пагинации..</param>
+    /// <param name="skip">Смещение для пагинации.</param>
     /// <param name="take">Количество запрашиваемых сущностей.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     public async Task<DataResult<OrderDto>> GetUserSentOrders(int? skip, int? take, CancellationToken cancellationToken)

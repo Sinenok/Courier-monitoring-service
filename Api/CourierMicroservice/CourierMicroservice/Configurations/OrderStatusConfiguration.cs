@@ -1,4 +1,4 @@
-using CourierMicroservice.Models;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
