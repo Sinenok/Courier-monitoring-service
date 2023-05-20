@@ -118,7 +118,7 @@ public class AuthorizationService : IAuthorizationService
         }
 
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
-        var userRight = await _dbContext.Rights.FirstOrDefaultAsync(c => c.Name.ToLower() == request.Role.ToLower(), cancellationToken);
+        var userRight = Right.FromValue(request.Role);
 
         if (userRight == null)
         {
