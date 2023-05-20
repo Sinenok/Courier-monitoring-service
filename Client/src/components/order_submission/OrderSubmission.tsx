@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Row, Col, Container, Button, InputGroup } from 'react-bootstrap';
 import { useOrderSubmission, usePaymentMethods } from './behaivor';
-import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+// import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 // import { Decimal } from 'decimal.js';
 
 const OrderSubmission = () => {
@@ -38,20 +38,20 @@ const OrderSubmission = () => {
 	// const [productWeight, setProductWeight] = useState(0.0);
 	// console.log('productWeight', productWeight);
 
-	const defaultState = {
-		center: [55.751574, 37.573856],
-		zoom: 5
-	};
+	// const defaultState = {
+	// 	center: [55.751574, 37.573856],
+	// 	zoom: 5
+	// };
 
 	return (
 		<div className="OrderSubmission">
 			<Container className="text-center pt-5">
 				<h1>Отправка заказа</h1>
-				<YMaps>
+				{/* <YMaps>
 					<Map defaultState={defaultState} width="100%" height="400px">
 						<Placemark geometry={[51.684758, 37.738521]} />
 					</Map>
-				</YMaps>
+				</YMaps> */}
 			</Container>
 			<Form onSubmit={handleSubmit}>
 				<Container className="py-3">

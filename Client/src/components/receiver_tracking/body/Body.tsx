@@ -4,7 +4,9 @@ import OrderTitle from './../OrderTitle';
 import OrderInfo from './../OrderInfo';
 import OrderList from './../OrderList';
 import CourierTrackingMap from './../CourierTrackingMap';
-import { orderInfo, orderList, orderTitle } from './behavior';
+// import { orderInfo, orderList, orderTitle } from './behavior';
+import { getsOrderInfo } from '../../../hooks/IsLoggedIn';
+import { IOrderInfo, IOrderList, IOrderTitle } from './types';
 
 /**
  * Слишком большое количество констант.
@@ -23,6 +25,29 @@ import { orderInfo, orderList, orderTitle } from './behavior';
  *  */
 
 function Body() {
+	const isOrderInfoIn = getsOrderInfo();
+
+	const orderInfo: IOrderInfo = {
+		sender: isOrderInfoIn.senderName,
+		senderAddress: isOrderInfoIn.senderAddress,
+		recipient: isOrderInfoIn.receiverName,
+		deliveryAddress: isOrderInfoIn.receiverAddress,
+		plannedDeliveryDate: 'Дата доставки',
+		shippingCost: isOrderInfoIn.deliveryCost,
+		paymentMethod: isOrderInfoIn.paymentMethod
+	};
+
+	const orderList: IOrderList = {
+		productWeight: isOrderInfoIn.productWeight,
+		productDescription: isOrderInfoIn.productDescription,
+		amountPayable: isOrderInfoIn.productCost,
+		totalPrice: isOrderInfoIn.deliveryCost + isOrderInfoIn.productCost
+	};
+
+	const orderTitle: IOrderTitle = {
+		orderNumber: 555,
+		orderStatus: 'выполняется'
+	};
 	return (
 		<Container className="py-3">
 			<Row className="justify-content-center mb-3">

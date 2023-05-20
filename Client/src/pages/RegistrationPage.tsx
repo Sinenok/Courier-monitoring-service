@@ -1,12 +1,27 @@
 import React from 'react';
 import RegisterAccess from '../components/RegisterAccess';
 import Registration from '../components/registration/Registration';
-import { isRegistered } from '../hooks/IsLoggedIn';
+import { isRegisterLoad, isRegistered } from '../hooks/IsLoggedIn';
+import { Container, Spinner } from 'react-bootstrap';
 
 /** RenderProfile - в отдельный компонент - ИСПРАВЛЕНО */
 const RegistrationPage = () => {
 	const isRegisteredIn = isRegistered();
-	return <div>{isRegisteredIn ? <RegisterAccess /> : <Registration />}</div>;
+	const isLoad = isRegisterLoad();
+
+	return (
+		<div>
+			{isRegisteredIn && !isLoad ? (
+				<RegisterAccess />
+			) : !isRegisteredIn && !isLoad ? (
+				<Registration />
+			) : (
+				<Container className="text-center pt-5 mb-5">
+					<Spinner animation="border" variant="primary" />
+				</Container>
+			)}
+		</div>
+	);
 };
 
 export default RegistrationPage;

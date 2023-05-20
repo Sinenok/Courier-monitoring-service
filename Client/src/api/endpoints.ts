@@ -9,7 +9,8 @@ const Endpoints = {
 	},
 	ORDER: {
 		CREATE: `${httpHost}/api/Order/create-order`,
-		PAYMENT: `${httpHost}/api/Order/get-payment-methods`
+		PAYMENT: `${httpHost}/api/Order/get-payment-methods`,
+		ORDERINFO: `${httpHost}/api/Order/order-info`
 	}
 };
 

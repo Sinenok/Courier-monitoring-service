@@ -1,7 +1,14 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import api from '../../api';
-import { orderSendStart, orderSendSucess, orderSendFailure } from './orderReducer';
-import { IOrderCreateRequest } from '../../api/order/types';
+import {
+	orderSendStart,
+	orderSendSucess,
+	orderSendFailure,
+	getOrderInfoStart,
+	getOrderInfoSucess,
+	getOrderInfoFailure
+} from './orderReducer';
+import { IOrderCreateRequest, IOrderInfoRequest } from '../../api/order/types';
 
 export const createOrder =
 	(data: IOrderCreateRequest) =>
@@ -27,3 +34,18 @@ export const getPaymentMethod = async () => {
 		console.error(e);
 	}
 };
+
+export const getOrderInfo =
+	(data: IOrderInfoRequest) =>
+	async (dispatch: Dispatch<any>): Promise<void> => {
+		try {
+			dispatch(getOrderInfoStart());
+
+			const res = await api.order.getOrder(data);
+
+			dispatch(getOrderInfoSucess(res.data));
+		} catch (e: any) {
+			console.error(e);
+			dispatch(getOrderInfoFailure(e.response.data));
+		}
+	};

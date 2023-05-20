@@ -7,9 +7,9 @@ import { IOrderList } from './body/types';
  */
 
 const OrderList: FC<IOrderList> = ({
-	quantityProducts,
+	productWeight,
 	productDescription,
-	shippingCost,
+	amountPayable,
 	totalPrice
 }) => (
 	<Card className="h-100 bg-light">
@@ -18,9 +18,9 @@ const OrderList: FC<IOrderList> = ({
 		</Card.Header>
 		<Card.Body className="text-centers">
 			<Card.Text>
-				Количество товара:{' '}
+				Вес товара:{' '}
 				<a className="text-primary" href="#">
-					{quantityProducts}
+					{productWeight} грамм
 				</a>
 			</Card.Text>
 			<Card.Text>
@@ -30,15 +30,15 @@ const OrderList: FC<IOrderList> = ({
 				</a>
 			</Card.Text>
 			<Card.Text>
-				Цена доставки:{' '}
+				Стоимость товара:{' '}
 				<a className="text-primary" href="#">
-					{shippingCost}
+					{amountPayable} рублей
 				</a>
 			</Card.Text>
 			<Card.Text>
 				Итоговая цена:{' '}
 				<a className="text-primary" href="#">
-					{totalPrice}
+					{totalPrice} рублей
 				</a>
 			</Card.Text>
 		</Card.Body>
