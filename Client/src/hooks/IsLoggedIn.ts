@@ -12,7 +12,11 @@ import { IRootState } from '../store';
 export const isRegistered = () => {
 	return useSelector((state: IRootState) => state.auth.registrData.isRegistered);
 };
-
+// !!!!
+export const isRegisterLoad = () => {
+	return useSelector((state: IRootState) => state.auth.registrData.isLoading);
+};
+// !!!
 export const isOrderSending = () => {
 	return useSelector((state: IRootState) => state.order.createOrderData.trackNumber);
 };
@@ -25,4 +29,8 @@ export const isLogged = () => {
 export const getsProfile = () => {
 	useSelector((state: IRootState) => state.auth.profileData.profile);
 	return sessionStorage.getItem('userName');
+};
+
+export const getsOrderInfo = () => {
+	return useSelector((state: IRootState) => state.order.getOrderInfoData.order);
 };

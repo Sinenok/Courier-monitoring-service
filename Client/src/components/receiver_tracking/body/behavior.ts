@@ -2,18 +2,19 @@ import { IOrderInfo, IOrderList, IOrderTitle } from './types';
 
 export const orderInfo: IOrderInfo = {
 	sender: 'Название магазина',
+	senderAddress: 'isOrderInfoIn.senderAddress',
 	recipient: 'ФИО клиента',
 	deliveryAddress: 'Адрес доставки',
 	plannedDeliveryDate: 'Дата доставки',
-	amountPayable: 'Цена покупки',
-	paymentMethod: 'Карта/наличные'
+	shippingCost: 1,
+	paymentMethod: 1
 };
 
 export const orderList: IOrderList = {
-	quantityProducts: 1,
+	productWeight: 'isOrderInfoIn.productWeight',
 	productDescription: 'Описание товара',
-	shippingCost: 'Цена',
-	totalPrice: 'Цена товара + дотставки'
+	amountPayable: 1,
+	totalPrice: 1
 };
 
 export const orderTitle: IOrderTitle = {

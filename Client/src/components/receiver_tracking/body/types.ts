@@ -1,17 +1,18 @@
 export interface IOrderInfo {
 	sender: string;
+	senderAddress: string;
 	recipient: string;
 	deliveryAddress: string;
 	plannedDeliveryDate: string;
-	amountPayable: string;
-	paymentMethod: string;
+	shippingCost: number;
+	paymentMethod: number;
 }
 
 export interface IOrderList {
-	quantityProducts: number;
+	productWeight: string;
 	productDescription: string;
-	shippingCost: string;
-	totalPrice: string;
+	amountPayable: number;
+	totalPrice: number;
 }
 
 export interface IOrderTitle {

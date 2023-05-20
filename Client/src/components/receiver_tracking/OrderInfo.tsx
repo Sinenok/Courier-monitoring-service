@@ -14,13 +14,14 @@ import { IOrderInfo } from './body/types';
 
 const OrderInfo: FC<IOrderInfo> = ({
 	sender,
+	senderAddress,
 	recipient,
 	deliveryAddress,
 	plannedDeliveryDate,
-	amountPayable,
+	shippingCost,
 	paymentMethod
 }) => (
-	<Card className="bg-light">
+	<Card className="bg-light h-100">
 		<Card.Header className="text-center" as="h4">
 			Информация о заказе
 		</Card.Header>
@@ -29,6 +30,12 @@ const OrderInfo: FC<IOrderInfo> = ({
 				Отправитель:{' '}
 				<a className="text-primary" href="#">
 					{sender}
+				</a>
+			</Card.Text>
+			<Card.Text>
+				Адрес отправителя:{' '}
+				<a className="text-primary" href="#">
+					{senderAddress}
 				</a>
 			</Card.Text>
 			<Card.Text>
@@ -50,15 +57,21 @@ const OrderInfo: FC<IOrderInfo> = ({
 				</a>
 			</Card.Text>
 			<Card.Text>
-				Сумма к оплате:{' '}
+				Стоимость доставки:{' '}
 				<a className="text-primary" href="#">
-					{amountPayable}
+					{shippingCost} рублей
 				</a>
 			</Card.Text>
 			<Card.Text>
 				Способ оплаты:{' '}
 				<a className="text-primary" href="#">
-					{paymentMethod}
+					{paymentMethod === 0 ? (
+						<span>Наличные</span>
+					) : paymentMethod === 1 ? (
+						<span>Карта</span>
+					) : (
+						<span>Онлайн</span>
+					)}
 				</a>
 			</Card.Text>
 		</Card.Body>

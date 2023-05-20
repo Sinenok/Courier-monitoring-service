@@ -45,3 +45,20 @@ export interface IPaymentMethodsResponce {
 	modifiedUserId: null;
 	id: string;
 }
+
+//get order
+export interface IOrderInfoResponce {
+	senderName: string;
+	senderAddress: string;
+	receiverName: string;
+	receiverAddress: string;
+	deliveryCost: number;
+	paymentMethod: number;
+	productCost: number;
+	productDescription: string;
+	productWeight: number;
+}
+
+export interface IOrderInfoRequest {
+	trackNumber: string;
+}

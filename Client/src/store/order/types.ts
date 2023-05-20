@@ -5,6 +5,11 @@ export interface OrderState {
 		error: string | null;
 		trackNumber: string | null;
 	};
+	getOrderInfoData: {
+		isLoading: boolean;
+		error: string | null;
+		order: any | null;
+	};
 }
 
 export const initialState: OrderState = {
@@ -13,5 +18,10 @@ export const initialState: OrderState = {
 		isSending: false,
 		error: null,
 		trackNumber: null
+	},
+	getOrderInfoData: {
+		isLoading: false,
+		error: null,
+		order: null
 	}
 };
