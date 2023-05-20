@@ -30,6 +30,7 @@ public class AuthorizationController : ControllerBase
         return Ok(new TokenResultDto(token));
     }
 
+    [Authorize]
     [HttpPost("refresh-token")]
     public async Task<ActionResult<string>> RefreshToken(CancellationToken cancellationToken)
     {

@@ -1,5 +1,6 @@
 ﻿using CourierMicroservice.Dtos;
 using CourierMicroservice.Services.OrderService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourierMicroservice.Controllers;
@@ -12,6 +13,7 @@ public class OrderController : ControllerBase
 
     public OrderController(IOrderService orderService) => _orderService = orderService;
 
+    [Authorize]
     [HttpPost("create-order")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -21,6 +23,7 @@ public class OrderController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize]
     [HttpGet("order-info/{trackNumber:guid}")]
     public async Task<ActionResult> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
     {
@@ -28,6 +31,7 @@ public class OrderController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize]
     [HttpGet("get-payment-methods")]
     public async Task<ActionResult> GetPaymentMethods(CancellationToken cancellationToken)
     {

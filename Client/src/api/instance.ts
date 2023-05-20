@@ -29,12 +29,8 @@ const urlsSkipAuth = [
  *  Переписал
  */
 
-axiosInstance.interceptors.request.use(async (config) => {
-	if (config.url && urlsSkipAuth.includes(config.url)) {
-		return config;
-	}
-	const accessToken = await store.dispatch(getAccessToken());
-	// console.warn('asdasd', accessToken);
+axiosInstance.interceptors.request.use((config) => {
+	const accessToken = sessionStorage.getItem('token');
 	if (accessToken) {
 		const autharization = `Bearer ${accessToken}`;
 		config.headers.Authorization = autharization;
