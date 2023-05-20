@@ -109,7 +109,8 @@ public class AuthorizationService : IAuthorizationService
 
     public async Task Register(UserRegistrationDto request, CancellationToken cancellationToken)
     {
-        var isUserExist = await _dbContext.Users.AnyAsync(u => u.Login == request.Login, cancellationToken);
+        var isUserExist = await _dbContext.Users.Include(u => u.Right)
+                                          .AnyAsync(u => u.Login == request.Login, cancellationToken);
 
         if (isUserExist)
         {
@@ -146,7 +147,7 @@ public class AuthorizationService : IAuthorizationService
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, user.Login),
-            new Claim(ClaimTypes.Role, "User")
+            new Claim(ClaimTypes.Role, user.Right.Name)
         };
 
         var value = _configuration.GetSection("AppSettings:Token")
