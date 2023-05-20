@@ -20,11 +20,6 @@ public interface IAppDbContext
     DbSet<PaymentMethod> PaymentMethods { get; }
 
     /// <summary>
-    /// Возвращает набор прав пользователя.
-    /// </summary>
-    DbSet<Right> Rights { get; }
-
-    /// <summary>
     /// Возвращает набор сущность пользователя.
     /// </summary>
     DbSet<User> Users { get; }

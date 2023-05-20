@@ -26,8 +26,7 @@ public class OrderService : IOrderService
     {
         var user = await GetCurrentUser(cancellationToken);
 
-        var paymentMethod = await _appDbContext.PaymentMethods.FirstOrDefaultAsync(q => q.Code == orderDto.PaymentMethod, cancellationToken) ??
-                            throw new NotFoundException(typeof(PaymentMethod), orderDto.PaymentMethod);
+        var paymentMethod = PaymentMethod.FromValue(orderDto.PaymentMethod);
         var packageInformation = new PackageInformation(SequentialGuid.Create(), orderDto.ProductDescription, orderDto.ProductWeight, orderDto.ProductCost);
 
         var order = new Order(SequentialGuid.Create(),

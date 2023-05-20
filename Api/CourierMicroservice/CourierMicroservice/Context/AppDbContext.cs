@@ -32,9 +32,6 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     /// <inheritdoc />
     public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();
 
-    /// <inheritdoc />
-    public DbSet<Right> Rights => Set<Right>();
-
     /// <inheritdoc cref="DbContext" />
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {

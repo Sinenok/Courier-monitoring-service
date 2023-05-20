@@ -23,8 +23,6 @@ internal class PaymentMethodConfiguration : EntityTypeConfigurationBase<PaymentM
         builder.Property(p => p.Name)
                .HasComment("Название");
 
-        builder.HasData(new PaymentMethod(Guid.Parse("d353d9a8-b9e2-4b8e-9207-e898ef328b52"), "Cash", 0),
-                        new PaymentMethod(Guid.Parse("7373f370-6206-41c7-b4e7-91caddf1a35a"), "Card", 1),
-                        new PaymentMethod(Guid.Parse("424b93cd-ca77-4bb5-b20b-e0f1201bc350"), "Online", 2));
+        builder.HasData(PaymentMethod.Card, PaymentMethod.Cash, PaymentMethod.Online);
     }
 }
