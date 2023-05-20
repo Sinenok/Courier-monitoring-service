@@ -72,4 +72,9 @@ public class OrderStatus : Entity<SequentialGuid>
 
         throw new InvalidOperationException($"Не удалось найти статус заказа с указанным кодом {code}");
     }
+
+    /// <summary>
+    /// Возвращает все значения перечисления.
+    /// </summary>
+    public static IReadOnlyCollection<OrderStatus> GetAllValues() => OrderStatuses.Values;
 }

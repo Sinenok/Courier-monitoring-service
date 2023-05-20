@@ -1,5 +1,4 @@
 using CourierMicroservice.Models;
-using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Context;
@@ -14,10 +13,10 @@ public interface IAppDbContext
     /// </summary>
     DbSet<Order> Orders { get; }
 
-    /// <summary>
-    /// Возвращает набор метода оплаты заказа.
-    /// </summary>
-    DbSet<PaymentMethod> PaymentMethods { get; }
+    // /// <summary>
+    // /// Возвращает набор метода оплаты заказа.
+    // /// </summary>
+    // DbSet<PaymentMethod> PaymentMethods { get; }
 
     /// <summary>
     /// Возвращает набор сущность пользователя.

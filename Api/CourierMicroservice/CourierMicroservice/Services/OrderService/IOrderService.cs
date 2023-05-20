@@ -17,6 +17,14 @@ public interface IOrderService
     public Task<Guid> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Получение заказов в статусе создано.
+    /// </summary>
+    /// <param name="skip">Смещение для пагинации.</param>
+    /// <param name="take">Количество запрашиваемых сущностей.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<DataResult<CourierOrderDto>> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение заказа по идентификатору.
     /// </summary>
     /// <param name="trackNumber"></param>
@@ -27,10 +35,10 @@ public interface IOrderService
     /// Получение вариантов метода оплаты.
     /// </summary>
     /// <param name="cancellationToken">Токен отмены.</param>
-    public Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken);
+    public IEnumerable<PaymentMethod> GetPaymentMethods();
 
     /// <summary>
-    /// Получение всех заказов пользователя.
+    /// Получение заказов пользователя.
     /// </summary>
     /// <param name="skip">Смещение для пагинации.</param>
     /// <param name="take">Количество запрашиваемых сущностей.</param>

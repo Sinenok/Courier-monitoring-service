@@ -23,7 +23,16 @@ public class OrderController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Courier")]
+    [HttpGet("created-orders")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var result = await _orderService.GetCreatedOrders(skip, take, cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("order-info/{trackNumber:guid}")]
     public async Task<ActionResult> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
     {
@@ -33,9 +42,9 @@ public class OrderController : ControllerBase
 
     [Authorize]
     [HttpGet("get-payment-methods")]
-    public async Task<ActionResult> GetPaymentMethods(CancellationToken cancellationToken)
+    public ActionResult GetPaymentMethods()
     {
-        var result = await _orderService.GetPaymentMethods(cancellationToken);
+        var result = _orderService.GetPaymentMethods();
         return Ok(result);
     }
 

@@ -66,4 +66,9 @@ public class PaymentMethod : Entity<SequentialGuid>
 
         throw new InvalidOperationException($"Не удалось найти метод оплаты с указанным кодом {code}");
     }
+
+    /// <summary>
+    /// Возвращает все значения перечисления.
+    /// </summary>
+    public static IReadOnlyCollection<PaymentMethod> GetAllValues() => PaymentMethods.Values;
 }

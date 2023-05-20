@@ -66,4 +66,9 @@ public class Right : Entity<SequentialGuid>
 
         throw new InvalidOperationException($"Не удалось найти право пользователя с указанным кодом {code}");
     }
+
+    /// <summary>
+    /// Возвращает все значения перечисления.
+    /// </summary>
+    public static IReadOnlyCollection<Right> GetAllValues() => Rights.Values;
 }
