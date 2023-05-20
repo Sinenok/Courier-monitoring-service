@@ -1,4 +1,5 @@
 ﻿using CourierMicroservice.Dtos;
+using CourierMicroservice.Dtos.Common;
 using CourierMicroservice.Models;
 
 namespace CourierMicroservice.Services.OrderService;
@@ -27,4 +28,12 @@ public interface IOrderService
     /// </summary>
     /// <param name="cancellationToken">Токен отмены.</param>
     public Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получение всех заказов пользователя.
+    /// </summary>
+    /// <param name="skip">Смещение для пагинации.</param>
+    /// <param name="take">Количество запрашиваемых сущностей.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<DataResult<OrderDto>> GetUserSentOrders(int? skip, int? take, CancellationToken cancellationToken);
 }

@@ -25,20 +25,15 @@ public class AuthorizationService : IAuthorizationService
         _dbContext = productContext;
     }
 
-    public UserInfoDto? GetUserInfo()
+    public UserInfoDto GetUserInfo()
     {
         if (_contextAccessor.HttpContext == null)
         {
-            return null;
+            throw new ApplicationException();
         }
 
-        var name = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
-        var role = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
-
-        if (name == null || role == null)
-        {
-            return null;
-        }
+        var name = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) ?? throw new NotFoundException(typeof(PaymentMethod), "User not founded in claim.");
+        var role = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role) ?? throw new NotFoundException(typeof(PaymentMethod), "User role not founded in claim.");
 
         return new UserInfoDto(name, role);
     }

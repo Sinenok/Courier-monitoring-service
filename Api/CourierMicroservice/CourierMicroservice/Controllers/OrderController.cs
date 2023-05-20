@@ -38,4 +38,14 @@ public class OrderController : ControllerBase
         var result = await _orderService.GetPaymentMethods(cancellationToken);
         return Ok(result);
     }
+
+    [Authorize]
+    [HttpGet("user-sent-orders")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> GetUserSentOrders(int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var result = await _orderService.GetUserSentOrders(skip, take, cancellationToken);
+        return Ok(result);
+    }
 }

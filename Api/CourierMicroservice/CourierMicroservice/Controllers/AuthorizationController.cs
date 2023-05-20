@@ -16,7 +16,7 @@ public class AuthorizationController : ControllerBase
 
     [Authorize]
     [HttpGet("current-user")]
-    public ActionResult<string> GetUserInfo()
+    public ActionResult GetUserInfo()
     {
         var userName = _authorizationService.GetUserInfo();
         return Ok(userName);
