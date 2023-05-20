@@ -24,16 +24,22 @@ public class AuthorizationService : IAuthorizationService
         _dbContext = productContext;
     }
 
-    public string? GetMyName()
+    public UserInfoDto? GetUserInfo()
     {
-        var result = string.Empty;
-
-        if (_contextAccessor.HttpContext != null)
+        if (_contextAccessor.HttpContext == null)
         {
-            result = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            return null;
         }
 
-        return result;
+        var name = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+        var role = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+
+        if (name == null || role == null)
+        {
+            return null;
+        }
+
+        return new UserInfoDto(name, role);
     }
 
     public async Task<string> Login(UserLoginDto request, CancellationToken cancellationToken)

@@ -11,7 +11,7 @@ public interface IAuthorizationService
     /// Получение имени текущего пользователя.
     /// </summary>
     /// <returns></returns>
-    public string? GetMyName();
+    public UserInfoDto? GetUserInfo();
 
     /// <summary>
     /// Авторизация пользователя.
