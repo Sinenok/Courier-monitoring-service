@@ -47,31 +47,6 @@ public class OrderService : IOrderService
     }
 
     /// <inheritdoc />
-    public async Task<DataResult<CourierOrderDto>> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken) //!!
-    {
-        var query = _appDbContext.Orders.Where(order => order.OrderStatus == OrderStatus.Created)
-                                 .ApplyPagination(skip, take);
-
-        var orders = await query.Include(o => o.PaymentMethod)
-                                .Include(o => o.PackageInformation)
-                                .ToListAsync(cancellationToken);
-
-        var result = orders.Select(order => new CourierOrderDto(order.Id,
-                                                                order.SenderName,
-                                                                order.SenderAddress,
-                                                                order.ReceiverName,
-                                                                order.ReceiverAddress,
-                                                                order.DeliveryCost,
-                                                                order.PaymentMethod.Code,
-                                                                order.PackageInformation.Weight))
-                           .ToList();
-
-        var totalCount = await query.CountAsync(cancellationToken);
-
-        return new DataResult<CourierOrderDto>(result, totalCount);
-    }
-
-    /// <inheritdoc />
     public async Task<OrderDto> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
     {
         var result = await _appDbContext.Orders.Where(order => order.TrackNumber == trackNumber)

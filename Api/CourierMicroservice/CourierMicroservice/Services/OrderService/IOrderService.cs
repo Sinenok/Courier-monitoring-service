@@ -17,14 +17,6 @@ public interface IOrderService
     public Task<Guid> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Получение заказов в статусе создано.
-    /// </summary>
-    /// <param name="skip">Смещение для пагинации.</param>
-    /// <param name="take">Количество запрашиваемых сущностей.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    public Task<DataResult<CourierOrderDto>> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken);
-
-    /// <summary>
     /// Получение заказа по идентификатору.
     /// </summary>
     /// <param name="trackNumber"></param>

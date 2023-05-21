@@ -13,23 +13,13 @@ public class OrderController : ControllerBase
 
     public OrderController(IOrderService orderService) => _orderService = orderService;
 
-    [Authorize]
+    [Authorize(Roles = "User,Admin")]
     [HttpPost("create-order")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
     {
         var result = await _orderService.CreateOrder(orderDto, cancellationToken);
-        return Ok(result);
-    }
-
-    [Authorize(Roles = "Courier")]
-    [HttpGet("created-orders")]
-    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken)
-    {
-        var result = await _orderService.GetCreatedOrders(skip, take, cancellationToken);
         return Ok(result);
     }
 
