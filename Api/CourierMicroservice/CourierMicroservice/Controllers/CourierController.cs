@@ -21,4 +21,14 @@ public class CourierController : ControllerBase
         var result = await _courierService.GetCreatedOrders(skip, take, cancellationToken);
         return Ok(result);
     }
+
+    [Authorize(Roles = "Courier,Admin")]
+    [HttpPost("take-order")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> TakeOrder(Guid orderId, CancellationToken cancellationToken)
+    {
+        var result = await _courierService.TakeOrder(orderId, cancellationToken);
+        return Ok(result);
+    }
 }

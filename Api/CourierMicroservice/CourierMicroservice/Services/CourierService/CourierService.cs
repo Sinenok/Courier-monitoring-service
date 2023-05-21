@@ -1,7 +1,10 @@
+using System.Security.Claims;
 using CourierMicroservice.Context;
 using CourierMicroservice.Dtos;
 using CourierMicroservice.Dtos.Common;
+using CourierMicroservice.Exceptions;
 using CourierMicroservice.Extensions;
+using CourierMicroservice.Models;
 using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,5 +44,36 @@ public class CourierService : ICourierService
         var totalCount = await query.CountAsync(cancellationToken);
 
         return new DataResult<CourierOrderDto>(result, totalCount);
+    }
+
+    /// <summary>
+    /// Взятие заказа в работу.
+    /// </summary>
+    /// <param name="orderId">Идентификатор заказа.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public async Task<Guid> TakeOrder(Guid orderId, CancellationToken cancellationToken)
+    {
+        var user = await GetCurrentUser(cancellationToken);
+        var courier = await _appDbContext.Couriers.FirstOrDefaultAsync(c => c.User == user, cancellationToken) ?? throw new NotFoundException(typeof(Courier), user.Id);
+        var order = await _appDbContext.Orders.FirstOrDefaultAsync(order => (Guid)order.Id == orderId, cancellationToken) ?? throw new NotFoundException(typeof(Order), orderId);
+        order.OrderStatus = OrderStatus.CourierAssigned;
+        order.Courier = courier;
+
+        await _appDbContext.SaveChangesAsync(cancellationToken);
+
+        return order.Id;
+    }
+
+    private async Task<User> GetCurrentUser(CancellationToken cancellationToken)
+    {
+        if (_contextAccessor.HttpContext == null)
+        {
+            throw new ApplicationException();
+        }
+
+        var name = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) ?? throw new NotFoundException(typeof(PaymentMethod), "User not founded in claim.");
+        var user = await _appDbContext.Users.FirstOrDefaultAsync(user => user.Login == name, cancellationToken) ?? throw new NotFoundException(typeof(PaymentMethod), name);
+
+        return user;
     }
 }

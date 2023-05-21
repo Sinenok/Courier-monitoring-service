@@ -126,12 +126,23 @@ public class AuthorizationService : IAuthorizationService
             throw new NotFoundException("Role not found.");
         }
 
-        await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
-                                        {
-                                            LastName = request.LastName,
-                                            Phone = request.Phone
-                                        },
-                                        cancellationToken);
+        if (userRight == Right.Admin)
+        {
+            throw new NotFoundException("You can not create user with admin role.");
+        }
+
+        var user = new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
+        {
+            LastName = request.LastName,
+            Phone = request.Phone
+        };
+
+        await _dbContext.Users.AddAsync(user, cancellationToken);
+
+        if (userRight == Right.Courier)
+        {
+            await _dbContext.Couriers.AddAsync(new Courier(SequentialGuid.Create(), user), cancellationToken);
+        }
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

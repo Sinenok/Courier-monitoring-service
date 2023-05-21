@@ -29,6 +29,9 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();
 
     /// <inheritdoc />
+    public DbSet<Courier> Couriers => Set<Courier>();
+
+    /// <inheritdoc />
     public DbSet<Order> Orders => Set<Order>();
 
     /// <inheritdoc cref="DbContext" />
