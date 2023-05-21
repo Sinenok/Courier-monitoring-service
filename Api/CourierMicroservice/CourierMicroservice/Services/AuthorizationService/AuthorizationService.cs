@@ -7,6 +7,7 @@ using CourierMicroservice.Dtos;
 using CourierMicroservice.Exceptions;
 using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core.Primitives;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -118,19 +119,30 @@ public class AuthorizationService : IAuthorizationService
         }
 
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
-        var userRight = await _dbContext.Rights.FirstOrDefaultAsync(c => c.Name.ToLower() == request.Role.ToLower(), cancellationToken);
+        var userRight = Right.FromValue(request.Role);
 
         if (userRight == null)
         {
             throw new NotFoundException("Role not found.");
         }
 
-        await _dbContext.Users.AddAsync(new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
-                                        {
-                                            LastName = request.LastName,
-                                            Phone = request.Phone
-                                        },
-                                        cancellationToken);
+        if (userRight == Right.Admin)
+        {
+            throw new NotFoundException("You can not create user with admin role.");
+        }
+
+        var user = new User(SequentialGuid.Create(), request.Login, request.Mail, request.FirstName, passwordHash, passwordSalt, userRight)
+        {
+            LastName = request.LastName,
+            Phone = request.Phone
+        };
+
+        await _dbContext.Users.AddAsync(user, cancellationToken);
+
+        if (userRight == Right.Courier)
+        {
+            await _dbContext.Couriers.AddAsync(new Courier(SequentialGuid.Create(), user), cancellationToken);
+        }
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

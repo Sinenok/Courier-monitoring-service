@@ -13,7 +13,7 @@ public class OrderController : ControllerBase
 
     public OrderController(IOrderService orderService) => _orderService = orderService;
 
-    [Authorize]
+    [Authorize(Roles = "User,Admin")]
     [HttpPost("create-order")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -23,7 +23,6 @@ public class OrderController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize]
     [HttpGet("order-info/{trackNumber:guid}")]
     public async Task<ActionResult> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
     {
@@ -33,13 +32,13 @@ public class OrderController : ControllerBase
 
     [Authorize]
     [HttpGet("get-payment-methods")]
-    public async Task<ActionResult> GetPaymentMethods(CancellationToken cancellationToken)
+    public ActionResult GetPaymentMethods()
     {
-        var result = await _orderService.GetPaymentMethods(cancellationToken);
+        var result = _orderService.GetPaymentMethods();
         return Ok(result);
     }
 
-    [Authorize]
+    [Authorize(Roles = "User,Admin")]
     [HttpGet("user-sent-orders")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

@@ -2,6 +2,7 @@ using System.Text;
 using CourierMicroservice.Context;
 using CourierMicroservice.Infrastructure.IoC;
 using CourierMicroservice.Services.AuthorizationService;
+using CourierMicroservice.Services.CourierService;
 using CourierMicroservice.Services.OrderService;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,6 +19,7 @@ builder.Services.AddDefaultEfCore();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+builder.Services.AddScoped<ICourierService, CourierService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

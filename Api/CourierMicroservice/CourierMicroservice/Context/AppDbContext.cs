@@ -1,5 +1,6 @@
 ﻿using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Context;
@@ -15,12 +16,8 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     /// </summary>
     /// <param name="options">Опции.</param>
     public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
-    {
-    }
-
-    /// <inheritdoc />
-    public DbSet<Order> Orders => Set<Order>();
+        : base(options) =>
+        AttachDictionaryValues();
 
     /// <inheritdoc />
     public DbSet<OrderStatus> OrderStatuses => Set<OrderStatus>();
@@ -32,7 +29,10 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();
 
     /// <inheritdoc />
-    public DbSet<Right> Rights => Set<Right>();
+    public DbSet<Courier> Couriers => Set<Courier>();
+
+    /// <inheritdoc />
+    public DbSet<Order> Orders => Set<Order>();
 
     /// <inheritdoc cref="DbContext" />
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
@@ -66,4 +66,11 @@ public sealed class AppDbContext : DbContext, IAppDbContext
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+    private void AttachDictionaryValues()
+    {
+        AttachRange(OrderStatus.GetAllValues());
+        AttachRange(PaymentMethod.GetAllValues());
+        AttachRange(Right.GetAllValues());
+    }
 }

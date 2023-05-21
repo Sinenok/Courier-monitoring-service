@@ -1,4 +1,4 @@
-using CourierMicroservice.Models;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,5 +22,7 @@ internal class OrderStatusConfiguration : EntityTypeConfigurationBase<OrderStatu
 
         builder.Property(p => p.Name)
                .HasComment("Название статуса");
+
+        builder.HasData(OrderStatus.CourierAssigned, OrderStatus.Created, OrderStatus.Done, OrderStatus.InProgress);
     }
 }

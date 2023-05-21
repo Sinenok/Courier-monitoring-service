@@ -9,19 +9,14 @@ namespace CourierMicroservice.Context;
 public interface IAppDbContext
 {
     /// <summary>
+    /// Возвращает набор курьеров.
+    /// </summary>
+    DbSet<Courier> Couriers { get; }
+
+    /// <summary>
     /// Возвращает набор заказов.
     /// </summary>
     DbSet<Order> Orders { get; }
-
-    /// <summary>
-    /// Возвращает набор метода оплаты заказа.
-    /// </summary>
-    DbSet<PaymentMethod> PaymentMethods { get; }
-
-    /// <summary>
-    /// Возвращает набор прав пользователя.
-    /// </summary>
-    DbSet<Right> Rights { get; }
 
     /// <summary>
     /// Возвращает набор сущность пользователя.

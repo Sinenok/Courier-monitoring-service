@@ -6,6 +6,7 @@ using CourierMicroservice.Exceptions;
 using CourierMicroservice.Extensions;
 using CourierMicroservice.Models;
 using CourierMicroservice.Models.Core.Primitives;
+using CourierMicroservice.Models.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourierMicroservice.Services.OrderService;
@@ -21,12 +22,12 @@ public class OrderService : IOrderService
         _appDbContext = appDbContext;
     }
 
+    /// <inheritdoc />
     public async Task<Guid> CreateOrder(OrderDto orderDto, CancellationToken cancellationToken)
     {
         var user = await GetCurrentUser(cancellationToken);
 
-        var paymentMethod = await _appDbContext.PaymentMethods.FirstOrDefaultAsync(q => q.Code == orderDto.PaymentMethod, cancellationToken) ??
-                            throw new NotFoundException(typeof(PaymentMethod), orderDto.PaymentMethod);
+        var paymentMethod = PaymentMethod.FromValue(orderDto.PaymentMethod);
         var packageInformation = new PackageInformation(SequentialGuid.Create(), orderDto.ProductDescription, orderDto.ProductWeight, orderDto.ProductCost);
 
         var order = new Order(SequentialGuid.Create(),
@@ -37,18 +38,21 @@ public class OrderService : IOrderService
                               orderDto.ReceiverAddress,
                               orderDto.DeliveryCost,
                               paymentMethod,
-                              packageInformation);
+                              packageInformation,
+                              OrderStatus.Created);
 
         _appDbContext.Orders.Add(order);
         await _appDbContext.SaveChangesAsync(cancellationToken);
         return order.TrackNumber;
     }
 
+    /// <inheritdoc />
     public async Task<OrderDto> GetOrder(Guid trackNumber, CancellationToken cancellationToken)
     {
         var result = await _appDbContext.Orders.Where(order => order.TrackNumber == trackNumber)
                                         .Include(o => o.PaymentMethod)
                                         .Include(o => o.PackageInformation)
+                                        .Include(o => o.OrderStatus)
                                         .FirstOrDefaultAsync(cancellationToken) ??
                      throw new NotFoundException(typeof(Order), trackNumber);
 
@@ -60,21 +64,14 @@ public class OrderService : IOrderService
                             result.PaymentMethod.Code,
                             result.PackageInformation.Cost,
                             result.PackageInformation.ShortDescription,
-                            result.PackageInformation.Weight);
+                            result.PackageInformation.Weight,
+                            result.OrderStatus.Code,
+                            result.TrackNumber);
     }
 
-    public async Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken)
-    {
-        var result = await _appDbContext.PaymentMethods.ToListAsync(cancellationToken);
-        return result;
-    }
+    public IEnumerable<PaymentMethod> GetPaymentMethods() => PaymentMethod.GetAllValues();
 
-    /// <summary>
-    /// Получение всех заказов пользователя.
-    /// </summary>
-    /// <param name="skip">Смещение для пагинации..</param>
-    /// <param name="take">Количество запрашиваемых сущностей.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <inheritdoc />
     public async Task<DataResult<OrderDto>> GetUserSentOrders(int? skip, int? take, CancellationToken cancellationToken)
     {
         var user = await GetCurrentUser(cancellationToken);
@@ -84,6 +81,7 @@ public class OrderService : IOrderService
 
         var orders = await query.Include(o => o.PaymentMethod)
                                 .Include(o => o.PackageInformation)
+                                .Include(o => o.OrderStatus)
                                 .ToListAsync(cancellationToken);
 
         var result = orders.Select(order => new OrderDto(order.SenderName,
@@ -94,7 +92,9 @@ public class OrderService : IOrderService
                                                          order.PaymentMethod.Code,
                                                          order.PackageInformation.Cost,
                                                          order.PackageInformation.ShortDescription,
-                                                         order.PackageInformation.Weight))
+                                                         order.PackageInformation.Weight,
+                                                         order.OrderStatus.Code,
+                                                         order.TrackNumber))
                            .ToList();
 
         var totalCount = await query.CountAsync(cancellationToken);

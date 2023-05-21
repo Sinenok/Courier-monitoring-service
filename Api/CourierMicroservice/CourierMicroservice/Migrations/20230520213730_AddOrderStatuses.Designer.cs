@@ -3,6 +3,7 @@ using System;
 using CourierMicroservice.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CourierMicroservice.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230520213730_AddOrderStatuses")]
+    partial class AddOrderStatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,95 @@ namespace CourierMicroservice.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourierMicroservice.Models.Dictionaries.OrderStatus", b =>
+            modelBuilder.Entity("CourierMicroservice.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasComment("Уникальный идентификатор");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("DeliveryCost")
+                        .HasColumnType("numeric")
+                        .HasComment("Цена доставки");
+
+                    b.Property<DateTime?>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Дата доставки");
+
+                    b.Property<string>("ReceiverAddress")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Адрес получателя");
+
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Имя получателя");
+
+                    b.Property<string>("SenderAddress")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Адрес отправителя");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Имя отправителя");
+
+                    b.Property<Guid>("TrackNumber")
+                        .HasColumnType("uuid")
+                        .HasComment("Номер отслеживания");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("courier_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор курьера");
+
+                    b.Property<Guid?>("order_status_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор статуса заказа");
+
+                    b.Property<Guid>("package_information_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор посылки");
+
+                    b.Property<Guid>("payment_method_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор метода оплаты");
+
+                    b.Property<Guid?>("receiver_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор получателя");
+
+                    b.Property<Guid?>("sender_id")
+                        .HasColumnType("uuid")
+                        .HasComment("Идентификатор связанной цели");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("courier_id");
+
+                    b.HasIndex("order_status_id");
+
+                    b.HasIndex("package_information_id");
+
+                    b.HasIndex("payment_method_id");
+
+                    b.HasIndex("receiver_id");
+
+                    b.HasIndex("sender_id");
+
+                    b.ToTable("orders", null, t =>
+                        {
+                            t.HasComment("Заказ");
+                        });
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.OrderStatus", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -114,7 +205,40 @@ namespace CourierMicroservice.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourierMicroservice.Models.Dictionaries.PaymentMethod", b =>
+            modelBuilder.Entity("CourierMicroservice.Models.PackageInformation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasComment("Уникальный идентификатор");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Цена");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Краткое описание");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Вес");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("packageInformation", null, t =>
+                        {
+                            t.HasComment("Информация о посылке");
+                        });
+                });
+
+            modelBuilder.Entity("CourierMicroservice.Models.PaymentMethod", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -145,18 +269,18 @@ namespace CourierMicroservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7373f370-6206-41c7-b4e7-91caddf1a35a"),
-                            Code = 1,
-                            CreatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Name = "Card",
-                            UpdatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
                             Id = new Guid("d353d9a8-b9e2-4b8e-9207-e898ef328b52"),
                             Code = 0,
                             CreatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "Cash",
+                            UpdatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            Id = new Guid("7373f370-6206-41c7-b4e7-91caddf1a35a"),
+                            Code = 1,
+                            CreatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Name = "Card",
                             UpdatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
@@ -169,7 +293,7 @@ namespace CourierMicroservice.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourierMicroservice.Models.Dictionaries.Right", b =>
+            modelBuilder.Entity("CourierMicroservice.Models.Right", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -221,127 +345,6 @@ namespace CourierMicroservice.Migrations
                             CreatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "User",
                             UpdatedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        });
-                });
-
-            modelBuilder.Entity("CourierMicroservice.Models.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasComment("Уникальный идентификатор");
-
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("DeliveryCost")
-                        .HasColumnType("numeric")
-                        .HasComment("Цена доставки");
-
-                    b.Property<DateTime?>("DeliveryDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasComment("Дата доставки");
-
-                    b.Property<string>("ReceiverAddress")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Адрес получателя");
-
-                    b.Property<string>("ReceiverName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Имя получателя");
-
-                    b.Property<string>("SenderAddress")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Адрес отправителя");
-
-                    b.Property<string>("SenderName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Имя отправителя");
-
-                    b.Property<Guid>("TrackNumber")
-                        .HasColumnType("uuid")
-                        .HasComment("Номер отслеживания");
-
-                    b.Property<DateTimeOffset>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("courier_id")
-                        .HasColumnType("uuid")
-                        .HasComment("Идентификатор курьера");
-
-                    b.Property<Guid>("order_status_id")
-                        .HasColumnType("uuid")
-                        .HasComment("Идентификатор статуса заказа");
-
-                    b.Property<Guid>("package_information_id")
-                        .HasColumnType("uuid")
-                        .HasComment("Идентификатор посылки");
-
-                    b.Property<Guid>("payment_method_id")
-                        .HasColumnType("uuid")
-                        .HasComment("Идентификатор метода оплаты");
-
-                    b.Property<Guid?>("receiver_id")
-                        .HasColumnType("uuid")
-                        .HasComment("Идентификатор получателя");
-
-                    b.Property<Guid?>("sender_id")
-                        .HasColumnType("uuid")
-                        .HasComment("Идентификатор связанной цели");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("courier_id");
-
-                    b.HasIndex("order_status_id");
-
-                    b.HasIndex("package_information_id");
-
-                    b.HasIndex("payment_method_id");
-
-                    b.HasIndex("receiver_id");
-
-                    b.HasIndex("sender_id");
-
-                    b.ToTable("orders", null, t =>
-                        {
-                            t.HasComment("Заказ");
-                        });
-                });
-
-            modelBuilder.Entity("CourierMicroservice.Models.PackageInformation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasComment("Уникальный идентификатор");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)")
-                        .HasComment("Цена");
-
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ShortDescription")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Краткое описание");
-
-                    b.Property<DateTimeOffset>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)")
-                        .HasComment("Вес");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("packageInformation", null, t =>
-                        {
-                            t.HasComment("Информация о посылке");
                         });
                 });
 
@@ -434,11 +437,9 @@ namespace CourierMicroservice.Migrations
                         .WithMany()
                         .HasForeignKey("courier_id");
 
-                    b.HasOne("CourierMicroservice.Models.Dictionaries.OrderStatus", "OrderStatus")
+                    b.HasOne("CourierMicroservice.Models.OrderStatus", "OrderStatus")
                         .WithMany()
-                        .HasForeignKey("order_status_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("order_status_id");
 
                     b.HasOne("CourierMicroservice.Models.PackageInformation", "PackageInformation")
                         .WithMany()
@@ -446,7 +447,7 @@ namespace CourierMicroservice.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CourierMicroservice.Models.Dictionaries.PaymentMethod", "PaymentMethod")
+                    b.HasOne("CourierMicroservice.Models.PaymentMethod", "PaymentMethod")
                         .WithMany()
                         .HasForeignKey("payment_method_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -475,7 +476,7 @@ namespace CourierMicroservice.Migrations
 
             modelBuilder.Entity("CourierMicroservice.Models.User", b =>
                 {
-                    b.HasOne("CourierMicroservice.Models.Dictionaries.Right", "Right")
+                    b.HasOne("CourierMicroservice.Models.Right", "Right")
                         .WithMany()
                         .HasForeignKey("right_id")
                         .OnDelete(DeleteBehavior.Cascade)

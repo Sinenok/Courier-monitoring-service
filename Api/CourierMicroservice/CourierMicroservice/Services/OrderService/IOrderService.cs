@@ -1,6 +1,6 @@
 ﻿using CourierMicroservice.Dtos;
 using CourierMicroservice.Dtos.Common;
-using CourierMicroservice.Models;
+using CourierMicroservice.Models.Dictionaries;
 
 namespace CourierMicroservice.Services.OrderService;
 
@@ -27,10 +27,10 @@ public interface IOrderService
     /// Получение вариантов метода оплаты.
     /// </summary>
     /// <param name="cancellationToken">Токен отмены.</param>
-    public Task<List<PaymentMethod>> GetPaymentMethods(CancellationToken cancellationToken);
+    public IEnumerable<PaymentMethod> GetPaymentMethods();
 
     /// <summary>
-    /// Получение всех заказов пользователя.
+    /// Получение заказов пользователя.
     /// </summary>
     /// <param name="skip">Смещение для пагинации.</param>
     /// <param name="take">Количество запрашиваемых сущностей.</param>
