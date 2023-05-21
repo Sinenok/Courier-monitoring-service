@@ -8,6 +8,8 @@ interface Item {
 	productCost: number;
 	productDescription: string;
 	productWeight: number;
+	orderStatus: number;
+	trackNumber: string;
 }
 
 export interface ResponseData {

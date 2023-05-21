@@ -45,8 +45,7 @@ function Body() {
 	};
 
 	const orderTitle: IOrderTitle = {
-		orderNumber: 555,
-		orderStatus: 'выполняется'
+		orderStatus: isOrderInfoIn.orderStatus
 	};
 	return (
 		<Container className="py-3">

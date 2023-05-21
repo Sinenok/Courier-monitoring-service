@@ -31,7 +31,17 @@ const RenderProfile = () => {
 		}
 	};
 
-	const orderProductStatus = 'Выполнен';
+	const getOrderStatusName = (orderStatus: number) => {
+		if (orderStatus === 0) {
+			return 'Создан';
+		} else if (orderStatus === 1) {
+			return 'Принят курьером';
+		} else if (orderStatus === 2) {
+			return 'Выполняется';
+		} else {
+			return 'Завершен';
+		}
+	};
 
 	const renderProfile = () => (
 		<div>
@@ -93,9 +103,12 @@ const RenderProfile = () => {
 												{order.deliveryCost + order.productCost} рублей
 											</span>
 										</Card.Text>
+										<Card.Text>
+											Номер отслеживания: <span className="text-primary">{order.trackNumber}</span>
+										</Card.Text>
 									</Card.Body>
 									<Card.Footer className="text-center text-muted">
-										Статус заказа: {orderProductStatus}
+										Статус заказа: {getOrderStatusName(order.orderStatus)}
 									</Card.Footer>
 								</Card>
 							</Row>

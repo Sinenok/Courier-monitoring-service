@@ -16,6 +16,5 @@ export interface IOrderList {
 }
 
 export interface IOrderTitle {
-	orderNumber: number;
-	orderStatus: string;
+	orderStatus: number;
 }

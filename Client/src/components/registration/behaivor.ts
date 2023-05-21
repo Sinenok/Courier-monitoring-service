@@ -11,7 +11,7 @@ export const useRegister = (): IUseRegiserResult => {
 	const [password, setPassword] = useState('');
 	const [repeatPassword, setRepeatPassword] = useState('');
 	const [phone, setPhone] = useState('');
-	const [role, setRole] = useState('user');
+	const [role, setRole] = useState(0);
 
 	const dispatch = useAppDispatch();
 
