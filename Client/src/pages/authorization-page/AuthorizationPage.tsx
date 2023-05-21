@@ -1,7 +1,7 @@
 import React from 'react';
-import RenderProfile from '../../components/RenderProfile';
 import { isLogged } from '../../hooks/IsLoggedIn';
 import Authorization from './../../components/authorization/Authorization';
+import RenderProfile from '../../components/render_profile/RenderProfile';
 
 /**
  * RenderProfile необходмо вынести в отдельный компонент

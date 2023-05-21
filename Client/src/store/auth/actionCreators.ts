@@ -61,9 +61,10 @@ export const getProfile =
 			dispatch(loadProfileStart());
 
 			const res = await api.auth.getProfile();
-			dispatch(loadProfileSucess(res.data));
+			dispatch(loadProfileSucess({ name: res.data.name, role: res.data.role }));
 
-			sessionStorage.setItem('userName', res.data);
+			sessionStorage.setItem('userName', res.data.name);
+			sessionStorage.setItem('role', res.data.role);
 		} catch (e: any) {
 			console.error(e);
 

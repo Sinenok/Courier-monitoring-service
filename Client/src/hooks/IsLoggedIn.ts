@@ -27,8 +27,13 @@ export const isLogged = () => {
 };
 
 export const getsProfile = () => {
-	useSelector((state: IRootState) => state.auth.profileData.profile);
+	useSelector((state: IRootState) => state.auth.profileData.profileName);
 	return sessionStorage.getItem('userName');
+};
+
+export const getsProfileRole = () => {
+	useSelector((state: IRootState) => state.auth.profileData.profileRole);
+	return sessionStorage.getItem('role');
 };
 
 export const getsOrderInfo = () => {

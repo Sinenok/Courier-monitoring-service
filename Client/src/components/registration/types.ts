@@ -14,5 +14,7 @@ export interface IUseRegiserResult {
 	setRepeatPassword: React.Dispatch<React.SetStateAction<string>>;
 	phone: string;
 	setPhone: React.Dispatch<React.SetStateAction<string>>;
+	role: string;
+	setRole: React.Dispatch<React.SetStateAction<string>>;
 	handleSubmit: (e: FormEvent) => void;
 }

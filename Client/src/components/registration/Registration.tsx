@@ -21,6 +21,8 @@ const Registration = () => {
 		setRepeatPassword,
 		phone,
 		setPhone,
+		role,
+		setRole,
 		handleSubmit
 	} = useRegister();
 	return (
@@ -126,6 +128,15 @@ const Registration = () => {
 								value={phone}
 								onChange={(e) => setPhone(e.target.value)}
 							/>
+						</Form.Group>
+					</Row>
+					<Row className="justify-content-md-center">
+						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPhone">
+							<Form.Label>Выберите роль</Form.Label>
+							<Form.Select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
+								<option value="user">Пользователь</option>
+								<option value="courier">Курьер</option>
+							</Form.Select>
 						</Form.Group>
 					</Row>
 					<Row lg="5" className="justify-content-md-center mb-4">

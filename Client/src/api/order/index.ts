@@ -19,3 +19,9 @@ export const getPaymentMethods = (): AxiosPromise => {
 export const getOrder = (params: IOrderInfoRequest): AxiosPromise<IOrderInfoResponce> => {
 	return axiosInstance.get(`${Endpoints.ORDER.ORDERINFO}/${params.trackNumber}`);
 };
+
+// --------------USER SENT ORDERS-----------------------------------------
+export const getAllSentOrders = (): AxiosPromise => {
+	return axiosInstance.get(Endpoints.ORDER.SENTORDERS);
+};
+// --------------USER SENT ORDERS-----------------------------------------

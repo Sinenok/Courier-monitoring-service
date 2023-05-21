@@ -49,3 +49,13 @@ export const getOrderInfo =
 			dispatch(getOrderInfoFailure(e.response.data));
 		}
 	};
+
+export const getAllUserSentOrders = async () => {
+	try {
+		// console.log('11');
+
+		return (await api.order.getAllSentOrders()).data;
+	} catch (e: any) {
+		console.error(e);
+	}
+};
