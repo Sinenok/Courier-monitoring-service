@@ -12,6 +12,8 @@
 /// <param name="ProductCost">Стоимость посылки.</param>
 /// <param name="ProductDescription">Описание посылки.</param>
 /// <param name="ProductWeight">Вес посылки.</param>
+/// <param name="OrderStatus">Статус заказа.</param>
+/// <param name="TrackNumber">Трек номер.</param>
 public record OrderDto(string SenderName,
                        string SenderAddress,
                        string ReceiverName,
@@ -20,4 +22,6 @@ public record OrderDto(string SenderName,
                        int PaymentMethod,
                        decimal ProductCost,
                        string ProductDescription,
-                       decimal ProductWeight);
+                       decimal ProductWeight,
+                       int OrderStatus,
+                       Guid TrackNumber);

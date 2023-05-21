@@ -22,6 +22,20 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
+    public async Task<Guid> CompleteOrder(Guid orderId, CancellationToken cancellationToken)
+    {
+        var user = await GetCurrentUser(cancellationToken);
+        var courier = await _appDbContext.Couriers.FirstOrDefaultAsync(c => c.User == user, cancellationToken) ?? throw new NotFoundException(typeof(Courier), user.Id);
+        var order = await _appDbContext.Orders.FirstOrDefaultAsync(order => (Guid)order.Id == orderId, cancellationToken) ?? throw new NotFoundException(typeof(Order), orderId);
+        order.OrderStatus = OrderStatus.Done;
+        order.Courier = courier;
+
+        await _appDbContext.SaveChangesAsync(cancellationToken);
+
+        return order.Id;
+    }
+
+    /// <inheritdoc />
     public async Task<DataResult<CourierOrderDto>> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken) //!!
     {
         var query = _appDbContext.Orders.Where(order => order.OrderStatus == OrderStatus.Created)
@@ -46,11 +60,7 @@ public class CourierService : ICourierService
         return new DataResult<CourierOrderDto>(result, totalCount);
     }
 
-    /// <summary>
-    /// Взятие заказа в работу.
-    /// </summary>
-    /// <param name="orderId">Идентификатор заказа.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <inheritdoc />
     public async Task<Guid> TakeOrder(Guid orderId, CancellationToken cancellationToken)
     {
         var user = await GetCurrentUser(cancellationToken);

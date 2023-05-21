@@ -9,6 +9,13 @@ namespace CourierMicroservice.Services.CourierService;
 public interface ICourierService
 {
     /// <summary>
+    /// Завершение заказа.
+    /// </summary>
+    /// <param name="orderId">Идентификатор заказа.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<Guid> CompleteOrder(Guid orderId, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение заказов в статусе создано.
     /// </summary>
     /// <param name="skip">Смещение для пагинации.</param>

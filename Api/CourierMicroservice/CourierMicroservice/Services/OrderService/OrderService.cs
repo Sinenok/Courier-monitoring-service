@@ -52,6 +52,7 @@ public class OrderService : IOrderService
         var result = await _appDbContext.Orders.Where(order => order.TrackNumber == trackNumber)
                                         .Include(o => o.PaymentMethod)
                                         .Include(o => o.PackageInformation)
+                                        .Include(o => o.OrderStatus)
                                         .FirstOrDefaultAsync(cancellationToken) ??
                      throw new NotFoundException(typeof(Order), trackNumber);
 
@@ -63,7 +64,9 @@ public class OrderService : IOrderService
                             result.PaymentMethod.Code,
                             result.PackageInformation.Cost,
                             result.PackageInformation.ShortDescription,
-                            result.PackageInformation.Weight);
+                            result.PackageInformation.Weight,
+                            result.OrderStatus.Code,
+                            result.TrackNumber);
     }
 
     public IEnumerable<PaymentMethod> GetPaymentMethods() => PaymentMethod.GetAllValues();
@@ -78,6 +81,7 @@ public class OrderService : IOrderService
 
         var orders = await query.Include(o => o.PaymentMethod)
                                 .Include(o => o.PackageInformation)
+                                .Include(o => o.OrderStatus)
                                 .ToListAsync(cancellationToken);
 
         var result = orders.Select(order => new OrderDto(order.SenderName,
@@ -88,7 +92,9 @@ public class OrderService : IOrderService
                                                          order.PaymentMethod.Code,
                                                          order.PackageInformation.Cost,
                                                          order.PackageInformation.ShortDescription,
-                                                         order.PackageInformation.Weight))
+                                                         order.PackageInformation.Weight,
+                                                         order.OrderStatus.Code,
+                                                         order.TrackNumber))
                            .ToList();
 
         var totalCount = await query.CountAsync(cancellationToken);

@@ -13,6 +13,16 @@ public class CourierController : ControllerBase
     public CourierController(ICourierService courierService) => _courierService = courierService;
 
     [Authorize(Roles = "Courier,Admin")]
+    [HttpPost("complete-order")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> CompleteOrder(Guid orderId, CancellationToken cancellationToken)
+    {
+        var result = await _courierService.CompleteOrder(orderId, cancellationToken);
+        return Ok(result);
+    }
+
+    [Authorize(Roles = "Courier,Admin")]
     [HttpGet("created-orders")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
