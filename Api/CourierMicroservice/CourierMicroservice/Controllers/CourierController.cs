@@ -22,7 +22,6 @@ public class CourierController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles = "Courier,Admin,User")]
     [HttpPost("get-courier-coordinates")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

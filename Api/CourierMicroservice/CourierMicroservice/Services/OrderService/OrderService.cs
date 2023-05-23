@@ -56,7 +56,8 @@ public class OrderService : IOrderService
                                         .FirstOrDefaultAsync(cancellationToken) ??
                      throw new NotFoundException(typeof(Order), trackNumber);
 
-        return new OrderDto(result.SenderName,
+        return new OrderDto(result.Id,
+                            result.SenderName,
                             result.SenderAddress,
                             result.ReceiverName,
                             result.ReceiverAddress,
