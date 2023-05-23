@@ -85,7 +85,8 @@ public class OrderService : IOrderService
                                 .Include(o => o.OrderStatus)
                                 .ToListAsync(cancellationToken);
 
-        var result = orders.Select(order => new OrderDto(order.SenderName,
+        var result = orders.Select(order => new OrderDto(order.Id,
+                                                         order.SenderName,
                                                          order.SenderAddress,
                                                          order.ReceiverName,
                                                          order.ReceiverAddress,
