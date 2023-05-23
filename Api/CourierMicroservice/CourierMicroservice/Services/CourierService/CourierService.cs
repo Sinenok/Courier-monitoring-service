@@ -54,15 +54,17 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public async Task<DataResult<CourierOrderDto>> GetOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken)
+    public async Task<DataResult<CourierOrderDto>> GetCourierOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken)
     {
-        var status = OrderStatus.FromValue(statusId);
-
-        var query = _appDbContext.Orders.Where(order => order.OrderStatus == status)
-                                 .ApplyPagination(skip, take);
+        var user = await GetCurrentUser(cancellationToken);
+        var courier = await _appDbContext.Couriers.FirstOrDefaultAsync(c => c.User == user, cancellationToken) ?? throw new NotFoundException(typeof(Courier), user.Id);
+        var query = _appDbContext.Orders.Where(order => order.Courier == courier);
+        var totalCount = await query.CountAsync(cancellationToken);
 
         var orders = await query.Include(o => o.PaymentMethod)
                                 .Include(o => o.PackageInformation)
+                                .OrderBy(o => o.CreatedDate)
+                                .ApplyPagination(skip, take)
                                 .ToListAsync(cancellationToken);
 
         var result = orders.Select(order => new CourierOrderDto(order.Id,
@@ -75,7 +77,33 @@ public class CourierService : ICourierService
                                                                 order.PackageInformation.Weight))
                            .ToList();
 
+        return new DataResult<CourierOrderDto>(result, totalCount);
+    }
+
+    /// <inheritdoc />
+    public async Task<DataResult<CourierOrderDto>> GetOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var status = OrderStatus.FromValue(statusId);
+
+        var query = _appDbContext.Orders.Where(order => order.OrderStatus == status);
+
         var totalCount = await query.CountAsync(cancellationToken);
+
+        var orders = await query.Include(o => o.PaymentMethod)
+                                .Include(o => o.PackageInformation)
+                                .OrderBy(o => o.CreatedDate)
+                                .ApplyPagination(skip, take)
+                                .ToListAsync(cancellationToken);
+
+        var result = orders.Select(order => new CourierOrderDto(order.Id,
+                                                                order.SenderName,
+                                                                order.SenderAddress,
+                                                                order.ReceiverName,
+                                                                order.ReceiverAddress,
+                                                                order.DeliveryCost,
+                                                                order.PaymentMethod.Code,
+                                                                order.PackageInformation.Weight))
+                           .ToList();
 
         return new DataResult<CourierOrderDto>(result, totalCount);
     }
