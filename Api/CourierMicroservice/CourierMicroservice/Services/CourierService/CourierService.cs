@@ -36,9 +36,29 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public async Task<DataResult<CourierOrderDto>> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken) //!!
+    public Task<CourierCoordinatesDto> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
     {
-        var query = _appDbContext.Orders.Where(order => order.OrderStatus == OrderStatus.Created)
+        var rand = new Random();
+
+        var list = new List<CourierCoordinatesDto>
+        {
+            new("20.624845803541483", "166.3039685612529"),
+            new("53.430960692531805", "56.050080450958234"),
+            new("59.9340083524359", "30.32896231192853"),
+            new("59.932254154001946", "30.32692026009099"),
+            new("43.35059252845298", "42.445287147080954")
+        };
+        var randomNumber = rand.Next(0, list.Count);
+
+        return Task.FromResult(list[randomNumber]);
+    }
+
+    /// <inheritdoc />
+    public async Task<DataResult<CourierOrderDto>> GetOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var status = OrderStatus.FromValue(statusId);
+
+        var query = _appDbContext.Orders.Where(order => order.OrderStatus == status)
                                  .ApplyPagination(skip, take);
 
         var orders = await query.Include(o => o.PaymentMethod)
