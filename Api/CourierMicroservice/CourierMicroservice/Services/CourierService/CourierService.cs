@@ -54,11 +54,24 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public async Task<DataResult<CourierOrderDto>> GetCourierOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken)
+    public async Task<DataResult<CourierOrderDto>> GetCourierOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
     {
+        OrderStatus? status = null;
+
+        if (statusId.HasValue)
+        {
+            status = OrderStatus.FromValue(statusId.Value);
+        }
+
         var user = await GetCurrentUser(cancellationToken);
         var courier = await _appDbContext.Couriers.FirstOrDefaultAsync(c => c.User == user, cancellationToken) ?? throw new NotFoundException(typeof(Courier), user.Id);
         var query = _appDbContext.Orders.Where(order => order.Courier == courier);
+
+        if (status != null)
+        {
+            query = query.Where(order => order.OrderStatus == status);
+        }
+
         var totalCount = await query.CountAsync(cancellationToken);
 
         var orders = await query.Include(o => o.PaymentMethod)
@@ -81,11 +94,21 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public async Task<DataResult<CourierOrderDto>> GetOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken)
+    public async Task<DataResult<CourierOrderDto>> GetOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
     {
-        var status = OrderStatus.FromValue(statusId);
+        OrderStatus? status = null;
 
-        var query = _appDbContext.Orders.Where(order => order.OrderStatus == status);
+        if (statusId.HasValue)
+        {
+            status = OrderStatus.FromValue(statusId.Value);
+        }
+
+        IQueryable<Order> query = _appDbContext.Orders;
+
+        if (status != null)
+        {
+            query = _appDbContext.Orders.Where(order => order.OrderStatus == status);
+        }
 
         var totalCount = await query.CountAsync(cancellationToken);
 

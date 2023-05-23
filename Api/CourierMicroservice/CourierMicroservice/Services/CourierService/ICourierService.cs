@@ -29,7 +29,7 @@ public interface ICourierService
     /// <param name="skip">Смещение для пагинации.</param>
     /// <param name="take">Количество запрашиваемых сущностей.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    public Task<DataResult<CourierOrderDto>> GetCourierOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken);
+    public Task<DataResult<CourierOrderDto>> GetCourierOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение заказов в статусе создано.
@@ -38,7 +38,7 @@ public interface ICourierService
     /// <param name="skip">Смещение для пагинации.</param>
     /// <param name="take">Количество запрашиваемых сущностей.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    public Task<DataResult<CourierOrderDto>> GetOrders(int statusId, int? skip, int? take, CancellationToken cancellationToken);
+    public Task<DataResult<CourierOrderDto>> GetOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken);
 
     /// <summary>
     /// Взятие заказа в работу.
