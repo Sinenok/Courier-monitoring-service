@@ -22,13 +22,33 @@ public class CourierController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles = "Courier,Admin")]
-    [HttpGet("created-orders")]
+    [Authorize(Roles = "Courier,Admin,User")]
+    [HttpPost("get-courier-coordinates")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken)
+    public async Task<ActionResult> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
     {
-        var result = await _courierService.GetCreatedOrders(skip, take, cancellationToken);
+        var result = await _courierService.GetCourierCoordinates(orderId, cancellationToken);
+        return Ok(result);
+    }
+
+    [Authorize(Roles = "Courier,Admin")]
+    [HttpGet("courier-orders")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> GetCreatedOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var result = await _courierService.GetCourierOrders(statusId, skip, take, cancellationToken);
+        return Ok(result);
+    }
+
+    //[Authorize(Roles = "Courier,Admin")]
+    [HttpGet("orders")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> GetOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var result = await _courierService.GetOrders(statusId, skip, take, cancellationToken);
         return Ok(result);
     }
 

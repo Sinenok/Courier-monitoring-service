@@ -36,13 +36,48 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public async Task<DataResult<CourierOrderDto>> GetCreatedOrders(int? skip, int? take, CancellationToken cancellationToken) //!!
+    public Task<CourierCoordinatesDto> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
     {
-        var query = _appDbContext.Orders.Where(order => order.OrderStatus == OrderStatus.Created)
-                                 .ApplyPagination(skip, take);
+        var rand = new Random();
+
+        var list = new List<CourierCoordinatesDto>
+        {
+            new("20.624845803541483", "166.3039685612529"),
+            new("53.430960692531805", "56.050080450958234"),
+            new("59.9340083524359", "30.32896231192853"),
+            new("59.932254154001946", "30.32692026009099"),
+            new("43.35059252845298", "42.445287147080954")
+        };
+        var randomNumber = rand.Next(0, list.Count);
+
+        return Task.FromResult(list[randomNumber]);
+    }
+
+    /// <inheritdoc />
+    public async Task<DataResult<CourierOrderDto>> GetCourierOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        OrderStatus? status = null;
+
+        if (statusId.HasValue)
+        {
+            status = OrderStatus.FromValue(statusId.Value);
+        }
+
+        var user = await GetCurrentUser(cancellationToken);
+        var courier = await _appDbContext.Couriers.FirstOrDefaultAsync(c => c.User == user, cancellationToken) ?? throw new NotFoundException(typeof(Courier), user.Id);
+        var query = _appDbContext.Orders.Where(order => order.Courier == courier);
+
+        if (status != null)
+        {
+            query = query.Where(order => order.OrderStatus == status);
+        }
+
+        var totalCount = await query.CountAsync(cancellationToken);
 
         var orders = await query.Include(o => o.PaymentMethod)
                                 .Include(o => o.PackageInformation)
+                                .OrderBy(o => o.CreatedDate)
+                                .ApplyPagination(skip, take)
                                 .ToListAsync(cancellationToken);
 
         var result = orders.Select(order => new CourierOrderDto(order.Id,
@@ -55,7 +90,43 @@ public class CourierService : ICourierService
                                                                 order.PackageInformation.Weight))
                            .ToList();
 
+        return new DataResult<CourierOrderDto>(result, totalCount);
+    }
+
+    /// <inheritdoc />
+    public async Task<DataResult<CourierOrderDto>> GetOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        OrderStatus? status = null;
+
+        if (statusId.HasValue)
+        {
+            status = OrderStatus.FromValue(statusId.Value);
+        }
+
+        IQueryable<Order> query = _appDbContext.Orders;
+
+        if (status != null)
+        {
+            query = _appDbContext.Orders.Where(order => order.OrderStatus == status);
+        }
+
         var totalCount = await query.CountAsync(cancellationToken);
+
+        var orders = await query.Include(o => o.PaymentMethod)
+                                .Include(o => o.PackageInformation)
+                                .OrderBy(o => o.CreatedDate)
+                                .ApplyPagination(skip, take)
+                                .ToListAsync(cancellationToken);
+
+        var result = orders.Select(order => new CourierOrderDto(order.Id,
+                                                                order.SenderName,
+                                                                order.SenderAddress,
+                                                                order.ReceiverName,
+                                                                order.ReceiverAddress,
+                                                                order.DeliveryCost,
+                                                                order.PaymentMethod.Code,
+                                                                order.PackageInformation.Weight))
+                           .ToList();
 
         return new DataResult<CourierOrderDto>(result, totalCount);
     }
