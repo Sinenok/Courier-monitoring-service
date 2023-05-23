@@ -12,6 +12,10 @@ const Endpoints = {
 		PAYMENT: `${httpHost}/api/Order/get-payment-methods`,
 		ORDERINFO: `${httpHost}/api/Order/order-info`,
 		SENTORDERS: `${httpHost}/api/Order/user-sent-orders`
+	},
+	COURIER: {
+		CREATEDORDERS: `${httpHost}/api/Courier/created-orders`,
+		TAKEORDER: `${httpHost}/api/Courier/take-order`
 	}
 };
 

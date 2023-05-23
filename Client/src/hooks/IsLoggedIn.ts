@@ -39,3 +39,10 @@ export const getsProfileRole = () => {
 export const getsOrderInfo = () => {
 	return useSelector((state: IRootState) => state.order.getOrderInfoData.order);
 };
+
+// ----------------------------------------Courier-----------------------------------------------
+export const getsOrderId = () => {
+	useSelector((state: IRootState) => state.courier.takeActiveOrderData.orderId);
+	return sessionStorage.getItem('orderId');
+};
+// ----------------------------------------Courier-----------------------------------------------

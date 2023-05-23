@@ -1,20 +1,20 @@
 import axios from 'axios';
-import { store } from '../store';
-import { getAccessToken } from '../store/auth/actionCreators';
-import Endpoints from './endpoints';
+// import { store } from '../store';
+// import { getAccessToken } from '../store/auth/actionCreators';
+// import Endpoints from './endpoints';
 
 export const axiosInstance = axios.create({});
 
-const urlsSkipAuth = [
-	Endpoints.AUTH.LOGIN,
-	Endpoints.AUTH.REFRESH,
-	Endpoints.AUTH.LOGOUT,
-	Endpoints.AUTH.REGISTER,
+// const urlsSkipAuth = [
+// 	Endpoints.AUTH.LOGIN,
+// 	Endpoints.AUTH.REFRESH,
+// 	Endpoints.AUTH.LOGOUT,
+// 	Endpoints.AUTH.REGISTER,
 
-	Endpoints.ORDER.CREATE,
-	Endpoints.ORDER.PAYMENT,
-	Endpoints.ORDER.ORDERINFO
-];
+// 	Endpoints.ORDER.CREATE,
+// 	Endpoints.ORDER.PAYMENT,
+// 	Endpoints.ORDER.ORDERINFO
+// ];
 
 /**
  * Необходимо избегать изменений параметров функций, т.к. это влечёт побочные эффекты.

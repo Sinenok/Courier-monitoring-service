@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState, OrderState } from './types';
 
-/** Интерфейс AuthState и начальный стейт для читаемости лучше вынести в отдельный файл и импортировать */
-// ------------------------------ИСПРАВИЛ---------------------------------------------------------------------------
-
 export const orderReducer = createSlice({
 	name: 'order',
 	initialState,

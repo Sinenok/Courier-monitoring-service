@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux';
 
 import logger from 'redux-logger';
 import orderReducer from './order/orderReducer';
+import courierReducer from './courier/courierReducer';
 
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
-		order: orderReducer
+		order: orderReducer,
+		courier: courierReducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(...(process.env.NODE_ENV !== 'production' ? [logger] : []))
