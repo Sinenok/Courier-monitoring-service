@@ -42,7 +42,22 @@ export const getsOrderInfo = () => {
 
 // ----------------------------------------Courier-----------------------------------------------
 export const getsOrderId = () => {
-	useSelector((state: IRootState) => state.courier.takeActiveOrderData.orderId);
-	return sessionStorage.getItem('orderId');
+	return useSelector((state: IRootState) => state.courier.takeActiveOrderData.orderId);
+	// return sessionStorage.getItem('orderId');
+};
+export const getsCompleteOrderId = () => {
+	return useSelector((state: IRootState) => state.courier.completeOrderData.orderId);
+	// return sessionStorage.getItem('completeOrderId');
 };
 // ----------------------------------------Courier-----------------------------------------------
+// -----------------------Coordinate--------------------------------------------------------
+export const getsS = () => {
+	return useSelector((state: IRootState) => state.courier.getCoordinate.s);
+};
+export const getse = () => {
+	return useSelector((state: IRootState) => state.courier.getCoordinate.e);
+};
+
+export const flagCoord = () => {
+	return useSelector((state: IRootState) => state.courier.getCoordinate.isLoading);
+};

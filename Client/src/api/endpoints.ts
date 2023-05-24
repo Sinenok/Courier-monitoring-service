@@ -14,8 +14,11 @@ const Endpoints = {
 		SENTORDERS: `${httpHost}/api/Order/user-sent-orders`
 	},
 	COURIER: {
-		CREATEDORDERS: `${httpHost}/api/Courier/created-orders`,
-		TAKEORDER: `${httpHost}/api/Courier/take-order`
+		CREATEDORDERS: `${httpHost}/api/Courier/orders`,
+		TAKEORDER: `${httpHost}/api/Courier/take-order`,
+		COURIERORDERS: `${httpHost}/api/Courier/courier-orders`,
+		COMPLETEORDER: `${httpHost}/api/Courier/complete-order`,
+		COURIERCOORDINATE: `${httpHost}/api/Courier/get-courier-coordinates`
 	}
 };
 

@@ -3,10 +3,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import OrderTitle from './../OrderTitle';
 import OrderInfo from './../OrderInfo';
 import OrderList from './../OrderList';
-import CourierTrackingMap from './../CourierTrackingMap';
+import CourierTrackingMap from './../courier_tracking_map/CourierTrackingMap';
 // import { orderInfo, orderList, orderTitle } from './behavior';
 import { getsOrderInfo } from '../../../hooks/IsLoggedIn';
-import { IOrderInfo, IOrderList, IOrderTitle } from './types';
+import { IOrderInfo, IOrderList, IOrderMap, IOrderTitle } from './types';
 
 /**
  * Слишком большое количество констант.
@@ -47,6 +47,9 @@ function Body() {
 	const orderTitle: IOrderTitle = {
 		orderStatus: isOrderInfoIn.orderStatus
 	};
+	const orderMap: IOrderMap = {
+		orderId: isOrderInfoIn.orderId
+	};
 	return (
 		<Container className="py-3">
 			<Row className="justify-content-center mb-3">
@@ -64,7 +67,7 @@ function Body() {
 			</Row>
 			<Row className="justify-content-center">
 				<Col md="10" className="p-0">
-					<CourierTrackingMap />
+					<CourierTrackingMap {...orderMap} />
 				</Col>
 			</Row>
 		</Container>

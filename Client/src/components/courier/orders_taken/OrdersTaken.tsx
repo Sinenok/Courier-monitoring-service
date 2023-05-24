@@ -1,35 +1,26 @@
 import React, { useState } from 'react';
-import { getsProfile } from '../../hooks/IsLoggedIn';
+import { useGetActiveOrders } from '../behavior';
 import { Button, Card, Container, Form, Row } from 'react-bootstrap';
-import { useGetActiveOrders } from './behavior';
-import './../../styles/component-styles/CourierProfile.css';
-import Pagination from '../render_profile/Pagination';
-import { useAppDispatch } from '../../store';
-import { takeOrder } from '../../store/courier/actionCreators';
+import Pagination from '../../render_profile/Pagination';
+import { useAppDispatch } from '../../../store';
+import { completeOrder } from '../../../store/courier/actionCreators';
 
-const CourierProfile = () => {
-	const profile = getsProfile();
-	const createdOrders = 0;
-	const getAllActiveOrders = useGetActiveOrders(createdOrders);
-	// console.log('aa', getAllActiveOrders.allActiveOrders.total);
+const OrdersTaken = () => {
+	const takenOrders = 1;
+	const getAllTakenOrders = useGetActiveOrders(takenOrders);
 
-	// const { orderId, setOrderId, handleSubmit } = useTakeOrder();
-	// const [orderId, setOrderId] = useState();
-	// console.log('id', orderId);
 	const dispatch = useAppDispatch();
-	const handleTakeOrder = (event: React.FormEvent<HTMLFormElement>, orderId: string) => {
+	const handleCompleteOrder = (event: React.FormEvent<HTMLFormElement>, orderId: string) => {
 		// event.preventDefault();
-		dispatch(takeOrder({ orderId }));
+		dispatch(completeOrder({ orderId }));
 		console.log('aaa', orderId);
 	};
-	// const flag = getsOrderId();
-	// console.log('dsdsadsa', flag);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [activeOrdersPerPage] = useState(2);
 	const lastOrderIndex = currentPage * activeOrdersPerPage;
 	const firstOrderIndex = lastOrderIndex - activeOrdersPerPage;
-	const currentOrder = getAllActiveOrders.allActiveOrders.items.slice(
+	const currentOrder = getAllTakenOrders.allActiveOrders.items.slice(
 		firstOrderIndex,
 		lastOrderIndex
 	);
@@ -45,23 +36,17 @@ const CourierProfile = () => {
 			return 'Онлайн';
 		}
 	};
-
 	return (
 		<div>
-			<Container className="text-center pt-5 mb-5">
-				<h2>
-					Вы успешно авторизовались, <span className="user-name">{profile}</span>!
-				</h2>
-			</Container>
-			{getAllActiveOrders.allActiveOrders.total !== 0 ? (
+			{getAllTakenOrders.allActiveOrders.total !== 0 ? (
 				<div>
-					<Container className="text-center mb-4">
-						<h3>Здесь вы можете посмотреть список активных заказов и взять в исполнение</h3>
+					<Container className="text-center mb-4 pt-5">
+						<h3>Список взятых в исполнение заказов</h3>
 					</Container>
 					<Container className="flexxx cards-wrapper">
 						{currentOrder.map((order, index) => (
 							<Row className="cardss" key={index}>
-								<Form onSubmit={(event) => handleTakeOrder(event, order.orderId)}>
+								<Form onSubmit={(event) => handleCompleteOrder(event, order.orderId)}>
 									<Card className="cards-main bg-light">
 										<Card.Header className="text-center" as="h4">
 											Заказ от отправителя {order.senderName}
@@ -103,7 +88,7 @@ const CourierProfile = () => {
 											<Row lg="5" className="justify-content-center border">
 												<input type="hidden" name="orderId" value={order.orderId} />
 												<Button variant="primary" type="submit">
-													Взять заказ
+													Завершить заказ
 												</Button>
 											</Row>
 										</Card.Footer>
@@ -114,14 +99,14 @@ const CourierProfile = () => {
 					</Container>
 					<Pagination
 						sentOrdersPerPage={activeOrdersPerPage}
-						totalOrders={getAllActiveOrders.allActiveOrders.total}
+						totalOrders={getAllTakenOrders.allActiveOrders.total}
 						paginate={paginate}
 					/>
 				</div>
 			) : (
 				<div>
 					<Container className="text-center p-5">
-						<h3>У вас нет заказов</h3>
+						<h3>У вас нет принятых заказов</h3>
 					</Container>
 				</div>
 			)}
@@ -129,4 +114,4 @@ const CourierProfile = () => {
 	);
 };
 
-export default CourierProfile;
+export default OrdersTaken;

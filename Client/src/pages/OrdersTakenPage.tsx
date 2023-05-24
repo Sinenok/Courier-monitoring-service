@@ -1,7 +1,8 @@
 import React from 'react';
+import OrdersTaken from '../components/courier/orders_taken/OrdersTaken';
 
 const OrdersTakenPage = () => {
-	return <div>Принятые заказы</div>;
+	return <OrdersTaken />;
 };
 
 export default OrdersTakenPage;

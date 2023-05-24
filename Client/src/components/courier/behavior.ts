@@ -3,13 +3,13 @@ import { ResponseDataActiveOrders } from './types';
 import { getAllUserActiveOrders } from '../../store/courier/actionCreators';
 // import { useAppDispatch } from '../../store';
 
-export const useGetActiveOrders = () => {
+export const useGetActiveOrders = (createdOrders: number) => {
 	const [allActiveOrders, setAllActiveOrders] = useState<ResponseDataActiveOrders>({
 		items: [],
 		total: 0
 	});
 	useEffect(() => {
-		getAllUserActiveOrders().then((data) => {
+		getAllUserActiveOrders(createdOrders).then((data) => {
 			setAllActiveOrders(data);
 		});
 	}, []);
