@@ -11,6 +11,7 @@ export const useRegister = (): IUseRegiserResult => {
 	const [password, setPassword] = useState('');
 	const [repeatPassword, setRepeatPassword] = useState('');
 	const [phone, setPhone] = useState('');
+	const [role, setRole] = useState(0);
 
 	const dispatch = useAppDispatch();
 
@@ -18,13 +19,13 @@ export const useRegister = (): IUseRegiserResult => {
 		(e: FormEvent) => {
 			e.preventDefault();
 			if (password === repeatPassword) {
-				dispatch(registerUser({ firstName, lastName, login, mail, password, phone }));
+				dispatch(registerUser({ firstName, lastName, login, mail, password, phone, role }));
 			} else {
 				/** Где будет обработана эта ошибка? */
 				throw new Error('У вас не совпадают пароли');
 			}
 		},
-		[firstName, lastName, login, mail, password, phone, repeatPassword]
+		[firstName, lastName, login, mail, password, phone, repeatPassword, role]
 	);
 
 	return {
@@ -42,6 +43,8 @@ export const useRegister = (): IUseRegiserResult => {
 		setRepeatPassword,
 		phone,
 		setPhone,
+		role,
+		setRole,
 		handleSubmit
 	};
 };

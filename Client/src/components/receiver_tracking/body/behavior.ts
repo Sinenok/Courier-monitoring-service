@@ -18,6 +18,5 @@ export const orderList: IOrderList = {
 };
 
 export const orderTitle: IOrderTitle = {
-	orderNumber: 555,
-	orderStatus: 'выполнен'
+	orderStatus: 1
 };

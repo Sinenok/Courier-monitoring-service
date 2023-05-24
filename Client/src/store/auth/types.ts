@@ -5,7 +5,8 @@ export interface AuthState {
 		error: string | null;
 	};
 	profileData: {
-		profile: string | null;
+		profileName: string | null;
+		profileRole: string | null;
 		isLoading: boolean;
 		error: string | null;
 	};
@@ -23,7 +24,8 @@ export const initialState: AuthState = {
 		error: null
 	},
 	profileData: {
-		profile: null,
+		profileName: null,
+		profileRole: null,
 		isLoading: false,
 		error: null
 	},

@@ -1,3 +1,7 @@
-.courier-tracking-map-card {
+/* .courier-tracking-map-card {
    min-height: 700px;
+} */
+
+.leaflet-container {
+   height: 800px
 }

@@ -27,10 +27,37 @@ export const isLogged = () => {
 };
 
 export const getsProfile = () => {
-	useSelector((state: IRootState) => state.auth.profileData.profile);
+	useSelector((state: IRootState) => state.auth.profileData.profileName);
 	return sessionStorage.getItem('userName');
+};
+
+export const getsProfileRole = () => {
+	useSelector((state: IRootState) => state.auth.profileData.profileRole);
+	return sessionStorage.getItem('role');
 };
 
 export const getsOrderInfo = () => {
 	return useSelector((state: IRootState) => state.order.getOrderInfoData.order);
+};
+
+// ----------------------------------------Courier-----------------------------------------------
+export const getsOrderId = () => {
+	return useSelector((state: IRootState) => state.courier.takeActiveOrderData.orderId);
+	// return sessionStorage.getItem('orderId');
+};
+export const getsCompleteOrderId = () => {
+	return useSelector((state: IRootState) => state.courier.completeOrderData.orderId);
+	// return sessionStorage.getItem('completeOrderId');
+};
+// ----------------------------------------Courier-----------------------------------------------
+// -----------------------Coordinate--------------------------------------------------------
+export const getsS = () => {
+	return useSelector((state: IRootState) => state.courier.getCoordinate.s);
+};
+export const getse = () => {
+	return useSelector((state: IRootState) => state.courier.getCoordinate.e);
+};
+
+export const flagCoord = () => {
+	return useSelector((state: IRootState) => state.courier.getCoordinate.isLoading);
 };

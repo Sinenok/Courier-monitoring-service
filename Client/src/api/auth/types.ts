@@ -16,5 +16,5 @@ export interface IRegisterResponce {
 	mail: string;
 	password: string;
 	phone: string;
+	role: number;
 }
-

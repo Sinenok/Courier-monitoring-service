@@ -1,7 +1,8 @@
 import React from 'react';
-import RenderProfile from '../../components/RenderProfile';
-import { isLogged } from '../../hooks/IsLoggedIn';
+import { getsProfileRole, isLogged } from '../../hooks/IsLoggedIn';
 import Authorization from './../../components/authorization/Authorization';
+import RenderProfile from '../../components/render_profile/RenderProfile';
+import CourierProfile from '../../components/courier/CourierProfile';
 
 /**
  * RenderProfile необходмо вынести в отдельный компонент
@@ -20,7 +21,20 @@ import Authorization from './../../components/authorization/Authorization';
 
 const AuthorizationPage = () => {
 	const isLoggedIn = isLogged();
-	return <div>{!isLoggedIn ? <Authorization /> : <RenderProfile />}</div>;
+	const userRole = getsProfileRole();
+	return (
+		<div>
+			{!isLoggedIn ? (
+				<Authorization />
+			) : isLoggedIn && userRole === 'User' ? (
+				<RenderProfile />
+			) : isLoggedIn && userRole === 'Courier' ? (
+				<CourierProfile />
+			) : isLoggedIn && userRole === 'Admin' ? (
+				<div>dsadddd</div>
+			) : null}
+		</div>
+	);
 };
 
 export default AuthorizationPage;

@@ -21,8 +21,11 @@ const Registration = () => {
 		setRepeatPassword,
 		phone,
 		setPhone,
+		role,
+		setRole,
 		handleSubmit
 	} = useRegister();
+
 	return (
 		<div className="Registration">
 			<Container className="text-center pt-5">
@@ -126,6 +129,18 @@ const Registration = () => {
 								value={phone}
 								onChange={(e) => setPhone(e.target.value)}
 							/>
+						</Form.Group>
+					</Row>
+					<Row className="justify-content-md-center">
+						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPhone">
+							<Form.Label>Выберите роль</Form.Label>
+							<Form.Select
+								className="input"
+								value={role}
+								onChange={(e) => setRole(Number(e.target.value))}>
+								<option value={0}>Пользователь</option>
+								<option value={2}>Курьер</option>
+							</Form.Select>
 						</Form.Group>
 					</Row>
 					<Row lg="5" className="justify-content-md-center mb-4">
