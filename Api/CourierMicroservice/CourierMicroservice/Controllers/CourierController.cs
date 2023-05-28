@@ -22,12 +22,12 @@ public class CourierController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("get-courier-coordinates")]
+    [HttpGet("get-courier-coordinates/{trackNumber:guid}")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
+    public async Task<ActionResult> GetCourierCoordinates(Guid trackNumber, CancellationToken cancellationToken)
     {
-        var result = await _courierService.GetCourierCoordinates(orderId, cancellationToken);
+        var result = await _courierService.GetCourierCoordinates(trackNumber, cancellationToken);
         return Ok(result);
     }
 

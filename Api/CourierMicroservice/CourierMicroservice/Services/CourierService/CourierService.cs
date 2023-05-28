@@ -36,15 +36,15 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public async Task<CourierCoordinatesDto> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
+    public async Task<CourierCoordinatesDto> GetCourierCoordinates(Guid trackNumber, CancellationToken cancellationToken)
     {
-        var order = await _appDbContext.Orders.Where(order => (Guid)order.Id == orderId)
+        var order = await _appDbContext.Orders.Where(order => order.TrackNumber == trackNumber)
                                        .FirstOrDefaultAsync(cancellationToken) ??
-                    throw new NotFoundException(typeof(Order), orderId);
+                    throw new NotFoundException(typeof(Order), trackNumber);
 
         if (order.Courier == null)
         {
-            throw new NotFoundException(typeof(Courier), orderId);
+            throw new NotFoundException(typeof(Courier), trackNumber);
         }
 
         return new CourierCoordinatesDto(order.Courier.S, order.Courier.E);
