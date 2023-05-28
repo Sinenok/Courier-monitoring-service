@@ -1,17 +1,18 @@
 ﻿using System.Globalization;
-using LiveLocationMicroservice.IoC;
+using LiveLocationMicroservice.Services.MyConfiguration;
+using LiveLocationMicroservice.Services.WriteToDatabase;
 using Telegram.Bot;
 
-namespace LiveLocationMicroservice;
+namespace LiveLocationMicroservice.Services.MyBotClient;
 
-internal class MyBotClient
+internal class MyBotClient : IMyBotClient
 {
     private readonly TelegramBotClient _botClient;
     private readonly IWriteToDatabase _writeToDatabase;
 
-    public MyBotClient(IMyConfiguration configuration, IWriteToDatabase writeToDatabase)
+    public MyBotClient(IMyConfigurationService configurationService, IWriteToDatabase writeToDatabase)
     {
-        _botClient = new TelegramBotClient(configuration.GetTgToken());
+        _botClient = new TelegramBotClient(configurationService.GetTgToken());
         _writeToDatabase = writeToDatabase;
     }
 

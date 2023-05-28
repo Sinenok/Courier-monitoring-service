@@ -1,12 +1,13 @@
-﻿using Npgsql;
+﻿using LiveLocationMicroservice.Services.MyConfiguration;
+using Npgsql;
 
-namespace LiveLocationMicroservice.IoC;
+namespace LiveLocationMicroservice.Services.WriteToDatabase;
 
 public class WriteToDatabase : IWriteToDatabase
 {
-    private readonly IMyConfiguration _configuration;
+    private readonly IMyConfigurationService _configurationService;
 
-    public WriteToDatabase(IMyConfiguration configuration) => _configuration = configuration;
+    public WriteToDatabase(IMyConfigurationService configurationService) => _configurationService = configurationService;
 
     public async Task SetCoordinates(string userName, string? e, string? s)
     {
@@ -16,7 +17,7 @@ public class WriteToDatabase : IWriteToDatabase
         }
 
         userName = "@" + userName;
-        var conn = new NpgsqlConnection(_configuration.GetConnectionString());
+        var conn = new NpgsqlConnection(_configurationService.GetConnectionString());
         await conn.OpenAsync();
         var cmd = new NpgsqlCommand(@"SELECT ""Id"" FROM couriers WHERE ""TelegramUserName""=@telegramUserName", conn);
         cmd.Parameters.AddWithValue("telegramUserName", userName);
