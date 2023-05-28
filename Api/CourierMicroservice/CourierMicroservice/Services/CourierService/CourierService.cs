@@ -36,21 +36,18 @@ public class CourierService : ICourierService
     }
 
     /// <inheritdoc />
-    public Task<CourierCoordinatesDto> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
+    public async Task<CourierCoordinatesDto> GetCourierCoordinates(Guid orderId, CancellationToken cancellationToken)
     {
-        var rand = new Random();
+        var order = await _appDbContext.Orders.Where(order => (Guid)order.Id == orderId)
+                                       .FirstOrDefaultAsync(cancellationToken) ??
+                    throw new NotFoundException(typeof(Order), orderId);
 
-        var list = new List<CourierCoordinatesDto>
+        if (order.Courier == null)
         {
-            new("20.624845803541483", "166.3039685612529"),
-            new("53.430960692531805", "56.050080450958234"),
-            new("59.9340083524359", "30.32896231192853"),
-            new("59.932254154001946", "30.32692026009099"),
-            new("43.35059252845298", "42.445287147080954")
-        };
-        var randomNumber = rand.Next(0, list.Count);
+            throw new NotFoundException(typeof(Courier), orderId);
+        }
 
-        return Task.FromResult(list[randomNumber]);
+        return new CourierCoordinatesDto(order.Courier.S, order.Courier.E);
     }
 
     /// <inheritdoc />
