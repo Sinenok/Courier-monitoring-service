@@ -16,28 +16,28 @@ const CourierTrackingMap: FC<IOrderMap> = ({ orderId }) => {
 	// console.log(orderId);
 	// const getCoordinate = useGetCoordinate(orderId);
 	// console.log('dsfdsfsdfsd', getCoordinate.e);
-	const dispatch = useAppDispatch();
-	const flag = flagCoord();
-	if (flag === false)
-		setInterval(() => {
-			dispatch(getCoordinate({ orderId }));
-		}, 10000);
+	// const dispatch = useAppDispatch();
+	// const flag = flagCoord();
+	// if (flag === false)
+	// 	setInterval(() => {
+	// 		dispatch(getCoordinate({ orderId }));
+	// 	}, 10000);
 
 	// dispatch(getCoordinate({ orderId }));
 	// const handleClick = () => {
 	// 	dispatch(getCoordinate({ orderId }));
 	// };
-	const s = getsS();
-	const e = getse();
-	console.log('ssss', Number(s));
-	console.log('eeee', Number(e));
+	// const s = getsS();
+	// const e = getse();
+	// console.log('ssss', Number(s));
+	// console.log('eeee', Number(e));
 
 	// const getCoordinate = useGetCoordinate();
 	const markers = [
-		{
-			geocode: [Number(s), Number(e)],
-			popUp: 'Im mar 1'
-		},
+		// {
+		// 	geocode: [Number(s), Number(e)],
+		// 	popUp: 'Im mar 1'
+		// },
 		{
 			geocode: [48.85, 2.3522],
 			popUp: 'Im mar 2'

@@ -10,6 +10,11 @@ export interface OrderState {
 		error: string | null;
 		order: any | null;
 	};
+	rateOrderData: {
+		isLoading: boolean;
+		error: string | null;
+		orderRate: boolean;
+	};
 }
 
 export const initialState: OrderState = {
@@ -23,5 +28,10 @@ export const initialState: OrderState = {
 		isLoading: false,
 		error: null,
 		order: null
+	},
+	rateOrderData: {
+		isLoading: false,
+		error: null,
+		orderRate: false
 	}
 };

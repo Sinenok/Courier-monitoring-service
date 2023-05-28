@@ -62,3 +62,9 @@ export interface IOrderInfoResponce {
 export interface IOrderInfoRequest {
 	trackNumber: string;
 }
+
+// Order rate
+export interface IOrderRateRequest {
+	courierRating: string;
+	productRating: string;
+}

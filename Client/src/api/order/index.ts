@@ -4,7 +4,8 @@ import {
 	IOrderCreateRequest,
 	IOrderCreateResponce,
 	IOrderInfoRequest,
-	IOrderInfoResponce
+	IOrderInfoResponce,
+	IOrderRateRequest
 } from './types';
 import { AxiosPromise } from 'axios';
 
@@ -25,3 +26,7 @@ export const getAllSentOrders = (): AxiosPromise => {
 	return axiosInstance.get(Endpoints.ORDER.SENTORDERS);
 };
 // --------------USER SENT ORDERS-----------------------------------------
+
+export const orderRateCreate = (params: IOrderRateRequest): AxiosPromise<any> => {
+	return axiosInstance.post(Endpoints.ORDER.ORDERRATE, params);
+};

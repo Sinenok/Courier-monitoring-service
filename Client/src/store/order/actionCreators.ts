@@ -6,9 +6,12 @@ import {
 	orderSendFailure,
 	getOrderInfoStart,
 	getOrderInfoSucess,
-	getOrderInfoFailure
+	getOrderInfoFailure,
+	getOrderRateStart,
+	getOrderRateSucess,
+	getOrderRateFailure
 } from './orderReducer';
-import { IOrderCreateRequest, IOrderInfoRequest } from '../../api/order/types';
+import { IOrderCreateRequest, IOrderInfoRequest, IOrderRateRequest } from '../../api/order/types';
 
 export const createOrder =
 	(data: IOrderCreateRequest) =>
@@ -59,3 +62,18 @@ export const getAllUserSentOrders = async () => {
 		console.error(e);
 	}
 };
+
+export const rateTheOrder =
+	(data: IOrderRateRequest) =>
+	async (dispatch: Dispatch): Promise<void> => {
+		try {
+			dispatch(getOrderRateStart());
+
+			await api.order.orderRateCreate(data);
+			dispatch(getOrderRateSucess());
+		} catch (e: any) {
+			console.error(e.response.data);
+
+			dispatch(getOrderRateFailure(e.response.data));
+		}
+	};
