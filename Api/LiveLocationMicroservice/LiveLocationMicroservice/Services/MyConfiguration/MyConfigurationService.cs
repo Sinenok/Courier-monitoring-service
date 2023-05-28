@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace LiveLocationMicroservice.IoC;
+namespace LiveLocationMicroservice.Services.MyConfiguration;
 
-public class MyConfiguration : IMyConfiguration
+public class MyConfigurationService : IMyConfigurationService
 {
     private readonly IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                                                                                .AddJsonFile("appsettings.json", true)

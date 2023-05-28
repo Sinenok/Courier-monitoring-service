@@ -1,4 +1,4 @@
-﻿namespace LiveLocationMicroservice.IoC;
+﻿namespace LiveLocationMicroservice.Services.WriteToDatabase;
 
 public interface IWriteToDatabase
 {
