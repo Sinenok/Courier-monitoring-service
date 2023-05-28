@@ -41,7 +41,6 @@ public class CourierController : ControllerBase
         return Ok(result);
     }
 
-    //[Authorize(Roles = "Courier,Admin")]
     [HttpGet("orders")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

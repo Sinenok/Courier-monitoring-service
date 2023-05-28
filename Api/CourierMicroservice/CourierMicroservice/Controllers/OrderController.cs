@@ -37,4 +37,14 @@ public class OrderController : ControllerBase
         var result = _orderService.GetPaymentMethods();
         return Ok(result);
     }
+
+    [Authorize(Roles = "User,Admin")]
+    [HttpGet("user-orders")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> GetUserOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        var result = await _orderService.GetUserOrders(statusId, skip, take, cancellationToken);
+        return Ok(result);
+    }
 }

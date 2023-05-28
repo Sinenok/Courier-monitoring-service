@@ -72,6 +72,56 @@ public class OrderService : IOrderService
 
     public IEnumerable<PaymentMethod> GetPaymentMethods() => PaymentMethod.GetAllValues();
 
+    /// <summary>
+    /// Получение заказов сотрудника.
+    /// </summary>
+    /// <param name="statusId">Статус заказа.</param>
+    /// <param name="skip">Смещение для пагинации.</param>
+    /// <param name="take">Количество запрашиваемых сущностей.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public async Task<DataResult<OrderDto>> GetUserOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken)
+    {
+        OrderStatus? status = null;
+
+        if (statusId.HasValue)
+        {
+            status = OrderStatus.FromValue(statusId.Value);
+        }
+
+        var user = await GetCurrentUser(cancellationToken);
+
+        var query = _appDbContext.Orders.Where(order => order.Sender == user);
+
+        if (status != null)
+        {
+            query = _appDbContext.Orders.Where(order => order.OrderStatus == status);
+        }
+
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        var orders = await query.Include(o => o.PaymentMethod)
+                                .Include(o => o.PackageInformation)
+                                .OrderBy(o => o.CreatedDate)
+                                .ApplyPagination(skip, take)
+                                .ToListAsync(cancellationToken);
+
+        var result = orders.Select(order => new OrderDto(order.Id,
+                                                         order.SenderName,
+                                                         order.SenderAddress,
+                                                         order.ReceiverName,
+                                                         order.ReceiverAddress,
+                                                         order.DeliveryCost,
+                                                         order.PaymentMethod.Code,
+                                                         order.PackageInformation.Cost,
+                                                         order.PackageInformation.ShortDescription,
+                                                         order.PackageInformation.Weight,
+                                                         order.OrderStatus.Code,
+                                                         order.TrackNumber))
+                           .ToList();
+
+        return new DataResult<OrderDto>(result, totalCount);
+    }
+
     /// <inheritdoc />
     public async Task<DataResult<OrderDto>> GetUserSentOrders(int? skip, int? take, CancellationToken cancellationToken)
     {

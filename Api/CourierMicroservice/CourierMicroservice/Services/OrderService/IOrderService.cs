@@ -30,6 +30,15 @@ public interface IOrderService
     public IEnumerable<PaymentMethod> GetPaymentMethods();
 
     /// <summary>
+    /// Получение заказов сотрудника.
+    /// </summary>
+    /// <param name="statusId">Статус заказа.</param>
+    /// <param name="skip">Смещение для пагинации.</param>
+    /// <param name="take">Количество запрашиваемых сущностей.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    public Task<DataResult<OrderDto>> GetUserOrders(int? statusId, int? skip, int? take, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение заказов пользователя.
     /// </summary>
     /// <param name="skip">Смещение для пагинации.</param>
