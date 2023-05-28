@@ -10,4 +10,4 @@
 /// <param name="Password">Пароль.</param>
 /// <param name="Phone">Номер телефона.</param>
 /// <param name="Role">Роль.</param>
-public record UserRegistrationDto(string FirstName, string LastName, string Login, string Mail, string Password, string Phone, int Role);
+public record UserRegistrationDto(string FirstName, string LastName, string Login, string Mail, string Password, string Phone, int Role, string telegramUserName);

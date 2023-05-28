@@ -1,39 +1,56 @@
-﻿using Telegram.Bot;
+﻿using System.Globalization;
+using LiveLocationMicroservice.IoC;
+using Telegram.Bot;
 
 namespace LiveLocationMicroservice;
 
 internal class MyBotClient
 {
-    public MyBotClient(string token) => BotClient = new TelegramBotClient(token);
+    private readonly TelegramBotClient _botClient;
+    private readonly IWriteToDatabase _writeToDatabase;
 
-    private TelegramBotClient BotClient { get; }
+    public MyBotClient(IMyConfiguration configuration, IWriteToDatabase writeToDatabase)
+    {
+        _botClient = new TelegramBotClient(configuration.GetTgToken());
+        _writeToDatabase = writeToDatabase;
+    }
 
     [Obsolete("Obsolete")]
     public void RunBot()
     {
         OnMessageSubscribe();
         OnUpdateSubscribe();
-        BotClient.StartReceiving();
+        _botClient.StartReceiving();
     }
 
     [Obsolete("Obsolete")]
     private void OnMessageSubscribe()
     {
-        BotClient.OnMessage += async (s, e) =>
+        _botClient.OnMessage += async (s, e) =>
         {
             try
             {
                 if (e.Message.Location != null)
                 {
-                    await BotClient.SendTextMessageAsync(e.Message.Chat, $"Lat: {e.Message.Location?.Latitude}, Long: {e.Message.Location?.Longitude}");
+                    var message = e.Message;
+                    var username = message.From.Username;
+
+                    await _botClient.SendTextMessageAsync(e.Message.Chat, $"Привет, {username}!");
+                    await _botClient.SendTextMessageAsync(e.Message.Chat, $"Lat: {e.Message.Location?.Latitude}, Long: {e.Message.Location?.Longitude}");
+
+                    await _writeToDatabase.SetCoordinates(username,
+                                                          e.Message.Location?.Latitude.ToString(CultureInfo.InvariantCulture),
+                                                          e.Message.Location?.Longitude.ToString(CultureInfo.InvariantCulture));
                 }
                 else
                 {
-                    await BotClient.SendTextMessageAsync(e.Message.Chat, e.Message?.Text ?? "Unrecognized content");
+                    await _botClient.SendTextMessageAsync(e.Message.Chat, e.Message?.Text ?? "Unrecognized content");
                 }
             }
-            catch
+            catch (Exception exception)
             {
+                Console.WriteLine(exception);
+                throw;
             }
         };
     }
@@ -41,18 +58,31 @@ internal class MyBotClient
     [Obsolete("Obsolete")]
     private void OnUpdateSubscribe()
     {
-        BotClient.OnUpdate += async (s, e) =>
+        _botClient.OnUpdate += async (s, e) =>
         {
             try
             {
-                if (e.Update.EditedMessage?.Location != null)
+                if (e.Update.EditedMessage?.Location == null)
                 {
-                    await BotClient.SendTextMessageAsync(e.Update.EditedMessage.Chat,
-                                                         $"Lat: {e.Update.EditedMessage?.Location?.Latitude}, Long: {e.Update.EditedMessage?.Location?.Longitude}");
+                    return;
                 }
+
+                var message = e.Update.EditedMessage;
+                var username = message.From.Username;
+
+                await _botClient.SendTextMessageAsync(e.Update.EditedMessage.Chat, $"Привет, {username}!");
+
+                await _botClient.SendTextMessageAsync(e.Update.EditedMessage.Chat,
+                                                      $"Lat: {e.Update.EditedMessage?.Location?.Latitude}, Long: {e.Update.EditedMessage?.Location?.Longitude}");
+
+                await _writeToDatabase.SetCoordinates(username,
+                                                      e.Update.EditedMessage?.Location?.Latitude.ToString(CultureInfo.InvariantCulture),
+                                                      e.Update.EditedMessage?.Location?.Longitude.ToString(CultureInfo.InvariantCulture));
             }
-            catch
+            catch (Exception exception)
             {
+                Console.WriteLine(exception);
+                throw;
             }
         };
     }

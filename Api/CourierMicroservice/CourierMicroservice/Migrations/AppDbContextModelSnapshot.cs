@@ -34,6 +34,19 @@ namespace CourierMicroservice.Migrations
                     b.Property<DateTimeOffset>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("E")
+                        .HasColumnType("text")
+                        .HasComment("Координаты E");
+
+                    b.Property<string>("S")
+                        .HasColumnType("text")
+                        .HasComment("Координаты S");
+
+                    b.Property<string>("TelegramUserName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("Ник телеграм");
+
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 

@@ -141,7 +141,7 @@ public class AuthorizationService : IAuthorizationService
 
         if (userRight == Right.Courier)
         {
-            await _dbContext.Couriers.AddAsync(new Courier(SequentialGuid.Create(), user), cancellationToken);
+            await _dbContext.Couriers.AddAsync(new Courier(SequentialGuid.Create(), user, request.telegramUserName), cancellationToken);
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);

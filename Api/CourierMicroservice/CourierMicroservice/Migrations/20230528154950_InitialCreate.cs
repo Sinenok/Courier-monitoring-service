@@ -114,6 +114,9 @@ namespace CourierMicroservice.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Уникальный идентификатор"),
+                    E = table.Column<string>(type: "text", nullable: true, comment: "Координаты E"),
+                    S = table.Column<string>(type: "text", nullable: true, comment: "Координаты S"),
+                    TelegramUserName = table.Column<string>(type: "text", nullable: false, comment: "Ник телеграм"),
                     userid = table.Column<Guid>(name: "user_id", type: "uuid", nullable: false, comment: "Идентификатор пользователя"),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
@@ -138,7 +141,7 @@ namespace CourierMicroservice.Migrations
                     courierid = table.Column<Guid>(name: "courier_id", type: "uuid", nullable: true, comment: "Идентификатор курьера"),
                     DeliveryCost = table.Column<decimal>(type: "numeric", nullable: false, comment: "Цена доставки"),
                     DeliveryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Дата доставки"),
-                    orderstatusid = table.Column<Guid>(name: "order_status_id", type: "uuid", nullable: true, comment: "Идентификатор статуса заказа"),
+                    orderstatusid = table.Column<Guid>(name: "order_status_id", type: "uuid", nullable: false, comment: "Идентификатор статуса заказа"),
                     packageinformationid = table.Column<Guid>(name: "package_information_id", type: "uuid", nullable: false, comment: "Идентификатор посылки"),
                     paymentmethodid = table.Column<Guid>(name: "payment_method_id", type: "uuid", nullable: false, comment: "Идентификатор метода оплаты"),
                     receiverid = table.Column<Guid>(name: "receiver_id", type: "uuid", nullable: true, comment: "Идентификатор получателя"),
@@ -163,7 +166,8 @@ namespace CourierMicroservice.Migrations
                         name: "FK_orders_orderStatuses_order_status_id",
                         column: x => x.orderstatusid,
                         principalTable: "orderStatuses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_orders_packageInformation_package_information_id",
                         column: x => x.packageinformationid,
@@ -190,6 +194,17 @@ namespace CourierMicroservice.Migrations
                 comment: "Заказ");
 
             migrationBuilder.InsertData(
+                table: "orderStatuses",
+                columns: new[] { "Id", "Code", "CreatedDate", "Name", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { new Guid("32ba2971-2a5e-435b-87c7-f8022e901c63"), 2, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "InProgress", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("4fdc6d99-f3fd-49ee-8af9-6ac5531cc40e"), 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "CourierAssigned", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("9171b0ee-7091-4dee-95aa-59c5522a21fd"), 3, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Done", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("b63c138c-c36b-4bb1-8dad-b3770512b858"), 0, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Created", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) }
+                });
+
+            migrationBuilder.InsertData(
                 table: "paymentMethods",
                 columns: new[] { "Id", "Code", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
@@ -205,6 +220,7 @@ namespace CourierMicroservice.Migrations
                 values: new object[,]
                 {
                     { new Guid("3dfcd6f3-1775-4e1b-91db-fdccea3f83eb"), 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Admin", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { new Guid("60eb98f3-9f8c-4c12-93d4-66f208caa6f6"), 2, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Courier", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) },
                     { new Guid("e10222c4-7723-498b-8bf4-83252378e0c9"), 0, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "User", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) }
                 });
 
