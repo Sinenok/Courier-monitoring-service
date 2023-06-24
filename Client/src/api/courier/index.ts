@@ -1,7 +1,7 @@
 import Endpoints from '../endpoints';
 import { axiosInstance } from '../instance';
 import { AxiosPromise } from 'axios';
-import { IOrderTakeRequest, IOrderTakeResponce } from './types';
+import { IOrderTakeRequest, IOrderTakeResponce, IOrderTakesRequest } from './types';
 import { ResponseDataCoordinate } from '../../components/receiver_tracking/courier_tracking_map/types';
 
 export const getForCourierActiveOrders = (statusId: number): AxiosPromise => {
@@ -23,6 +23,10 @@ export const orderComplete = (params: IOrderTakeRequest): AxiosPromise<IOrderTak
 };
 
 // ------------coordinate--------------
-export const getCourierCoordinate = (orderId: IOrderTakeRequest): AxiosPromise<any> => {
-	return axiosInstance.post(Endpoints.COURIER.COURIERCOORDINATE, { orderId });
+// export const getCourierCoordinate = (trackNumber: IOrderTakesRequest): AxiosPromise<any> => {
+// 	return axiosInstance.post(Endpoints.COURIER.COURIERCOORDINATE, { trackNumber });
+// };
+
+export const getCourierCoordinate = (params: IOrderTakesRequest): AxiosPromise<any> => {
+	return axiosInstance.get(`${Endpoints.COURIER.COURIERCOORDINATE}/${params.trackNumber}`);
 };

@@ -48,7 +48,8 @@ function Body() {
 		orderStatus: isOrderInfoIn.orderStatus
 	};
 	const orderMap: IOrderMap = {
-		orderId: isOrderInfoIn.orderId
+		trackNumber: isOrderInfoIn.trackNumber,
+		orderStatus: isOrderInfoIn.orderStatus
 	};
 	return (
 		<Container className="py-3">

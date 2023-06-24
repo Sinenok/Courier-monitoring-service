@@ -85,7 +85,7 @@ const OrdersTaken = () => {
 											</Card.Text>
 										</Card.Body>
 										<Card.Footer className="">
-											<Row lg="5" className="justify-content-center border">
+											<Row lg="5" className="justify-content-center">
 												<input type="hidden" name="orderId" value={order.orderId} />
 												<Button variant="primary" type="submit">
 													Завершить заказ

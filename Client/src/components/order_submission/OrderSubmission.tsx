@@ -107,6 +107,19 @@ const OrderSubmission = () => {
 							/>
 						</Form.Group>
 					</Row>
+					{/* <Row className="justify-content-md-center">
+						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupReceiverNumber">
+							<Form.Label>Номер телефона получателя</Form.Label>
+							<Form.Control
+								required
+								name="receiverNumber"
+								type="text"
+								placeholder="Введите номер телефона получателя"
+								value={receiverName}
+								onChange={(e) => setReceiverName(e.target.value)}
+							/>
+						</Form.Group>
+					</Row> */}
 					<Row className="justify-content-md-center">
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupDeliveryCost">
 							<Form.Label>Стоимость доставки</Form.Label>

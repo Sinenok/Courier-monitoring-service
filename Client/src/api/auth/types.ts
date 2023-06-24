@@ -17,4 +17,5 @@ export interface IRegisterResponce {
 	password: string;
 	phone: string;
 	role: number;
+	telegramUserName: string;
 }

@@ -14,7 +14,7 @@ const Popup: FC<any> = ({ show, handleClose }) => {
 	return (
 		<div className={showHideClassName}>
 			<section className="popup-main">
-				{orderRate ? (
+				{!orderRate ? (
 					<>
 						<h2>Оцените доставку</h2>
 						<Form onSubmit={handleSubmit}>

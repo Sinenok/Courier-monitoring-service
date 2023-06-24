@@ -12,6 +12,7 @@ export const useRegister = (): IUseRegiserResult => {
 	const [repeatPassword, setRepeatPassword] = useState('');
 	const [phone, setPhone] = useState('');
 	const [role, setRole] = useState(0);
+	const [telegramUserName, setTelegramUserName] = useState('');
 
 	const dispatch = useAppDispatch();
 
@@ -19,13 +20,24 @@ export const useRegister = (): IUseRegiserResult => {
 		(e: FormEvent) => {
 			e.preventDefault();
 			if (password === repeatPassword) {
-				dispatch(registerUser({ firstName, lastName, login, mail, password, phone, role }));
+				dispatch(
+					registerUser({
+						firstName,
+						lastName,
+						login,
+						mail,
+						password,
+						phone,
+						role,
+						telegramUserName
+					})
+				);
 			} else {
 				/** Где будет обработана эта ошибка? */
 				throw new Error('У вас не совпадают пароли');
 			}
 		},
-		[firstName, lastName, login, mail, password, phone, repeatPassword, role]
+		[firstName, lastName, login, mail, password, phone, repeatPassword, role, telegramUserName]
 	);
 
 	return {
@@ -45,6 +57,8 @@ export const useRegister = (): IUseRegiserResult => {
 		setPhone,
 		role,
 		setRole,
+		telegramUserName,
+		setTelegramUserName,
 		handleSubmit
 	};
 };

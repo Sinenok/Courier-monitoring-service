@@ -23,8 +23,11 @@ const Registration = () => {
 		setPhone,
 		role,
 		setRole,
+		telegramUserName,
+		setTelegramUserName,
 		handleSubmit
 	} = useRegister();
+	console.log(role);
 
 	return (
 		<div className="Registration">
@@ -143,6 +146,22 @@ const Registration = () => {
 							</Form.Select>
 						</Form.Group>
 					</Row>
+					{role === 2 ? (
+						<Row className="justify-content-md-center">
+							<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupTelegram">
+								<Form.Label>Телеграм</Form.Label>
+								<Form.Control
+									className="input"
+									required
+									name="telegramUserName"
+									type="text"
+									placeholder="Введите ваш ник в телеграме"
+									value={telegramUserName}
+									onChange={(e) => setTelegramUserName(e.target.value)}
+								/>
+							</Form.Group>
+						</Row>
+					) : null}
 					<Row lg="5" className="justify-content-md-center mb-4">
 						<Button variant="primary" type="submit">
 							Зарегистрироваться

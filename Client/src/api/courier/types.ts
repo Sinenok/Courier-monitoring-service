@@ -5,3 +5,8 @@ export interface IOrderTakeRequest {
 export interface IOrderTakeResponce {
 	orderId: string;
 }
+
+
+export interface IOrderTakesRequest {
+	trackNumber: string;
+}

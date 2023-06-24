@@ -11,7 +11,7 @@ import {
 	getCoordinateSucess,
 	getCoordinateFailure
 } from './courierReducer';
-import { IOrderTakeRequest } from '../../api/courier/types';
+import { IOrderTakeRequest, IOrderTakesRequest } from '../../api/courier/types';
 
 export const takeOrder =
 	(data: IOrderTakeRequest) =>
@@ -72,7 +72,7 @@ export const completeOrder =
 // 	}
 // };
 export const getCoordinate =
-	(data: IOrderTakeRequest) =>
+	(data: IOrderTakesRequest) =>
 	async (dispatch: Dispatch): Promise<void> => {
 		try {
 			// dispatch(getCoordinateStart());
