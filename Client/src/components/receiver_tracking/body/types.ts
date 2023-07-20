@@ -1,3 +1,5 @@
+/** Похожие интерфейсы уже есть на проекте, их можно переиспользовать через extends */
+
 export interface IOrderInfo {
 	sender: string;
 	senderAddress: string;
@@ -15,6 +17,7 @@ export interface IOrderList {
 	totalPrice: number;
 }
 
+/** Для orderStatus тоже можно было ввести enum, чтобы не было магических чисел */
 export interface IOrderTitle {
 	orderStatus: number;
 }

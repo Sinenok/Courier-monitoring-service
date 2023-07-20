@@ -14,12 +14,14 @@ const OrderList: FC<IOrderList> = ({
 		</Card.Header>
 		<Card.Body className="text-centers">
 			<Card.Text>
+				{/** <span className="text-primary"> используется по всему проекту неоднократно, можно вынести в отдельный компонент  */}
 				Вес товара: <span className="text-primary">{productWeight} грамм</span>
 			</Card.Text>
 			<Card.Text>
 				Краткое описание: <span className="text-primary">{productDescription}</span>
 			</Card.Text>
 			<Card.Text>
+				{/** слово "рублей" не будет подходить к числам, оканчивающимся на 0,1,2,3,4 */}
 				Стоимость товара: <span className="text-primary">{amountPayable} рублей</span>
 			</Card.Text>
 			<Card.Text>

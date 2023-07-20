@@ -18,6 +18,8 @@ export const useGetUserAllSentOrders = () => {
 	};
 };
 
+/** paymentMethod также заслуживает отдельный enum  */
+
 export const getPaymentMethodName = (paymentMethod: number) => {
 	if (paymentMethod === 0) {
 		return 'Наличные';

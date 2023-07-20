@@ -5,6 +5,7 @@ export const orderReducer = createSlice({
 	name: 'courier',
 	initialState,
 	reducers: {
+		/** не типизирован state, IDE выдает ошибку */
 		takeActiveOrderStart: (state): OrderState => ({
 			...state,
 			takeActiveOrderData: {

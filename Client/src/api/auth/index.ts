@@ -15,6 +15,13 @@ import { AxiosPromise } from 'axios';
  * AxiosPromise<any>, с чем впоследствии будет неудобно работать
  */
 
+
+/**
+ * 
+ * index.ts по идее надо использовать только для реэкспорта. Т.е. в этих файлах ничего не объявляется
+ *
+ */
+
 export const login = (params: ILoginRequest): AxiosPromise<ILoginResponse> =>
 	axiosInstance.post(Endpoints.AUTH.LOGIN, params, { withCredentials: true });
 

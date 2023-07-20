@@ -111,6 +111,7 @@ const OrderSubmission = () => {
 								onChange={(e) => setPaymentMethod(Number(e.target.value))}>
 								{paymentMethodList.map((method, index) => {
 									return (
+										/** index в key */
 										<option key={index} value={method.code}>
 											{method.name}
 										</option>
@@ -159,6 +160,7 @@ const OrderSubmission = () => {
 									type="number"
 									step="0.1"
 									placeholder="Введите вес товара в граммах"
+									/** сюда можно будет ввести не только число, но и любой другой текст, и тогда parseFloat поломается */
 									onChange={(e) => setProductWeight(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{productWeight}</InputGroup.Text>

@@ -15,6 +15,10 @@ function HeaderNavbar() {
 	const profile = getsProfile();
 	const userRole = getsProfileRole();
 
+	/** очень много тернарных операторов
+	 * куски кода в тернарниках можно вынести в отдельные компоненты для читаемости
+	 */
+
 	return (
 		<div className="HeaderNavbar">
 			<Navbar className="navbar" bg="dark" variant="dark" expand="lg">

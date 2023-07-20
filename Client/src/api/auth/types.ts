@@ -16,6 +16,7 @@ export interface IRegisterResponce {
 	mail: string;
 	password: string;
 	phone: string;
+	/** Для роли по идее можно было сделать enum, чтобы не оперировать магическими числами */
 	role: number;
 	telegramUserName: string;
 }

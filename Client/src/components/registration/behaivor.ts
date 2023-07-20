@@ -33,6 +33,7 @@ export const useRegister = (): IUseRegiserResult => {
 					})
 				);
 			} else {
+				/** вопрос всё ещё актуален)) */
 				/** Где будет обработана эта ошибка? */
 				throw new Error('У вас не совпадают пароли');
 			}

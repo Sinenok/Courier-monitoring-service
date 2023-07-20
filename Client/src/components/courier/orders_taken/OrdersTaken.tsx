@@ -16,8 +16,8 @@ const OrdersTaken = () => {
 		dispatch(completeOrder({ orderId }));
 	};
 
-	const [currentPage, setCurrentPage] = useState(1);
-	const [activeOrdersPerPage] = useState(2);
+	const [currentPage, setCurrentPage] = useState(1); 
+	const [activeOrdersPerPage] = useState(2); // здесь не нужен useState, т.к. число не перезаписывается
 	const lastOrderIndex = currentPage * activeOrdersPerPage;
 	const firstOrderIndex = lastOrderIndex - activeOrdersPerPage;
 	const currentOrder = getAllTakenOrders.allActiveOrders.items.slice(
@@ -36,6 +36,7 @@ const OrdersTaken = () => {
 					</Container>
 					<Container className="flexxx cards-wrapper">
 						{currentOrder.map((order, index) => (
+							/** index нельзя указывать в качестве ключа для итерируемых объектов */
 							<Row className="cardss" key={index}>
 								<Form onSubmit={(event) => handleCompleteOrder(event, order.orderId)}>
 									<Card className="cards-main bg-light">
@@ -44,6 +45,7 @@ const OrdersTaken = () => {
 										</Card.Header>
 										<Card.Body>
 											<Card.Text>
+												{/** <span className="text-primary"> можно вынести в отдельных компонент и переиспользовать  */}
 												Номер заказа: <span className="text-primary">{order.orderId}</span>
 											</Card.Text>
 											<Card.Text>

@@ -5,6 +5,7 @@ import { flagCoord, getsS, getse } from '../../../hooks/IsLoggedIn';
 export const useTakeCoordinate = (trackNumber: string) => {
 	const dispatch = useAppDispatch();
 	const flag = flagCoord();
+	/** сокращается до if (!flag) */
 	if (flag === false) {
 		setInterval(() => {
 			dispatch(getCoordinate({ trackNumber }));

@@ -20,6 +20,7 @@ export const useOrderSubmission = (): IUseOrderSubmissionResult => {
 
 	const handleSubmit = useCallback(
 		(e: FormEvent) => {
+			/** Для чего везде используется preventDefault? */
 			e.preventDefault();
 
 			dispatch(

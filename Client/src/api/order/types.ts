@@ -26,6 +26,10 @@ export interface IPaymentMethodsResponce {
 	id: string;
 }
 
+/**
+ * IOrderCreateRequest и IOrderInfoResponce идентичны или очень похожи. Если идентичны, то тупо удалить один, если похожи, то расширить один от другого
+ */
+
 //get order
 export interface IOrderInfoResponce {
 	senderName: string;

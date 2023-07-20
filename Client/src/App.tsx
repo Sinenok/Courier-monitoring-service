@@ -34,6 +34,8 @@ const PrivateRouteCourier: FC<PropType> = ({ component: Component }) => {
 function App() {
 	const isLoggedIn = isLogged();
 
+	/** Для красоты не хватает обработки страницы 404 =) */
+
 	return (
 		<Router>
 			<div className="page">
