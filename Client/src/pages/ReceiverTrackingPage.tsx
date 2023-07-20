@@ -4,7 +4,6 @@ import CheckTrackNumber from '../components/receiver_tracking/check_track_number
 import { getsOrderInfo } from '../hooks/IsLoggedIn';
 
 function ReceiverTrackingPage() {
-	// const trackNumberCheck = false;
 	const trackNumberCheck = !!getsOrderInfo();
 
 	return (

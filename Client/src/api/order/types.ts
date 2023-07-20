@@ -1,23 +1,3 @@
-// login
-export interface ILoginRequest {
-	login: string;
-	password: string;
-}
-
-export interface ILoginResponse {
-	accessToken: string;
-}
-
-// register
-export interface IRegisterResponce {
-	firstName: string;
-	lastName: string;
-	login: string;
-	mail: string;
-	password: string;
-	phone: string;
-}
-
 // order
 export interface IOrderCreateRequest {
 	senderName: string;
@@ -61,4 +41,10 @@ export interface IOrderInfoResponce {
 
 export interface IOrderInfoRequest {
 	trackNumber: string;
+}
+
+// Order rate
+export interface IOrderRateRequest {
+	courierRating: string;
+	productRating: string;
 }

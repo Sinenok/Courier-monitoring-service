@@ -16,5 +16,7 @@ export interface IUseRegiserResult {
 	setPhone: React.Dispatch<React.SetStateAction<string>>;
 	role: number;
 	setRole: React.Dispatch<React.SetStateAction<number>>;
+	telegramUserName: string;
+	setTelegramUserName: React.Dispatch<React.SetStateAction<string>>;
 	handleSubmit: (e: FormEvent) => void;
 }

@@ -20,5 +20,6 @@ export interface IOrderTitle {
 }
 
 export interface IOrderMap {
-	orderId: string;
+	trackNumber: string;
+	orderStatus: number;
 }

@@ -2,16 +2,6 @@ import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
 import { IOrderInfo } from './body/types';
 
-/**
- * Использование any перечёркивает все плюсы тайпскрипта
- *
- * Чтобы не писать props.postOrderInfo.sender, props.postOrderInfo.recipient,
- *  можно воспользоваться деструктуризацией (но полноценно это будет работать, только если убрать any и заменить настоящим типом)
- *
- *  Переписал компонент
- * -------------------------------------------------ИСПРАВЛЕНО---------------------------------------------------------------------------------
- */
-
 const OrderInfo: FC<IOrderInfo> = ({
 	sender,
 	senderAddress,
@@ -27,44 +17,26 @@ const OrderInfo: FC<IOrderInfo> = ({
 		</Card.Header>
 		<Card.Body>
 			<Card.Text>
-				Отправитель:{' '}
-				<a className="text-primary" href="#">
-					{sender}
-				</a>
+				Отправитель: <span className="text-primary">{sender}</span>
 			</Card.Text>
 			<Card.Text>
-				Адрес отправителя:{' '}
-				<a className="text-primary" href="#">
-					{senderAddress}
-				</a>
+				Адрес отправителя: <span className="text-primary">{senderAddress}</span>
 			</Card.Text>
 			<Card.Text>
-				Получатель:{' '}
-				<a className="text-primary" href="#">
-					{recipient}
-				</a>
+				Получатель: <span className="text-primary">{recipient}</span>
 			</Card.Text>
 			<Card.Text>
-				Адрес доставки:{' '}
-				<a className="text-primary" href="#">
-					{deliveryAddress}
-				</a>
+				Адрес доставки: <span className="text-primary">{deliveryAddress}</span>
 			</Card.Text>
 			<Card.Text>
-				Плановая дата доставки:{' '}
-				<a className="text-primary" href="#">
-					{plannedDeliveryDate}
-				</a>
+				Плановая дата доставки: <span className="text-primary">{plannedDeliveryDate}</span>
 			</Card.Text>
 			<Card.Text>
-				Стоимость доставки:{' '}
-				<a className="text-primary" href="#">
-					{shippingCost} рублей
-				</a>
+				Стоимость доставки: <span className="text-primary">{shippingCost} рублей</span>
 			</Card.Text>
 			<Card.Text>
 				Способ оплаты:{' '}
-				<a className="text-primary" href="#">
+				<span className="text-primary">
 					{paymentMethod === 0 ? (
 						<span>Наличные</span>
 					) : paymentMethod === 1 ? (
@@ -72,7 +44,7 @@ const OrderInfo: FC<IOrderInfo> = ({
 					) : (
 						<span>Онлайн</span>
 					)}
-				</a>
+				</span>
 			</Card.Text>
 		</Card.Body>
 	</Card>

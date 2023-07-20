@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Container, Row } from 'react-bootstrap';
 import { getsProfile } from '../../hooks/IsLoggedIn';
-import { useGetUserAllSentOrders } from './behavior';
+import { getOrderStatusName, getPaymentMethodName, useGetUserAllSentOrders } from './behavior';
 import './../../styles/component-styles/RenderProfile.css';
 import Pagination from './Pagination';
 
@@ -19,31 +19,8 @@ const RenderProfile = () => {
 	);
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-	// console.log('aa', getAllSentOrders.allSentOrdersList.total);
 
-	const getPaymentMethodName = (paymentMethod: number) => {
-		if (paymentMethod === 0) {
-			return 'Наличные';
-		} else if (paymentMethod === 1) {
-			return 'Карта';
-		} else {
-			return 'Онлайн';
-		}
-	};
-
-	const getOrderStatusName = (orderStatus: number) => {
-		if (orderStatus === 0) {
-			return 'Создан';
-		} else if (orderStatus === 1) {
-			return 'Принят курьером';
-		} else if (orderStatus === 2) {
-			return 'Выполняется';
-		} else {
-			return 'Завершен';
-		}
-	};
-
-	const renderProfile = () => (
+	return (
 		<div>
 			<Container className="text-center pt-5 mb-5">
 				<h2>
@@ -129,7 +106,6 @@ const RenderProfile = () => {
 			)}
 		</div>
 	);
-	return renderProfile();
 };
 
 export default RenderProfile;

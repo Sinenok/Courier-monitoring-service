@@ -6,9 +6,12 @@ import {
 	orderSendFailure,
 	getOrderInfoStart,
 	getOrderInfoSucess,
-	getOrderInfoFailure
+	getOrderInfoFailure,
+	getOrderRateStart,
+	getOrderRateSucess,
+	getOrderRateFailure
 } from './orderReducer';
-import { IOrderCreateRequest, IOrderInfoRequest } from '../../api/order/types';
+import { IOrderCreateRequest, IOrderInfoRequest, IOrderRateRequest } from '../../api/order/types';
 
 export const createOrder =
 	(data: IOrderCreateRequest) =>
@@ -17,7 +20,7 @@ export const createOrder =
 			dispatch(orderSendStart());
 
 			const res = await api.order.orderCreate(data);
-			dispatch(orderSendSucess(String(res.data))); //Убрать стринг, завернуть трэк номер на бэке в объект (аналог аксес-токен)
+			dispatch(orderSendSucess(String(res.data)));
 		} catch (e: any) {
 			console.error(e.response.data);
 
@@ -27,8 +30,6 @@ export const createOrder =
 
 export const getPaymentMethod = async () => {
 	try {
-		// console.log('11');
-
 		return (await api.order.getPaymentMethods()).data;
 	} catch (e: any) {
 		console.error(e);
@@ -52,10 +53,23 @@ export const getOrderInfo =
 
 export const getAllUserSentOrders = async () => {
 	try {
-		// console.log('11');
-
 		return (await api.order.getAllSentOrders()).data;
 	} catch (e: any) {
 		console.error(e);
 	}
 };
+
+export const rateTheOrder =
+	(data: IOrderRateRequest) =>
+	async (dispatch: Dispatch): Promise<void> => {
+		try {
+			dispatch(getOrderRateStart());
+
+			await api.order.orderRateCreate(data);
+			dispatch(getOrderRateSucess());
+		} catch (e: any) {
+			console.error(e.response.data);
+
+			dispatch(getOrderRateFailure(e.response.data));
+		}
+	};

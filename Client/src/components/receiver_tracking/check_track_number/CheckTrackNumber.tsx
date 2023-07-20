@@ -25,7 +25,7 @@ function CheckTrackNumber() {
 					</Row>
 					<Row lg="5" className="justify-content-md-center">
 						<Button variant="primary" type="submit">
-							Войти
+							Отправить
 						</Button>
 					</Row>
 				</Container>

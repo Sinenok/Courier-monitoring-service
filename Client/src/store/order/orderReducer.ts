@@ -54,6 +54,31 @@ export const orderReducer = createSlice({
 				isLoading: false,
 				error: action.payload
 			}
+		}),
+
+		getOrderRateStart: (state): OrderState => ({
+			...state,
+			rateOrderData: {
+				...state.rateOrderData,
+				isLoading: true
+			}
+		}),
+		getOrderRateSucess: (state): OrderState => ({
+			...state,
+			rateOrderData: {
+				...state.rateOrderData,
+				error: null,
+				isLoading: false,
+				orderRate: true
+			}
+		}),
+		getOrderRateFailure: (state, action: PayloadAction<string>): OrderState => ({
+			...state,
+			rateOrderData: {
+				...state.rateOrderData,
+				isLoading: false,
+				error: action.payload
+			}
 		})
 	}
 });
@@ -64,7 +89,10 @@ export const {
 	orderSendFailure,
 	getOrderInfoStart,
 	getOrderInfoSucess,
-	getOrderInfoFailure
+	getOrderInfoFailure,
+	getOrderRateStart,
+	getOrderRateSucess,
+	getOrderRateFailure
 } = orderReducer.actions;
 
 export default orderReducer.reducer;

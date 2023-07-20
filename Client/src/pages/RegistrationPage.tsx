@@ -4,7 +4,6 @@ import Registration from '../components/registration/Registration';
 import { isRegisterLoad, isRegistered } from '../hooks/IsLoggedIn';
 import { Container, Spinner } from 'react-bootstrap';
 
-/** RenderProfile - в отдельный компонент - ИСПРАВЛЕНО */
 const RegistrationPage = () => {
 	const isRegisteredIn = isRegistered();
 	const isLoad = isRegisterLoad();

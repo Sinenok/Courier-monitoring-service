@@ -61,3 +61,8 @@ export const getse = () => {
 export const flagCoord = () => {
 	return useSelector((state: IRootState) => state.courier.getCoordinate.isLoading);
 };
+
+//---------------------Order Rate----------------------
+export const isOrderRate = () => {
+	return useSelector((state: IRootState) => state.order.rateOrderData.orderRate);
+};

@@ -3,8 +3,6 @@ import { Form, Row, Col, Container, Button } from 'react-bootstrap';
 import { useRegister } from './behaivor';
 import './../../styles/component-styles/Registration.css';
 
-// -----------------------------КАК И С АВТОРИЗАЦИЕЙ ВЫНЕС ЛОГИКУ--------------------------------------------
-
 const Registration = () => {
 	const {
 		firstName,
@@ -23,6 +21,8 @@ const Registration = () => {
 		setPhone,
 		role,
 		setRole,
+		telegramUserName,
+		setTelegramUserName,
 		handleSubmit
 	} = useRegister();
 
@@ -143,6 +143,22 @@ const Registration = () => {
 							</Form.Select>
 						</Form.Group>
 					</Row>
+					{role === 2 ? (
+						<Row className="justify-content-md-center">
+							<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupTelegram">
+								<Form.Label>Телеграм</Form.Label>
+								<Form.Control
+									className="input"
+									required
+									name="telegramUserName"
+									type="text"
+									placeholder="Введите ваш ник в телеграме"
+									value={telegramUserName}
+									onChange={(e) => setTelegramUserName(e.target.value)}
+								/>
+							</Form.Group>
+						</Row>
+					) : null}
 					<Row lg="5" className="justify-content-md-center mb-4">
 						<Button variant="primary" type="submit">
 							Зарегистрироваться

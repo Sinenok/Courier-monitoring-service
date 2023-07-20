@@ -4,25 +4,8 @@ import OrderTitle from './../OrderTitle';
 import OrderInfo from './../OrderInfo';
 import OrderList from './../OrderList';
 import CourierTrackingMap from './../courier_tracking_map/CourierTrackingMap';
-// import { orderInfo, orderList, orderTitle } from './behavior';
 import { getsOrderInfo } from '../../../hooks/IsLoggedIn';
 import { IOrderInfo, IOrderList, IOrderMap, IOrderTitle } from './types';
-
-/**
- * Слишком большое количество констант.
- * Разумнее было бы создать по одному объекту для пропсов каждого компонента с соответствующими полями и передавать пропс целым объектом.
- * Инициализацию данных объектов логично было бы вынести в соседний файл.
- *
- * Примерная структура папки с компонентом может быть такой:
- * behavior.ts - часть с логикой. В данном случае там могли бы лежать пропсы для дочерних компонентов
- * component.tsx - чисто визуальная часть. В данном случае - извлечение пропсов из behavior.ts и JSX часть в блоке return
- * types.ts - типы, используемые в компоненте
- * index.ts - для экспорта
- *
- * Отделение логики от визуала резко повышает читабельность кода
- *
- * ----------------------------------------------ИСПРАВЛЕНО---------------------------------------------------------------------------
- *  */
 
 function Body() {
 	const isOrderInfoIn = getsOrderInfo();
@@ -48,7 +31,8 @@ function Body() {
 		orderStatus: isOrderInfoIn.orderStatus
 	};
 	const orderMap: IOrderMap = {
-		orderId: isOrderInfoIn.orderId
+		trackNumber: isOrderInfoIn.trackNumber,
+		orderStatus: isOrderInfoIn.orderStatus
 	};
 	return (
 		<Container className="py-3">

@@ -11,7 +11,8 @@ const Endpoints = {
 		CREATE: `${httpHost}/api/Order/create-order`,
 		PAYMENT: `${httpHost}/api/Order/get-payment-methods`,
 		ORDERINFO: `${httpHost}/api/Order/order-info`,
-		SENTORDERS: `${httpHost}/api/Order/user-sent-orders`
+		SENTORDERS: `${httpHost}/api/Order/user-orders`,
+		ORDERRATE: `${httpHost}/api/Order/order-rate` //Поменять на нужный путь
 	},
 	COURIER: {
 		CREATEDORDERS: `${httpHost}/api/Courier/orders`,

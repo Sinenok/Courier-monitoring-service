@@ -4,6 +4,7 @@ import { Button, Card, Container, Form, Row } from 'react-bootstrap';
 import Pagination from '../../render_profile/Pagination';
 import { useAppDispatch } from '../../../store';
 import { completeOrder } from '../../../store/courier/actionCreators';
+import { getPaymentMethodName } from '../../render_profile/behavior';
 
 const OrdersTaken = () => {
 	const takenOrders = 1;
@@ -13,7 +14,6 @@ const OrdersTaken = () => {
 	const handleCompleteOrder = (event: React.FormEvent<HTMLFormElement>, orderId: string) => {
 		// event.preventDefault();
 		dispatch(completeOrder({ orderId }));
-		console.log('aaa', orderId);
 	};
 
 	const [currentPage, setCurrentPage] = useState(1);
@@ -27,15 +27,6 @@ const OrdersTaken = () => {
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-	const getPaymentMethodName = (paymentMethod: number) => {
-		if (paymentMethod === 0) {
-			return 'Наличные';
-		} else if (paymentMethod === 1) {
-			return 'Карта';
-		} else {
-			return 'Онлайн';
-		}
-	};
 	return (
 		<div>
 			{getAllTakenOrders.allActiveOrders.total !== 0 ? (
@@ -85,7 +76,7 @@ const OrdersTaken = () => {
 											</Card.Text>
 										</Card.Body>
 										<Card.Footer className="">
-											<Row lg="5" className="justify-content-center border">
+											<Row lg="5" className="justify-content-center">
 												<input type="hidden" name="orderId" value={order.orderId} />
 												<Button variant="primary" type="submit">
 													Завершить заказ
