@@ -6,3 +6,8 @@ export interface IUseOrderRating {
 	setProductRating: React.Dispatch<React.SetStateAction<string>>;
 	handleSubmit: (e: FormEvent) => void;
 }
+
+export interface IPopup {
+	show: boolean;
+	handleClose: () => void;
+}

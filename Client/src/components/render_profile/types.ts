@@ -16,3 +16,9 @@ export interface ResponseData {
 	items: Item[];
 	total: number;
 }
+
+export interface PaginationProps {
+	sentOrdersPerPage: number;
+	totalOrders: number;
+	paginate: Function;
+}

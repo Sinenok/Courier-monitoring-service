@@ -4,9 +4,6 @@ import { isOrderSending } from '../../hooks/IsLoggedIn';
 
 const OrderSubmissionSuccess = () => {
 	const isOrderSend = isOrderSending();
-	// const styles = {
-	// 	color: 'red'
-	// };
 	return (
 		<Container className="text-center pt-5">
 			<Row className="mb-3">

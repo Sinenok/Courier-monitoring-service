@@ -3,14 +3,6 @@ import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import { useLogin } from './behavior';
 import './../../styles/component-styles/Authorization.css';
 
-/**
- * В данном случае всю логику (всё, что доc:\Users\Ivan\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\code\electron-sandbox\workbench\workbench.html return) можно вынести в файл для логики, сформировав кастомный хук.
- * https://ru.reactjs.org/docs/hooks-custom.html
- * При этом его нужно типизировать, чтобы было более удобно работать
- *
- * Для оптимизации ререндеров handleSubmit можно обернуть в useCallback https://habr.com/ru/post/529950/
- * -------------------------------------------ИСПРАВЛЕНО---------------------------------------------------------------
- */
 const Authorization = () => {
 	const { login, setLogin, password, setPassword, handleSubmit } = useLogin();
 	return (

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Form, Row, Col, Container, Button, InputGroup } from 'react-bootstrap';
 import { useOrderSubmission, usePaymentMethods } from './behaivor';
-// import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
-// import { Decimal } from 'decimal.js';
 
 const OrderSubmission = () => {
 	const {
@@ -28,30 +26,11 @@ const OrderSubmission = () => {
 		handleSubmit
 	} = useOrderSubmission();
 
-	// const [paymentMethod, setPaymentMethod] = useState<number>(2);
-
 	const { paymentMethodList } = usePaymentMethods();
-
-	// const [deliveryCost, setDeliveryCost] = useState(0.0);
-	// const [productCost, setProductCost] = useState(0.0);
-	// const [productDescription, setProductDescription] = useState('');
-	// const [productWeight, setProductWeight] = useState(0.0);
-	// console.log('productWeight', productWeight);
-
-	// const defaultState = {
-	// 	center: [55.751574, 37.573856],
-	// 	zoom: 5
-	// };
-
 	return (
 		<div className="OrderSubmission">
 			<Container className="text-center pt-5">
 				<h1>Отправка заказа</h1>
-				{/* <YMaps>
-					<Map defaultState={defaultState} width="100%" height="400px">
-						<Placemark geometry={[51.684758, 37.738521]} />
-					</Map>
-				</YMaps> */}
 			</Container>
 			<Form onSubmit={handleSubmit}>
 				<Container className="py-3">
@@ -107,19 +86,6 @@ const OrderSubmission = () => {
 							/>
 						</Form.Group>
 					</Row>
-					{/* <Row className="justify-content-md-center">
-						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupReceiverNumber">
-							<Form.Label>Номер телефона получателя</Form.Label>
-							<Form.Control
-								required
-								name="receiverNumber"
-								type="text"
-								placeholder="Введите номер телефона получателя"
-								value={receiverName}
-								onChange={(e) => setReceiverName(e.target.value)}
-							/>
-						</Form.Group>
-					</Row> */}
 					<Row className="justify-content-md-center">
 						<Form.Group lg="5" as={Col} className="mb-3" controlId="formGroupDeliveryCost">
 							<Form.Label>Стоимость доставки</Form.Label>
@@ -130,7 +96,6 @@ const OrderSubmission = () => {
 									placeholder="Введите стоимость доставки в рублях"
 									type="number"
 									step="0.1"
-									// value={deliveryCost}
 									onChange={(e) => setDeliveryCost(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{deliveryCost}</InputGroup.Text>
@@ -164,7 +129,6 @@ const OrderSubmission = () => {
 									type="number"
 									step="0.1"
 									placeholder="Введите стоимость товара в рублях"
-									// value={productCost}
 									onChange={(e) => setProductCost(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{productCost}</InputGroup.Text>
@@ -195,7 +159,6 @@ const OrderSubmission = () => {
 									type="number"
 									step="0.1"
 									placeholder="Введите вес товара в граммах"
-									// value={productWeight}
 									onChange={(e) => setProductWeight(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{productWeight}</InputGroup.Text>

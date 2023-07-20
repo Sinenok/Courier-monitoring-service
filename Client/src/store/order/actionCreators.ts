@@ -20,7 +20,7 @@ export const createOrder =
 			dispatch(orderSendStart());
 
 			const res = await api.order.orderCreate(data);
-			dispatch(orderSendSucess(String(res.data))); //Убрать стринг, завернуть трэк номер на бэке в объект (аналог аксес-токен)
+			dispatch(orderSendSucess(String(res.data)));
 		} catch (e: any) {
 			console.error(e.response.data);
 
@@ -30,8 +30,6 @@ export const createOrder =
 
 export const getPaymentMethod = async () => {
 	try {
-		// console.log('11');
-
 		return (await api.order.getPaymentMethods()).data;
 	} catch (e: any) {
 		console.error(e);
@@ -55,8 +53,6 @@ export const getOrderInfo =
 
 export const getAllUserSentOrders = async () => {
 	try {
-		// console.log('11');
-
 		return (await api.order.getAllSentOrders()).data;
 	} catch (e: any) {
 		console.error(e);

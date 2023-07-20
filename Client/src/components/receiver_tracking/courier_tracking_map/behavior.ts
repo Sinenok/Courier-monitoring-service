@@ -1,37 +1,16 @@
-import { useEffect, useState } from 'react';
-import { ResponseDataCoordinate } from './types';
 import { getCoordinate } from '../../../store/courier/actionCreators';
+import { useAppDispatch } from '../../../store';
+import { flagCoord, getsS, getse } from '../../../hooks/IsLoggedIn';
 
-// export const useGetCoordinate = (orderId: string) => {
-// 	const [coordinate, setCoordinate] = useState<ResponseDataCoordinate>({
-// 		s: '',
-// 		e: ''
-// 	});
-// 	useEffect(() => {
-// 		getCoordinate(orderId).then((data) => {
-// 			setCoordinate(data);
-// 		});
-// 	}, []);
-
-// 	return {
-// 		coordinate
-// 	};
-// };
-// export const useGetCoordinate = (orderId: string) => {
-// 	const [coordinate, setCoordinate] = useState<ResponseDataCoordinate>({
-// 		s: '',
-// 		e: ''
-// 	});
-
-// 	useEffect(() => {
-// 		const interval = setInterval(() => {
-// 			getCoordinate(orderId).then((response) => {
-// 				setCoordinate(response.data);
-// 			});
-// 		}, 2000);
-
-// 		return () => clearInterval(interval);
-// 	}, [orderId]);
-
-// 	return coordinate;
-// };
+export const useTakeCoordinate = (trackNumber: string) => {
+	const dispatch = useAppDispatch();
+	const flag = flagCoord();
+	if (flag === false) {
+		setInterval(() => {
+			dispatch(getCoordinate({ trackNumber }));
+		}, 10000);
+	}
+	const e = getse();
+	const s = getsS();
+	return { e, s };
+};

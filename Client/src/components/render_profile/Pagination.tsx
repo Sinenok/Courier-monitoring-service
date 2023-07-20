@@ -1,10 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-interface PaginationProps {
-	sentOrdersPerPage: number;
-	totalOrders: number;
-	paginate: Function;
-}
+import { PaginationProps } from './types';
+
 const Pagination: React.FC<PaginationProps> = ({
 	sentOrdersPerPage,
 	totalOrders,

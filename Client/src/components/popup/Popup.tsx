@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-// import './Popup.css';
 import './../../styles/component-styles/Popup.css';
 import { Form, InputGroup, Col, Row, Button } from 'react-bootstrap';
 import { useOrderRating } from './bahavior';
 import { isOrderRate } from '../../hooks/IsLoggedIn';
+import { IPopup } from './types';
+import imgClose from './../../img/close.svg';
 
-const Popup: FC<any> = ({ show, handleClose }) => {
+const Popup: FC<IPopup> = ({ show, handleClose }) => {
 	const showHideClassName = show ? 'popup display-block' : 'popup display-none';
 	const { courierRating, setCourierRating, productRating, setProductRating, handleSubmit } =
 		useOrderRating();
@@ -16,7 +17,7 @@ const Popup: FC<any> = ({ show, handleClose }) => {
 			<section className="popup-main">
 				{!orderRate ? (
 					<>
-						<h2>Оцените доставку</h2>
+						<h2 className="popup-title">Оцените доставку</h2>
 						<Form onSubmit={handleSubmit}>
 							<Row className="">
 								<Form.Group lg="12" as={Col} className="mb-3" controlId="formGroupCourierRating">
@@ -66,7 +67,7 @@ const Popup: FC<any> = ({ show, handleClose }) => {
 				)}
 
 				<button className="close-button" onClick={handleClose}>
-					Закрыть
+					<img className="close-img" src={imgClose} alt="" />
 				</button>
 			</section>
 		</div>

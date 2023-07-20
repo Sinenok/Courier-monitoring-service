@@ -6,24 +6,18 @@ import './../../styles/component-styles/CourierProfile.css';
 import Pagination from '../render_profile/Pagination';
 import { useAppDispatch } from '../../store';
 import { takeOrder } from '../../store/courier/actionCreators';
+import { getPaymentMethodName } from '../render_profile/behavior';
 
 const CourierProfile = () => {
 	const profile = getsProfile();
 	const createdOrders = 0;
 	const getAllActiveOrders = useGetActiveOrders(createdOrders);
-	// console.log('aa', getAllActiveOrders.allActiveOrders.total);
 
-	// const { orderId, setOrderId, handleSubmit } = useTakeOrder();
-	// const [orderId, setOrderId] = useState();
-	// console.log('id', orderId);
 	const dispatch = useAppDispatch();
 	const handleTakeOrder = (event: React.FormEvent<HTMLFormElement>, orderId: string) => {
 		// event.preventDefault();
 		dispatch(takeOrder({ orderId }));
-		console.log('aaa', orderId);
 	};
-	// const flag = getsOrderId();
-	// console.log('dsdsadsa', flag);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [activeOrdersPerPage] = useState(2);
@@ -35,16 +29,6 @@ const CourierProfile = () => {
 	);
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-	const getPaymentMethodName = (paymentMethod: number) => {
-		if (paymentMethod === 0) {
-			return 'Наличные';
-		} else if (paymentMethod === 1) {
-			return 'Карта';
-		} else {
-			return 'Онлайн';
-		}
-	};
 
 	return (
 		<div>

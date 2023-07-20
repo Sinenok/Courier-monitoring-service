@@ -10,7 +10,6 @@ import { getsProfileRole, isLogged } from './hooks/IsLoggedIn';
 import Footer from './components/Footer';
 import './styles/App.css';
 import OrdersTakenPage from './pages/OrdersTakenPage';
-import AllOrdersPage from './pages/AllOrdersPage';
 
 interface PropType {
 	component: React.FC;
@@ -29,14 +28,6 @@ const PrivateRouteCourier: FC<PropType> = ({ component: Component }) => {
 	const userRole = getsProfileRole();
 
 	if (isLoggedIn && userRole === 'Courier') return <Component />;
-	return <Navigate to="/" />;
-};
-
-const PrivateRouteAdmin: FC<PropType> = ({ component: Component }) => {
-	const isLoggedIn = isLogged();
-	const userRole = getsProfileRole();
-
-	if (isLoggedIn && userRole === 'Admin') return <Component />;
 	return <Navigate to="/" />;
 };
 
@@ -64,8 +55,6 @@ function App() {
 						path="/orderstaken"
 						element={<PrivateRouteCourier component={OrdersTakenPage} />}
 					/>
-
-					<Route path="/allorders" element={<PrivateRouteAdmin component={AllOrdersPage} />} />
 				</Routes>
 				<Footer />
 			</div>

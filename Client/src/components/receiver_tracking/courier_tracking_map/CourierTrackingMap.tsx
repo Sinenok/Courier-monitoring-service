@@ -1,32 +1,14 @@
 import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
-// import './../../styles/component-styles/receiver-tracking-styles/CourierTrackingMap.css';
 import './../../../styles/component-styles/receiver-tracking-styles/CourierTrackingMap.css';
-// import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { IOrderMap } from '../body/types';
-import { useAppDispatch } from '../../../store';
-import { getCoordinate } from '../../../store/courier/actionCreators';
-import { flagCoord, getsS, getse } from '../../../hooks/IsLoggedIn';
-// import imCourierMarker from './../../img/courier-map/courier-marker.svg';
+import { useTakeCoordinate } from './behavior';
 
 const CourierTrackingMap: FC<IOrderMap> = ({ trackNumber, orderStatus }) => {
-	// console.log(orderId);
-	// const getCoordinate = useGetCoordinate(orderId);
-	// console.log('dsfdsfsdfsd', getCoordinate.e);
-	const dispatch = useAppDispatch();
-	const flag = flagCoord();
-	if (flag === false)
-		setInterval(() => {
-			dispatch(getCoordinate({ trackNumber }));
-		}, 10000);
-
-	const s = getsS();
-	const e = getse();
-
-	// const getCoordinate = useGetCoordinate();
+	const { e, s } = useTakeCoordinate(trackNumber);
 	const markers = [
 		{
 			geocode: [Number(e), Number(s)],
@@ -35,7 +17,6 @@ const CourierTrackingMap: FC<IOrderMap> = ({ trackNumber, orderStatus }) => {
 	];
 
 	const customIcon = new Icon({
-		// iconUrl: require('./../../img/courier-map/courier-marker.svg'),
 		iconUrl: 'https://cdn-icons-png.flaticon.com/512/1798/1798386.png',
 
 		iconSize: [38, 38]
@@ -43,9 +24,6 @@ const CourierTrackingMap: FC<IOrderMap> = ({ trackNumber, orderStatus }) => {
 
 	return (
 		<>
-			{/* <div className="test-cneter">
-				<button onClick={handleClick}>Get coordinate</button>
-			</div> */}
 			<Card className="text-center bg-light courier-tracking-map-card">
 				<Card.Header as="h4">Карта отслеживания курьера</Card.Header>
 				<Card.Body>
@@ -63,7 +41,6 @@ const CourierTrackingMap: FC<IOrderMap> = ({ trackNumber, orderStatus }) => {
 									<Popup>{marker.popUp}</Popup>
 								</Marker>
 							))}
-							{/* <Polyline pathOptions={limeOptions} positions={markers.geocode} /> */}
 						</MapContainer>
 					) : (
 						<h4 style={{ padding: '200px 0 200px 0' }}>Заказ завершен!</h4>

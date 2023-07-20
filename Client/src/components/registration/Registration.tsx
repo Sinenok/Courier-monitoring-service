@@ -3,8 +3,6 @@ import { Form, Row, Col, Container, Button } from 'react-bootstrap';
 import { useRegister } from './behaivor';
 import './../../styles/component-styles/Registration.css';
 
-// -----------------------------КАК И С АВТОРИЗАЦИЕЙ ВЫНЕС ЛОГИКУ--------------------------------------------
-
 const Registration = () => {
 	const {
 		firstName,
@@ -27,7 +25,6 @@ const Registration = () => {
 		setTelegramUserName,
 		handleSubmit
 	} = useRegister();
-	console.log(role);
 
 	return (
 		<div className="Registration">
