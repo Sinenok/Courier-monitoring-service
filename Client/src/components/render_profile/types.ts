@@ -1,15 +1,9 @@
-interface Item {
-	senderName: string;
-	senderAddress: string;
-	receiverName: string;
-	receiverAddress: string;
-	deliveryCost: number;
-	paymentMethod: number;
+import { ItemActive } from "../courier/types";
+import { IOrderMap } from "../receiver_tracking/body/types";
+
+interface Item extends ItemActive, IOrderMap {
 	productCost: number;
 	productDescription: string;
-	productWeight: number;
-	orderStatus: number;
-	trackNumber: string;
 }
 
 export interface ResponseData {

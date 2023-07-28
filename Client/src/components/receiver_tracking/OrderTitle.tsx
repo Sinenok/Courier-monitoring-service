@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import { Row, Card, Button } from 'react-bootstrap';
 import { IOrderTitle } from './body/types';
 import Popup from '../popup/Popup';
-import './../../styles/component-styles/receiver-tracking-styles/OrderTitle.css';
 
 const OrderTitle: FC<IOrderTitle> = ({ orderStatus }) => {
 	const [showPopup, setShowPopup] = useState(false);

@@ -9,14 +9,16 @@ export interface ILoginResponse {
 }
 
 // register
-export interface IRegisterResponce {
+// export enum UserRole {
+// 	Admin = 1,
+// 	User = 0,
+// 	Courier = 2
+// }
+export interface IRegisterResponce extends ILoginRequest {
 	firstName: string;
 	lastName: string;
-	login: string;
 	mail: string;
-	password: string;
 	phone: string;
-	/** Для роли по идее можно было сделать enum, чтобы не оперировать магическими числами */
 	role: number;
 	telegramUserName: string;
 }

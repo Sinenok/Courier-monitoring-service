@@ -4,6 +4,7 @@ import { getsProfile } from '../../hooks/IsLoggedIn';
 import { getOrderStatusName, getPaymentMethodName, useGetUserAllSentOrders } from './behavior';
 import './../../styles/component-styles/RenderProfile.css';
 import Pagination from './Pagination';
+import HighlightedText from '../courier/orders_taken/HighlightedText';
 
 const RenderProfile = () => {
 	const profile = getsProfile();
@@ -33,55 +34,47 @@ const RenderProfile = () => {
 						<h3>Здесь вы можете посмотреть ваш список заказов</h3>
 					</Container>
 					<Container className="flexxx cards-wrapper">
-						{currentOrder.map((order, index) => (
-							<Row className="cardss" key={index}>
+						{currentOrder.map((order) => (
+							<Row className="cardss" key={order.orderId}>
 								<Card className="cards-main bg-light">
 									<Card.Header className="text-center" as="h4">
 										Заказ от отправителя {order.senderName}
 									</Card.Header>
 									<Card.Body>
 										<Card.Text>
-											Отправитель: <span className="text-primary">{order.senderName}</span>
+											Отправитель: <HighlightedText text={order.senderName} />
 										</Card.Text>
 										<Card.Text>
-											Адрес отправителя: <span className="text-primary">{order.senderAddress}</span>
+											Адрес отправителя: <HighlightedText text={order.senderAddress} />
 										</Card.Text>
 										<Card.Text>
-											Получатель: <span className="text-primary">{order.receiverName}</span>
+											Получатель: <HighlightedText text={order.receiverName} />
 										</Card.Text>
 										<Card.Text>
-											Адрес получателя:{' '}
-											<span className="text-primary">{order.receiverAddress}</span>
+											Адрес получателя: <HighlightedText text={order.receiverAddress} />
 										</Card.Text>
 										<Card.Text>
-											Стоимость доставки:{' '}
-											<span className="text-primary">{order.deliveryCost} рублей</span>
+											Стоимость доставки: <HighlightedText text={`${order.deliveryCost} руб`} />
 										</Card.Text>
 										<Card.Text>
 											Способ оплаты:{' '}
-											<span className="text-primary">
-												{getPaymentMethodName(order.paymentMethod)}
-											</span>
+											<HighlightedText text={getPaymentMethodName(order.paymentMethod)} />
 										</Card.Text>
 										<Card.Text>
-											Стоимость товара:{' '}
-											<span className="text-primary">{order.productCost} рублей</span>
+											Стоимость товара: <HighlightedText text={`${order.productCost} руб`} />
 										</Card.Text>
 										<Card.Text>
-											Краткое описание:{' '}
-											<span className="text-primary">{order.productDescription}</span>
+											Краткое описание: <HighlightedText text={order.productDescription} />
 										</Card.Text>
 										<Card.Text>
-											Вес товара: <span className="text-primary">{order.productWeight} грамм</span>
+											Вес товара: <HighlightedText text={`${order.productWeight} г`} />
 										</Card.Text>
 										<Card.Text>
 											Итоговая цена:{' '}
-											<span className="text-primary">
-												{order.deliveryCost + order.productCost} рублей
-											</span>
+											<HighlightedText text={`${order.deliveryCost + order.productCost} руб`} />
 										</Card.Text>
 										<Card.Text>
-											Номер отслеживания: <span className="text-primary">{order.trackNumber}</span>
+											Номер отслеживания: <HighlightedText text={order.trackNumber} />
 										</Card.Text>
 									</Card.Body>
 									<Card.Footer className="text-center text-muted">

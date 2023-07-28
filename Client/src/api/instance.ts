@@ -1,20 +1,6 @@
 import axios from 'axios';
-// import { store } from '../store';
-// import { getAccessToken } from '../store/auth/actionCreators';
-// import Endpoints from './endpoints';
 
 export const axiosInstance = axios.create({});
-
-// const urlsSkipAuth = [
-// 	Endpoints.AUTH.LOGIN,
-// 	Endpoints.AUTH.REFRESH,
-// 	Endpoints.AUTH.LOGOUT,
-// 	Endpoints.AUTH.REGISTER,
-
-// 	Endpoints.ORDER.CREATE,
-// 	Endpoints.ORDER.PAYMENT,
-// 	Endpoints.ORDER.ORDERINFO
-// ];
 
 /**
  * Много закомментированного кода, плюс комментарий ниже всё ещё актуален
@@ -41,21 +27,3 @@ axiosInstance.interceptors.request.use((config) => {
 	}
 	return config;
 });
-
-// ---------------------TO DO for refresh-token--------------------
-// axiosInstance.interceptors.response.use(
-// 	(response) => response,
-// 	(error: AxiosError) => {
-// 		const isLoggedIn = !!store.getState().auth.authData.accessToken;
-
-// 		if (
-// 			error.response?.status === 401 &&
-// 			isLoggedIn &&
-// 			error.request.url !== Endpoints.AUTH.LOGOUT
-// 		) {
-// 			store.dispatch(logoutUser());
-// 		}
-
-// 		throw error;
-// 	}
-// );

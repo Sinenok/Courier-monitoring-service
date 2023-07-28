@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
 import { IOrderInfo } from './body/types';
+import HighlightedText from '../courier/orders_taken/HighlightedText';
+import { getPaymentMethodName } from '../render_profile/behavior';
 
 const OrderInfo: FC<IOrderInfo> = ({
 	sender,
@@ -17,34 +19,25 @@ const OrderInfo: FC<IOrderInfo> = ({
 		</Card.Header>
 		<Card.Body>
 			<Card.Text>
-				Отправитель: <span className="text-primary">{sender}</span>
+				Отправитель: <HighlightedText text={sender} />
 			</Card.Text>
 			<Card.Text>
-				Адрес отправителя: <span className="text-primary">{senderAddress}</span>
+				Адрес отправителя: <HighlightedText text={senderAddress} />
 			</Card.Text>
 			<Card.Text>
-				Получатель: <span className="text-primary">{recipient}</span>
+				Получатель: <HighlightedText text={recipient} />
 			</Card.Text>
 			<Card.Text>
-				Адрес доставки: <span className="text-primary">{deliveryAddress}</span>
+				Адрес доставки: <HighlightedText text={deliveryAddress} />
 			</Card.Text>
 			<Card.Text>
-				Плановая дата доставки: <span className="text-primary">{plannedDeliveryDate}</span>
+				Плановая дата доставки: <HighlightedText text={plannedDeliveryDate} />
 			</Card.Text>
 			<Card.Text>
-				Стоимость доставки: <span className="text-primary">{shippingCost} рублей</span>
+				Стоимость доставки: <HighlightedText text={`${shippingCost} руб`} />
 			</Card.Text>
 			<Card.Text>
-				Способ оплаты:{' '}
-				<span className="text-primary">
-					{paymentMethod === 0 ? (
-						<span>Наличные</span>
-					) : paymentMethod === 1 ? (
-						<span>Карта</span>
-					) : (
-						<span>Онлайн</span>
-					)}
-				</span>
+				Способ оплаты: <HighlightedText text={getPaymentMethodName(paymentMethod)} />
 			</Card.Text>
 		</Card.Body>
 	</Card>

@@ -11,10 +11,10 @@ import {
 	getOrderRateSucess,
 	getOrderRateFailure
 } from './orderReducer';
-import { IOrderCreateRequest, IOrderInfoRequest, IOrderRateRequest } from '../../api/order/types';
+import { IOrderInfoRequest, IOrderInfoResponce, IOrderRateRequest } from '../../api/order/types';
 
 export const createOrder =
-	(data: IOrderCreateRequest) =>
+	(data: IOrderInfoResponce) =>
 	async (dispatch: Dispatch): Promise<void> => {
 		try {
 			dispatch(orderSendStart());

@@ -2,9 +2,7 @@ export interface IOrderTakeRequest {
 	orderId: string;
 }
 
-export interface IOrderTakeResponce {
-	orderId: string;
-}
+export interface IOrderTakeResponce extends IOrderTakeRequest {}
 
 export interface IOrderTakesRequest {
 	trackNumber: string;

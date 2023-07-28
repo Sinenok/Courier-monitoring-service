@@ -1,21 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, initialState } from './types';
 
-/** Интерфейс AuthState и начальный стейт для читаемости лучше вынести в отдельный файл и импортировать */
-// ------------------------------ИСПРАВИЛ---------------------------------------------------------------------------
-
 export const authReducer = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		loginStart: (state): AuthState => ({
+		loginStart: (state: AuthState): AuthState => ({
 			...state,
 			authData: {
 				...state.authData,
 				isLoading: true
 			}
 		}),
-		loginSucess: (state, action: PayloadAction<string>): AuthState => ({
+		loginSucess: (state: AuthState, action: PayloadAction<string>): AuthState => ({
 			...state,
 			authData: {
 				...state.authData,
@@ -24,7 +21,7 @@ export const authReducer = createSlice({
 				error: null
 			}
 		}),
-		loginFailure: (state, action: PayloadAction<string>): AuthState => ({
+		loginFailure: (state: AuthState, action: PayloadAction<string>): AuthState => ({
 			...state,
 			authData: {
 				...state.authData,
@@ -32,7 +29,7 @@ export const authReducer = createSlice({
 				error: action.payload
 			}
 		}),
-		loadProfileStart: (state): AuthState => ({
+		loadProfileStart: (state: AuthState): AuthState => ({
 			...state,
 			profileData: {
 				...state.profileData,
@@ -40,7 +37,7 @@ export const authReducer = createSlice({
 			}
 		}),
 		loadProfileSucess: (
-			state,
+			state: AuthState,
 			action: PayloadAction<{ name: string; role: string }>
 		): AuthState => ({
 			...state,
@@ -52,7 +49,7 @@ export const authReducer = createSlice({
 				error: null
 			}
 		}),
-		loadProfileFailure: (state, action: PayloadAction<string>): AuthState => ({
+		loadProfileFailure: (state: AuthState, action: PayloadAction<string>): AuthState => ({
 			...state,
 			profileData: {
 				...state.profileData,
@@ -62,14 +59,14 @@ export const authReducer = createSlice({
 		}),
 		logoutSuccess: (): AuthState => initialState,
 
-		registrationStart: (state): AuthState => ({
+		registrationStart: (state: AuthState): AuthState => ({
 			...state,
 			registrData: {
 				...state.registrData,
 				isLoading: true
 			}
 		}),
-		registrationSucess: (state): AuthState => ({
+		registrationSucess: (state: AuthState): AuthState => ({
 			...state,
 			registrData: {
 				...state.registrData,
@@ -78,7 +75,7 @@ export const authReducer = createSlice({
 				error: null
 			}
 		}),
-		registrationFailure: (state, action: PayloadAction<string>): AuthState => ({
+		registrationFailure: (state: AuthState, action: PayloadAction<string>): AuthState => ({
 			...state,
 			registrData: {
 				...state.registrData,

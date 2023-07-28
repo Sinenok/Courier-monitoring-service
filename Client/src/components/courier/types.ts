@@ -1,4 +1,4 @@
-interface Item {
+export interface ItemActive {
 	orderId: string;
 	senderName: string;
 	senderAddress: string;
@@ -10,7 +10,7 @@ interface Item {
 }
 
 export interface ResponseDataActiveOrders {
-	items: Item[];
+	items: ItemActive[];
 	total: number;
 }
 

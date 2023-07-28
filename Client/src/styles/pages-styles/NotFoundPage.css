@@ -1,0 +1,18 @@
+.not-found-title {
+	color: red;
+	font-size: 250px;
+	line-height: 120%;
+}
+.not-found-sub-title {
+	font-size: 50px;
+}
+@media (max-width: 600px) {
+	.not-found-title {
+		color: red;
+		font-size: 200px;
+		line-height: 120%;
+	}
+	.not-found-sub-title {
+		font-size: 30px;
+	}
+}

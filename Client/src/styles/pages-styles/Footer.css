@@ -8,9 +8,6 @@
     align-items: center;
 }
 
-.cont {
-}
-
 .flexx {
     display: flex;
     flex-direction: column;

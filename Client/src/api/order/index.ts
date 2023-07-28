@@ -1,7 +1,6 @@
 import Endpoints from '../endpoints';
 import { axiosInstance } from '../instance';
 import {
-	IOrderCreateRequest,
 	IOrderCreateResponce,
 	IOrderInfoRequest,
 	IOrderInfoResponce,
@@ -9,7 +8,7 @@ import {
 } from './types';
 import { AxiosPromise } from 'axios';
 
-export const orderCreate = (params: IOrderCreateRequest): AxiosPromise<IOrderCreateResponce> => {
+export const orderCreate = (params: IOrderInfoResponce): AxiosPromise<IOrderCreateResponce> => {
 	return axiosInstance.post(Endpoints.ORDER.CREATE, params);
 };
 

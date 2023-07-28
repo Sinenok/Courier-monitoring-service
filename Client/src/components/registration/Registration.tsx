@@ -132,7 +132,7 @@ const Registration = () => {
 						</Form.Group>
 					</Row>
 					<Row className="justify-content-md-center">
-						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupPhone">
+						<Form.Group lg="5" as={Col} className="mb-4" controlId="formGroupRole">
 							<Form.Label>Выберите роль</Form.Label>
 							<Form.Select
 								className="input"

@@ -1,16 +1,4 @@
 // order
-export interface IOrderCreateRequest {
-	senderName: string;
-	senderAddress: string;
-	receiverName: string;
-	receiverAddress: string;
-	deliveryCost: number;
-	paymentMethod: number;
-	productCost: number;
-	productDescription: string;
-	productWeight: number;
-}
-
 export interface IOrderCreateResponce {
 	trackNumber: string;
 }
@@ -26,10 +14,6 @@ export interface IPaymentMethodsResponce {
 	id: string;
 }
 
-/**
- * IOrderCreateRequest и IOrderInfoResponce идентичны или очень похожи. Если идентичны, то тупо удалить один, если похожи, то расширить один от другого
- */
-
 //get order
 export interface IOrderInfoResponce {
 	senderName: string;
@@ -43,9 +27,7 @@ export interface IOrderInfoResponce {
 	productWeight: number;
 }
 
-export interface IOrderInfoRequest {
-	trackNumber: string;
-}
+export interface IOrderInfoRequest extends IOrderCreateResponce {}
 
 // Order rate
 export interface IOrderRateRequest {

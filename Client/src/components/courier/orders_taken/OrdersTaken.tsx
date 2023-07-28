@@ -5,6 +5,7 @@ import Pagination from '../../render_profile/Pagination';
 import { useAppDispatch } from '../../../store';
 import { completeOrder } from '../../../store/courier/actionCreators';
 import { getPaymentMethodName } from '../../render_profile/behavior';
+import HighlightedText from './HighlightedText';
 
 const OrdersTaken = () => {
 	const takenOrders = 1;
@@ -16,8 +17,8 @@ const OrdersTaken = () => {
 		dispatch(completeOrder({ orderId }));
 	};
 
-	const [currentPage, setCurrentPage] = useState(1); 
-	const [activeOrdersPerPage] = useState(2); // здесь не нужен useState, т.к. число не перезаписывается
+	const [currentPage, setCurrentPage] = useState(1);
+	const activeOrdersPerPage = 2;
 	const lastOrderIndex = currentPage * activeOrdersPerPage;
 	const firstOrderIndex = lastOrderIndex - activeOrdersPerPage;
 	const currentOrder = getAllTakenOrders.allActiveOrders.items.slice(
@@ -35,9 +36,8 @@ const OrdersTaken = () => {
 						<h3>Список взятых в исполнение заказов</h3>
 					</Container>
 					<Container className="flexxx cards-wrapper">
-						{currentOrder.map((order, index) => (
-							/** index нельзя указывать в качестве ключа для итерируемых объектов */
-							<Row className="cardss" key={index}>
+						{currentOrder.map((order) => (
+							<Row className="cardss" key={order.orderId}>
 								<Form onSubmit={(event) => handleCompleteOrder(event, order.orderId)}>
 									<Card className="cards-main bg-light">
 										<Card.Header className="text-center" as="h4">
@@ -45,36 +45,29 @@ const OrdersTaken = () => {
 										</Card.Header>
 										<Card.Body>
 											<Card.Text>
-												{/** <span className="text-primary"> можно вынести в отдельных компонент и переиспользовать  */}
-												Номер заказа: <span className="text-primary">{order.orderId}</span>
+												Номер заказа: <HighlightedText text={order.orderId} />
 											</Card.Text>
 											<Card.Text>
-												Отправитель: <span className="text-primary">{order.senderName}</span>
+												Отправитель: <HighlightedText text={order.senderName} />
 											</Card.Text>
 											<Card.Text>
-												Адрес отправителя:{' '}
-												<span className="text-primary">{order.senderAddress}</span>
+												Адрес отправителя: <HighlightedText text={order.senderAddress} />
 											</Card.Text>
 											<Card.Text>
-												Получатель: <span className="text-primary">{order.receiverName}</span>
+												Получатель: <HighlightedText text={order.receiverName} />
 											</Card.Text>
 											<Card.Text>
-												Адрес получателя:{' '}
-												<span className="text-primary">{order.receiverAddress}</span>
+												Адрес получателя: <HighlightedText text={order.receiverAddress} />
 											</Card.Text>
 											<Card.Text>
-												Стоимость доставки:{' '}
-												<span className="text-primary">{order.deliveryCost} рублей</span>
+												Стоимость доставки: <HighlightedText text={`${order.deliveryCost} руб`} />
 											</Card.Text>
 											<Card.Text>
 												Способ оплаты:{' '}
-												<span className="text-primary">
-													{getPaymentMethodName(order.paymentMethod)}
-												</span>
+												<HighlightedText text={getPaymentMethodName(order.paymentMethod)} />
 											</Card.Text>
 											<Card.Text>
-												Вес товара:{' '}
-												<span className="text-primary">{order.productWeight} грамм</span>
+												Вес товара: <HighlightedText text={`${order.productWeight} г`} />
 											</Card.Text>
 										</Card.Body>
 										<Card.Footer className="">

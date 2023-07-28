@@ -27,6 +27,7 @@ const OrderSubmission = () => {
 	} = useOrderSubmission();
 
 	const { paymentMethodList } = usePaymentMethods();
+
 	return (
 		<div className="OrderSubmission">
 			<Container className="text-center pt-5">
@@ -109,10 +110,9 @@ const OrderSubmission = () => {
 							<Form.Select
 								value={paymentMethod}
 								onChange={(e) => setPaymentMethod(Number(e.target.value))}>
-								{paymentMethodList.map((method, index) => {
+								{paymentMethodList.map((method) => {
 									return (
-										/** index в key */
-										<option key={index} value={method.code}>
+										<option key={method.code} value={method.code}>
 											{method.name}
 										</option>
 									);
@@ -160,7 +160,6 @@ const OrderSubmission = () => {
 									type="number"
 									step="0.1"
 									placeholder="Введите вес товара в граммах"
-									/** сюда можно будет ввести не только число, но и любой другой текст, и тогда parseFloat поломается */
 									onChange={(e) => setProductWeight(parseFloat(e.target.value))}
 								/>
 								<InputGroup.Text>{productWeight}</InputGroup.Text>

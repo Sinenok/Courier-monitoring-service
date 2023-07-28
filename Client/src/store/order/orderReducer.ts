@@ -5,14 +5,14 @@ export const orderReducer = createSlice({
 	name: 'order',
 	initialState,
 	reducers: {
-		orderSendStart: (state): OrderState => ({
+		orderSendStart: (state: OrderState): OrderState => ({
 			...state,
 			createOrderData: {
 				...state.createOrderData,
 				isLoading: true
 			}
 		}),
-		orderSendSucess: (state, action: PayloadAction<string>): OrderState => ({
+		orderSendSucess: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			createOrderData: {
 				...state.createOrderData,
@@ -22,7 +22,7 @@ export const orderReducer = createSlice({
 				trackNumber: action.payload
 			}
 		}),
-		orderSendFailure: (state, action: PayloadAction<string>): OrderState => ({
+		orderSendFailure: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			createOrderData: {
 				...state.createOrderData,
@@ -31,14 +31,14 @@ export const orderReducer = createSlice({
 			}
 		}),
 
-		getOrderInfoStart: (state): OrderState => ({
+		getOrderInfoStart: (state: OrderState): OrderState => ({
 			...state,
 			getOrderInfoData: {
 				...state.getOrderInfoData,
 				isLoading: true
 			}
 		}),
-		getOrderInfoSucess: (state, action: PayloadAction<any>): OrderState => ({
+		getOrderInfoSucess: (state: OrderState, action: PayloadAction<any>): OrderState => ({
 			...state,
 			getOrderInfoData: {
 				...state.getOrderInfoData,
@@ -47,7 +47,7 @@ export const orderReducer = createSlice({
 				order: action.payload
 			}
 		}),
-		getOrderInfoFailure: (state, action: PayloadAction<string>): OrderState => ({
+		getOrderInfoFailure: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			getOrderInfoData: {
 				...state.getOrderInfoData,
@@ -56,14 +56,14 @@ export const orderReducer = createSlice({
 			}
 		}),
 
-		getOrderRateStart: (state): OrderState => ({
+		getOrderRateStart: (state: OrderState): OrderState => ({
 			...state,
 			rateOrderData: {
 				...state.rateOrderData,
 				isLoading: true
 			}
 		}),
-		getOrderRateSucess: (state): OrderState => ({
+		getOrderRateSucess: (state: OrderState): OrderState => ({
 			...state,
 			rateOrderData: {
 				...state.rateOrderData,
@@ -72,7 +72,7 @@ export const orderReducer = createSlice({
 				orderRate: true
 			}
 		}),
-		getOrderRateFailure: (state, action: PayloadAction<string>): OrderState => ({
+		getOrderRateFailure: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			rateOrderData: {
 				...state.rateOrderData,

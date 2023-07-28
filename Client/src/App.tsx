@@ -10,6 +10,7 @@ import { getsProfileRole, isLogged } from './hooks/IsLoggedIn';
 import Footer from './components/Footer';
 import './styles/App.css';
 import OrdersTakenPage from './pages/OrdersTakenPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 interface PropType {
 	component: React.FC;
@@ -34,8 +35,6 @@ const PrivateRouteCourier: FC<PropType> = ({ component: Component }) => {
 function App() {
 	const isLoggedIn = isLogged();
 
-	/** Для красоты не хватает обработки страницы 404 =) */
-
 	return (
 		<Router>
 			<div className="page">
@@ -44,6 +43,7 @@ function App() {
 					<Route path="/" element={<Main />} />
 					<Route path="/authorization" element={<AuthorizationPage />} />
 					<Route path="/receivertracking" element={<ReceiverTrackingPage />} />
+					<Route path="*" element={<NotFoundPage />} />
 					<Route
 						path="/registration"
 						element={!isLoggedIn ? <RegistrationPage /> : <Navigate to="/" />}

@@ -35,6 +35,7 @@ export const useRegister = (): IUseRegiserResult => {
 			} else {
 				/** вопрос всё ещё актуален)) */
 				/** Где будет обработана эта ошибка? */
+				// Добавить обработку ошибки с помощью react-hook-form!!!!!!!!
 				throw new Error('У вас не совпадают пароли');
 			}
 		},

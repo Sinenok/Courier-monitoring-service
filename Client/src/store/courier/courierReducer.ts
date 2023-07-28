@@ -6,14 +6,15 @@ export const orderReducer = createSlice({
 	initialState,
 	reducers: {
 		/** не типизирован state, IDE выдает ошибку */
-		takeActiveOrderStart: (state): OrderState => ({
+		// ИСПРАВИЛ НО ВОЗМОЖНО НЕ ПРАВИЛЬНО
+		takeActiveOrderStart: (state: OrderState): OrderState => ({
 			...state,
 			takeActiveOrderData: {
 				...state.takeActiveOrderData,
 				isLoading: true
 			}
 		}),
-		takeActiveOrderSucess: (state, action: PayloadAction<string>): OrderState => ({
+		takeActiveOrderSucess: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			takeActiveOrderData: {
 				...state.takeActiveOrderData,
@@ -23,7 +24,7 @@ export const orderReducer = createSlice({
 				orderId: action.payload
 			}
 		}),
-		takeActiveOrderFailure: (state, action: PayloadAction<string>): OrderState => ({
+		takeActiveOrderFailure: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			takeActiveOrderData: {
 				...state.takeActiveOrderData,
@@ -32,14 +33,17 @@ export const orderReducer = createSlice({
 			}
 		}),
 
-		takeCompleteActiveOrderStart: (state): OrderState => ({
+		takeCompleteActiveOrderStart: (state: OrderState): OrderState => ({
 			...state,
 			completeOrderData: {
 				...state.completeOrderData,
 				isLoading: true
 			}
 		}),
-		takeCompleteActiveOrderSucess: (state, action: PayloadAction<string>): OrderState => ({
+		takeCompleteActiveOrderSucess: (
+			state: OrderState,
+			action: PayloadAction<string>
+		): OrderState => ({
 			...state,
 			completeOrderData: {
 				...state.completeOrderData,
@@ -49,7 +53,10 @@ export const orderReducer = createSlice({
 				orderId: action.payload
 			}
 		}),
-		takeCompleteActiveOrderFailure: (state, action: PayloadAction<string>): OrderState => ({
+		takeCompleteActiveOrderFailure: (
+			state: OrderState,
+			action: PayloadAction<string>
+		): OrderState => ({
 			...state,
 			completeOrderData: {
 				...state.completeOrderData,
@@ -58,14 +65,17 @@ export const orderReducer = createSlice({
 			}
 		}),
 
-		getCoordinateStart: (state): OrderState => ({
+		getCoordinateStart: (state: OrderState): OrderState => ({
 			...state,
 			getCoordinate: {
 				...state.getCoordinate,
 				isLoading: true
 			}
 		}),
-		getCoordinateSucess: (state, action: PayloadAction<{ s: string; e: string }>): OrderState => ({
+		getCoordinateSucess: (
+			state: OrderState,
+			action: PayloadAction<{ s: string; e: string }>
+		): OrderState => ({
 			...state,
 			getCoordinate: {
 				...state.getCoordinate,
@@ -76,7 +86,7 @@ export const orderReducer = createSlice({
 				e: action.payload.e
 			}
 		}),
-		getCoordinateFailure: (state, action: PayloadAction<string>): OrderState => ({
+		getCoordinateFailure: (state: OrderState, action: PayloadAction<string>): OrderState => ({
 			...state,
 			getCoordinate: {
 				...state.getCoordinate,

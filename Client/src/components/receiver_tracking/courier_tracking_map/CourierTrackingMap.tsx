@@ -43,8 +43,7 @@ const CourierTrackingMap: FC<IOrderMap> = ({ trackNumber, orderStatus }) => {
 							))}
 						</MapContainer>
 					) : (
-						/** Инлайн-стили - антипаттерн */
-						<h4 style={{ padding: '200px 0 200px 0' }}>Заказ завершен!</h4>
+						<h4 className="map-order-status">Заказ завершен!</h4>
 					)}
 				</Card.Body>
 			</Card>
